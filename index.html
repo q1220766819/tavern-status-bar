@@ -78,7 +78,8 @@ var __webpack_modules__ = {
         }).prefault({}),
         建筑列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string().describe("建筑名"), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-          耐久: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
+          耐久: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
+          功能: zod__WEBPACK_IMPORTED_MODULE_0__.z.string().prefault("")
         })).prefault({}),
         防御值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         忠诚度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
@@ -990,6 +991,10 @@ var __webpack_modules__ = {
       class: "block"
     };
     const _hoisted_12 = {
+      key: 0,
+      class: "muted"
+    };
+    const _hoisted_13 = {
       key: 2,
       class: "block"
     };
@@ -1029,10 +1034,14 @@ var __webpack_modules__ = {
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: n,
         class: "line"
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n) + " Lv." + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.建筑列表[n]?.等级) + " · 耐久 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.建筑列表[n]?.耐久), 1))), 128)) ])) : (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n) + " Lv." + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.建筑列表[n]?.等级) + " · 耐久 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.建筑列表[n]?.耐久) + " ", 1), $setup.store.data.领地.建筑列表[n]?.功能 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.建筑列表[n]?.功能), 1)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]))), 128)) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.npcNames.length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [ _cache[4] || (_cache[4] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [ _cache[4] || (_cache[4] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "重要 NPC", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -2957,7 +2966,7 @@ let __webpack_exports__ = {};
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-15.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=style&index=0&id=6289629d&lang=scss&scoped=true ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-6289629d]{display:flex;flex-direction:column;gap:8px}.invasion-alert[data-v-6289629d]{padding:6px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;text-align:center;animation:blink-6289629d 1s infinite}.resources[data-v-6289629d]{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.res[data-v-6289629d]{display:flex;justify-content:space-between;padding:4px 8px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px}.res .label[data-v-6289629d]{color:var(--c-muted);font-size:12px}.res .value[data-v-6289629d]{color:var(--c-ash);font-weight:bold}.block .block-title[data-v-6289629d]{color:var(--c-ember);font-size:12px;margin-bottom:4px}.block .line[data-v-6289629d]{color:var(--c-ash);font-size:12px;padding-left:8px}@keyframes blink-6289629d{0%,100%{opacity:1}50%{opacity:0.5}}
+.panel[data-v-6289629d]{display:flex;flex-direction:column;gap:8px}.invasion-alert[data-v-6289629d]{padding:6px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;text-align:center;animation:blink-6289629d 1s infinite}.resources[data-v-6289629d]{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.res[data-v-6289629d]{display:flex;justify-content:space-between;padding:4px 8px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px}.res .label[data-v-6289629d]{color:var(--c-muted);font-size:12px}.res .value[data-v-6289629d]{color:var(--c-ash);font-weight:bold}.block .block-title[data-v-6289629d]{color:var(--c-ember);font-size:12px;margin-bottom:4px}.block .line[data-v-6289629d]{color:var(--c-ash);font-size:12px;padding-left:8px}.block .muted[data-v-6289629d]{color:var(--c-muted);font-size:11px;padding-left:8px}@keyframes blink-6289629d{0%,100%{opacity:1}50%{opacity:0.5}}
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-15.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TaskPanel.vue?vue&type=style&index=0&id=558cb288&lang=scss&scoped=true ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
