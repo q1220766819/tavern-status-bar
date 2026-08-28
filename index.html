@@ -52,9 +52,9 @@ var __webpack_modules__ = {
         })),
         破限状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "无", "单破限", "双破限", "三破限" ]).prefault("无"),
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-        血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-        体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-        精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
+        血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+        体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+        精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         状态效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string().describe("状态名"), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           层数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           持续: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -396,28 +396,29 @@ var __webpack_modules__ = {
         const vitals = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           const 六 = store.data.人物面板.六维 ?? {};
           const g = k => 六[k]?.数值 ?? 0;
-          const 血上限 = g("体质") * 10 + g("力量") * 5 + 60;
-          const 体上限 = g("体质") * 8 + g("敏捷") * 6 + 40;
-          const 精上限 = g("精神") * 8 + g("感知") * 6 + 40;
+          const 血上限 = g("体质") * 100 + g("力量") * 80 + 120;
+          const 体上限 = g("体质") * 80 + g("敏捷") * 70 + 100;
+          const 精上限 = g("精神") * 80 + g("感知") * 70 + 100;
           const pct = (cur, max) => Math.max(0, Math.min(100, Math.round(cur / Math.max(1, max) * 100)));
           const P = store.data.人物面板;
+          const disp = (cur, max) => cur == null ? max : cur;
           return [ {
             name: "血量",
-            cur: P.血量,
+            cur: disp(P.血量, 血上限),
             max: 血上限,
-            pct: pct(P.血量, 血上限),
+            pct: pct(disp(P.血量, 血上限), 血上限),
             color: "var(--c-danger)"
           }, {
             name: "体力",
-            cur: P.体力,
+            cur: disp(P.体力, 体上限),
             max: 体上限,
-            pct: pct(P.体力, 体上限),
+            pct: pct(disp(P.体力, 体上限), 体上限),
             color: "#5fa86b"
           }, {
             name: "精神力",
-            cur: P.精神力,
+            cur: disp(P.精神力, 精上限),
             max: 精上限,
-            pct: pct(P.精神力, 精上限),
+            pct: pct(disp(P.精神力, 精上限), 精上限),
             color: "var(--c-rare)"
           } ];
         });

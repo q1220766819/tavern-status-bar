@@ -377,9 +377,9 @@ var __webpack_modules__ = {
               _.set(mvu, `stat_data.人物面板.六维.${k}.数值`, rolled.value[k]);
             }
             const 六 = rolled.value;
-            _.set(mvu, "stat_data.人物面板.血量", 六.体质 * 10 + 六.力量 * 5 + 60);
-            _.set(mvu, "stat_data.人物面板.体力", 六.体质 * 8 + 六.敏捷 * 6 + 40);
-            _.set(mvu, "stat_data.人物面板.精神力", 六.精神 * 8 + 六.感知 * 6 + 40);
+            _.set(mvu, "stat_data.人物面板.血量", 六.体质 * 100 + 六.力量 * 80 + 120);
+            _.set(mvu, "stat_data.人物面板.体力", 六.体质 * 80 + 六.敏捷 * 70 + 100);
+            _.set(mvu, "stat_data.人物面板.精神力", 六.精神 * 80 + 六.感知 * 70 + 100);
             _.set(mvu, "stat_data.人物面板.天赋", {
               [talent.name]: {
                 品级: talent.品级,
