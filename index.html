@@ -13,6 +13,14 @@ var __webpack_modules__ = {
     });
     var zod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zod */ "zod");
     var zod__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_0__);
+    const 阶位枚举 = [ "一阶见习", "二阶精英", "三阶王者", "四阶史诗", "五阶传奇", "六阶超凡", "七阶神话", "八阶至高", "九阶唯一" ];
+    const 阶位Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      for (const t of 阶位枚举) {
+        if (s.startsWith(t.slice(0, 2))) return t;
+      }
+      return s;
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum(阶位枚举)).prefault("一阶见习");
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -22,7 +30,7 @@ var __webpack_modules__ = {
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.boolean().prefault(false)
         })).prefault({}),
         未分配属性点: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-        阶位: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "一阶见习", "二阶精英", "三阶王者", "四阶史诗", "五阶传奇", "六阶超凡", "七阶神话", "八阶至高", "九阶唯一" ]).prefault("一阶见习"),
+        阶位: 阶位Schema,
         职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("LV.1"),
         经验值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
@@ -62,8 +70,8 @@ var __webpack_modules__ = {
           敬畏: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
           债务: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           秘密: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-          阶位: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "一阶见习", "二阶精英", "三阶王者", "四阶史诗", "五阶传奇", "六阶超凡", "七阶神话", "八阶至高", "九阶唯一" ]).prefault("三阶王者"),
-          体系词: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("权能·烬冠敕赐"),
+          阶位: 阶位Schema,
+          体系词: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -75,7 +83,7 @@ var __webpack_modules__ = {
         敬畏: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         债务: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         秘密: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        阶位: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "一阶见习", "二阶精英", "三阶王者", "四阶史诗", "五阶传奇", "六阶超凡", "七阶神话", "八阶至高", "九阶唯一" ]).prefault("一阶见习"),
+        阶位: 阶位Schema,
         体系词: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
