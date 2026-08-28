@@ -42,7 +42,8 @@ var __webpack_modules__ = {
         })).prefault({}),
         权能: zod__WEBPACK_IMPORTED_MODULE_0__.z.string().prefault(""),
         仪典: zod__WEBPACK_IMPORTED_MODULE_0__.z.string().prefault(""),
-        伟业传唱度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0)
+        伟业传唱度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+        体系词: zod__WEBPACK_IMPORTED_MODULE_0__.z.string().prefault("")
       }).prefault({}),
       时间: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.string().prefault(""),
@@ -541,23 +542,27 @@ var __webpack_modules__ = {
     };
     const _hoisted_8 = {
       key: 1,
-      class: "block"
+      class: "meta"
     };
     const _hoisted_9 = {
-      key: 0
-    };
-    const _hoisted_10 = {
       key: 2,
       class: "block"
     };
-    const _hoisted_11 = {
+    const _hoisted_10 = {
       key: 0
     };
-    const _hoisted_12 = {
+    const _hoisted_11 = {
       key: 3,
       class: "block"
     };
+    const _hoisted_12 = {
+      key: 0
+    };
     const _hoisted_13 = {
+      key: 4,
+      class: "block"
+    };
+    const _hoisted_14 = {
       key: 0
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -581,8 +586,12 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "权能：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.权能), 1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "仪典：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.仪典), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.store.data.人物面板.体系词 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "体系词：" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.体系词), 1) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.talentNames.length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [ _cache[0] || (_cache[0] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [ _cache[0] || (_cache[0] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "天赋", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -592,11 +601,11 @@ var __webpack_modules__ = {
         class: "line"
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n) + " · " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.天赋[n]?.品级) + " ", 1), $setup.store.data.人物面板.天赋[n]?.异化值 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, "异化 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, "异化 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.天赋[n]?.异化值), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]))), 128)) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.skillNames.length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [ _cache[1] || (_cache[1] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [ _cache[1] || (_cache[1] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "技能", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -606,11 +615,11 @@ var __webpack_modules__ = {
         class: "line"
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n) + " · " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.技能[n]?.类型) + " ", 1), $setup.store.data.人物面板.技能[n]?.冷却 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "冷却 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_12, "冷却 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.技能[n]?.冷却), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]))), 128)) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.statusNames.length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [ _cache[2] || (_cache[2] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, [ _cache[2] || (_cache[2] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "状态", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -619,7 +628,7 @@ var __webpack_modules__ = {
         key: n,
         class: "line"
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), $setup.store.data.人物面板.状态效果[n]?.层数 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, " ×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, " ×" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.状态效果[n]?.层数), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]))), 128)) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
