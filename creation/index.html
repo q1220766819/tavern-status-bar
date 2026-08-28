@@ -351,7 +351,7 @@ var __webpack_modules__ = {
               refresh: "affected"
             });
             await generate({
-              user_input: `（系统）角色已创建：姓名「${n}」，天赋「${talent.name}」（${talent.品级}·${talent.效果}），过往「${bg.name}」（${bg.描述}）。三阶权能方向：${bg.权能方向}。` + `请以第三人称、暗黑生存领主文风展开第一幕：${n}在黑泥沼的薪火旁醒来，薪火将熄，雾中有腐尸鬼的啃咬声，火堆旁围着五名流民。用网文开头的吸引力与互动小说的可回应性来写，结尾原样输出 <StatusPlaceHolderImpl/>。`,
+              user_input: `（系统）角色已创建：姓名「${n}」，天赋「${talent.name}」（${talent.品级}·${talent.效果}），过往「${bg.name}」（${bg.描述}）。可能的职业/权能发展方向：${bg.权能方向}（未来并非一成不变）。` + `请以第三人称、暗黑生存领主文风展开第一幕：${n}在黑泥沼的薪火旁醒来，薪火将熄，雾中有腐尸鬼的啃咬声，火堆旁围着五名流民。用网文开头的吸引力与互动小说的可回应性来写，结尾原样输出 <StatusPlaceHolderImpl/>。`,
               should_stream: true
             });
           } catch (e) {
@@ -494,7 +494,7 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_11, [ _cache[7] || (_cache[7] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "label"
-      }, "过往 · 决定三阶权能方向", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [ ((0, 
+      }, "过往 · 可能的职业/权能发展方向", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [ ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.过往池, b => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -505,7 +505,7 @@ var __webpack_modules__ = {
         onClick: $event => $setup.selectBg(b)
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.描述), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, "权能方向：" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.描述), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, "可能方向：" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.权能方向), 1) ], 10, _hoisted_13))), 128)), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "bg-card", {
@@ -516,7 +516,7 @@ var __webpack_modules__ = {
         class: "bg-name"
       }, "自由输入", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "bg-desc"
-      }, "自行决定你的来历与权能方向", -1) ]) ], 2) ]), $setup.isCustomBg ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      }, "自行决定你的来历与可能的发展方向", -1) ]) ], 2) ]), $setup.isCustomBg ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => $setup.customBg = $event),
@@ -527,7 +527,7 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => $setup.customDir = $event),
         class: "custom-input",
-        placeholder: "权能方向（可选，如：火焰与净化）"
+        placeholder: "可能的职业/权能发展方向（可选，如：火焰与净化）"
       }, null, 512), [ [ vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.customDir ] ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "submit-btn",
