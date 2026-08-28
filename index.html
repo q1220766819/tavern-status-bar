@@ -22,6 +22,68 @@ var __webpack_modules__ = {
       return s;
     }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum(阶位枚举)).prefault("一阶见习");
     const 技能类型 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => String(v).includes("被动") ? "被动" : "主动").pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "主动", "被动" ])).prefault("主动");
+    const 破限状态 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("三")) return "三破限";
+      if (s.includes("双") || s.includes("二")) return "双破限";
+      if (s.includes("单") || s.includes("一")) return "单破限";
+      return "无";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "无", "单破限", "双破限", "三破限" ])).prefault("无");
+    const 时间段 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("深夜") || s.includes("半夜") || s.includes("午夜")) return "深夜";
+      if (s.includes("傍晚") || s.includes("黄昏") || s.includes("日落") || s.includes("晚上")) return "傍晚";
+      if (s.includes("清晨") || s.includes("黎明") || s.includes("凌晨")) return "清晨";
+      if (s.includes("下午") || s.includes("午后") || s.includes("晌午")) return "下午";
+      return "上午";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "清晨", "上午", "下午", "傍晚", "深夜" ])).prefault("清晨");
+    const 昼夜危险时段 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("泛红") || s.includes("危险") || s.includes("红")) return "雾泛红危险时段";
+      return "白昼";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "白昼", "雾泛红危险时段" ])).prefault("白昼");
+    const 博弈阶段 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("亦敌") || s.includes("亦盟")) return "亦敌亦盟";
+      if (s.includes("对决") || s.includes("全面")) return "全面对决";
+      if (s.includes("竞争") || s.includes("相持")) return "竞争相持";
+      return "平行发展";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "平行发展", "竞争相持", "全面对决", "亦敌亦盟" ])).prefault("平行发展");
+    const 薪火等级 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("唯一")) return "唯一界火";
+      if (s.includes("至高")) return "至高王焰";
+      if (s.includes("神国")) return "神国薪庭";
+      if (s.includes("蜕凡")) return "蜕凡圣火";
+      if (s.includes("永燃")) return "永燃";
+      if (s.includes("彻夜")) return "彻夜";
+      if (s.includes("炽烈")) return "炽烈";
+      if (s.includes("初燃")) return "初燃";
+      return "微弱";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "微弱", "初燃", "炽烈", "彻夜", "永燃", "蜕凡圣火", "神国薪庭", "至高王焰", "唯一界火" ])).prefault("微弱");
+    const 评级链 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("神座")) return "神座之城";
+      if (s.includes("圣城")) return "圣城级";
+      if (s.includes("王都")) return "王都级";
+      if (s.includes("城镇")) return "城镇级";
+      if (s.includes("庄园")) return "庄园级";
+      return "营地级";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "营地级", "庄园级", "城镇级", "王都级", "圣城级", "神座之城" ])).prefault("营地级");
+    const 任务状态 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("完成")) return "已完成";
+      if (s.includes("异变")) return "已异变";
+      return "进行中";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "进行中", "已异变", "已完成" ])).prefault("进行中");
+    const 装备品质 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v);
+      if (s.includes("黑紫") || s.includes("完美") || s.includes("紫")) return "黑紫";
+      if (s.includes("蓝") || s.includes("稀有")) return "蓝";
+      if (s.includes("绿") || s.includes("精良")) return "绿";
+      if (s.includes("白") || s.includes("普通")) return "白";
+      return "灰";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "灰", "白", "绿", "蓝", "黑紫" ])).prefault("灰");
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -50,7 +112,7 @@ var __webpack_modules__ = {
           消耗: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
         })),
-        破限状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "无", "单破限", "双破限", "三破限" ]).prefault("无"),
+        破限状态,
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
@@ -67,11 +129,11 @@ var __webpack_modules__ = {
       }).prefault({}),
       时间: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        时间段: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "清晨", "上午", "下午", "傍晚", "深夜" ]).prefault("清晨"),
+        时间段,
         当前位置: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         结算周期计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 1, 7)).prefault(1),
         迷雾潮汐计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-        昼夜危险时段: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "白昼", "雾泛红危险时段" ]).prefault("白昼")
+        昼夜危险时段
       }).prefault({}),
       关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.intersection(zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         亚修: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -85,7 +147,7 @@ var __webpack_modules__ = {
           天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-          博弈阶段: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "平行发展", "竞争相持", "全面对决", "亦敌亦盟" ]).prefault("平行发展")
+          博弈阶段
         })
       }), zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string().describe("角色名"), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         好感: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
@@ -100,9 +162,9 @@ var __webpack_modules__ = {
         破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
       }))),
       领地: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        薪火等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "微弱", "初燃", "炽烈", "彻夜", "永燃", "蜕凡圣火", "神国薪庭", "至高王焰", "唯一界火" ]).prefault("微弱"),
+        薪火等级,
         薪火特殊名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        评级链: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "营地级", "庄园级", "城镇级", "王都级", "圣城级", "神座之城" ]).prefault("营地级"),
+        评级链,
         资源: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "晶石", "余烬", "贡献值", "晶币", "金币", "粮食" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)),
         人口: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           现有人数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
@@ -123,7 +185,7 @@ var __webpack_modules__ = {
         入侵预警值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
       }).prefault({}),
       背包: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string().describe("物品名"), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        品质: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "灰", "白", "绿", "蓝", "黑紫" ]).prefault("灰"),
+        品质: 装备品质,
         词条: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         数量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         污染度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
@@ -142,7 +204,7 @@ var __webpack_modules__ = {
           奖励: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           失败惩罚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           发布者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-          状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "进行中", "已异变", "已完成" ]).prefault("进行中")
+          状态: 任务状态
         }),
         活跃任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string().describe("任务名"), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           名称: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -152,7 +214,7 @@ var __webpack_modules__ = {
           奖励: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           失败惩罚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           发布者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-          状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "进行中", "已异变", "已完成" ]).prefault("进行中")
+          状态: 任务状态
         })),
         已完成计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
       }).prefault({}),
