@@ -11,77 +11,233 @@ var __webpack_modules__ = {
       过往池: () => 过往池
     });
     const 天赋池 = [ {
-      name: "只要活着",
-      品级: "唯一",
-      效果: "求生意志驱动，略微修正一切行为的成功判定概率"
-    }, {
-      name: "厄印灵枢",
-      品级: "唯一",
-      效果: "情绪超阈值时逆位重解，可异化为权柄"
-    }, {
-      name: "死亡奉还",
-      品级: "稀有",
-      效果: "确认死亡时以灵魂为燃料诅咒加害者"
-    }, {
-      name: "熔炉",
-      品级: "稀有",
-      效果: "强制炼化摄入物质、剥离污染"
-    }, {
-      name: "语言通解",
-      品级: "稀有",
-      效果: "跨越语言障碍触及文字信息，可推演破解陌生文字"
-    }, {
-      name: "余烬亲和",
-      品级: "稀有",
-      效果: "与薪火共鸣，火旁恢复加速、薪火亲和"
-    }, {
-      name: "冷血",
-      品级: "稀有",
-      效果: "恐惧疼痛等负面情绪削弱，严寒中行动不受影响"
-    }, {
-      name: "记忆烙印",
-      品级: "稀有",
-      效果: "看过的信息不易遗忘，可回溯近期记忆"
-    }, {
-      name: "残响",
-      品级: "稀有",
-      效果: "听见刚消散的声音残响，预警伏击"
-    }, {
-      name: "燃薪者",
-      品级: "稀有",
-      效果: "击伤敌人时自身薪火同步微弱恢复"
-    }, {
-      name: "死战",
+      name: "铁肺",
       品级: "普通",
-      效果: "伤势越重痛觉越低、力量小幅爆发"
-    }, {
-      name: "专注",
-      品级: "普通",
-      效果: "制作降低材料损耗、小概率提升成品耐久"
-    }, {
-      name: "搜寻者",
-      品级: "普通",
-      效果: "找东西比常人准一点"
-    }, {
-      name: "石肤",
-      品级: "普通",
-      效果: "皮肤硬化减免钝击"
-    }, {
-      name: "快手",
-      品级: "普通",
-      效果: "出手速度略快"
-    }, {
-      name: "野性嗅觉",
-      品级: "普通",
-      效果: "气味辨识与危险预判"
-    }, {
-      name: "铁胃",
-      品级: "普通",
-      效果: "吃下腐食不中毒，从食物榨取更多能量"
+      效果: "肺部容量与耐力远超常人，可在污浊或窒息环境中坚持更久"
     }, {
       name: "夜眼",
       品级: "普通",
-      效果: "微弱光线也能看清"
+      效果: "瞳孔对微光极度敏感，在迷雾与夜色中的视距比常人更远"
+    }, {
+      name: "好记性",
+      品级: "普通",
+      效果: "过目不忘，能精确回忆所见文字、地图或面孔"
+    }, {
+      name: "硬骨头",
+      品级: "普通",
+      效果: "骨骼密度异常，摔倒或钝击时不易骨折"
+    }, {
+      name: "顺风耳",
+      品级: "普通",
+      效果: "听力范围与精度远超常人，能听见远处低语或细微动静"
+    }, {
+      name: "凝血",
+      品级: "普通",
+      效果: "伤口止血速度显著快于常人，不易失血过多"
+    }, {
+      name: "方向感",
+      品级: "普通",
+      效果: "在任何环境中都能保持对方向的本能感知，不易迷失"
+    }, {
+      name: "粗粮胃",
+      品级: "普通",
+      效果: "能消化并吸收几乎所有非致命有机物，从极恶劣的食物中获取微量营养"
+    }, {
+      name: "铁掌",
+      品级: "普通",
+      效果: "双手茧层极厚，可徒手抓握滚烫或粗糙的物体而不受伤"
+    }, {
+      name: "猫步",
+      品级: "普通",
+      效果: "走路时足弓自然卸力，脚步极轻，在木质或碎石地面移动时更难被发觉"
+    }, {
+      name: "药感鼻",
+      品级: "普通",
+      效果: "嗅觉异常灵敏，能分辨出数十种草药与毒素的气味特征"
+    }, {
+      name: "冷皮",
+      品级: "普通",
+      效果: "体表隔热层厚于常人，在寒冷环境中体温流失更慢"
+    }, {
+      name: "软筋",
+      品级: "普通",
+      效果: "关节柔韧性极佳，能从狭窄缝隙或捆绑中挣脱"
+    }, {
+      name: "鸟胃",
+      品级: "普通",
+      效果: "进食极快，可在短时间内大量吞咽食物储备能量"
+    }, {
+      name: "夜游者",
+      品级: "普通",
+      效果: "睡眠需求比常人少三分之一，且不容易因睡眠不足而精神萎靡"
+    }, {
+      name: "挑水工",
+      品级: "普通",
+      效果: "负重时耐力消耗显著降低，可长时间背负重物行军"
+    }, {
+      name: "水感",
+      品级: "普通",
+      效果: "能凭直觉判断水源的大致方位与距离"
+    }, {
+      name: "晴雨骨",
+      品级: "普通",
+      效果: "身体对天气变化极为敏感，能提前数个时辰感知即将到来的风暴或迷雾异动"
+    }, {
+      name: "铁牙",
+      品级: "普通",
+      效果: "牙齿异常坚固，可啃咬硬物（干肉、坚果壳、绳索），不易崩裂"
+    }, {
+      name: "熔炉",
+      品级: "精良",
+      效果: "消化系统可分解并吸收高能量物质（毒药、污染晶石等），将其转化为临时力量"
+    }, {
+      name: "掠食者感知",
+      品级: "精良",
+      效果: "凭直觉预知即将到来的危险，即使无法说明理由"
+    }, {
+      name: "血债血偿",
+      品级: "精良",
+      效果: "每次受到伤害后，下一次对伤害来源的攻击将附带同等程度的额外痛苦（不增加物理伤害，只放大痛觉）"
+    }, {
+      name: "噬灵者",
+      品级: "精良",
+      效果: "击败敌人后，可吸收其部分灵力强化自身"
+    }, {
+      name: "虔诚",
+      品级: "精良",
+      效果: "信仰坚定不移，不会陷入疯狂或神智不清等污染状态"
+    }, {
+      name: "铁壁",
+      品级: "精良",
+      效果: "防御力显著提升"
+    }, {
+      name: "折光之瞳",
+      品级: "精良",
+      效果: "眼睛可捕捉到空气中因魔力或温度变化而产生的细微扭曲，看破隐形或伪装"
+    }, {
+      name: "犟骨头",
+      品级: "精良",
+      效果: "受到致命伤时，可强行压制濒死状态，维持行动能力一段时间"
+    }, {
+      name: "幸运儿",
+      品级: "精良",
+      效果: "附魔、锻造等与判定相关的鉴定成功率增加"
+    }, {
+      name: "泥鳅步",
+      品级: "精良",
+      效果: "在湿滑、泥泞或浅水地形中，移动速度与平衡性不降反升"
+    }, {
+      name: "通灵者",
+      品级: "精良",
+      效果: "更容易就任法术类职业，且修炼速度显著增加"
+    }, {
+      name: "野性直觉",
+      品级: "精良",
+      效果: "对自然中的异常（即将坍塌的洞穴、潜伏的野兽、天气突变）有先兆预感"
+    }, {
+      name: "饕餮之胃",
+      品级: "精良",
+      效果: "可吞噬任何有机物并将其彻底分解，转化为自身体力与微量永久属性增长"
+    }, {
+      name: "侦察专精",
+      品级: "精良",
+      效果: "听觉、视觉和移动速度提升"
+    }, {
+      name: "寻血猎犬",
+      品级: "精良",
+      效果: "对某个敌人造成伤害后，伤口会残留「能量标记」，可感知其大致方位"
+    }, {
+      name: "通晓之言",
+      品级: "精良",
+      效果: "接触带有「记录意图」的实体（书籍、石碑、壁画）时，可理解其核心含义"
+    }, {
+      name: "识途老马",
+      品级: "精良",
+      效果: "只要曾经到过某地，即可在脑海中建立一条无视迷雾与黑暗的绝对方向感路径"
+    }, {
+      name: "荆棘甲胄",
+      品级: "精良",
+      效果: "原地不动时防御力大幅提升，可将部分物理攻击的动能反射给攻击者"
+    }, {
+      name: "雾中之眼",
+      品级: "精良",
+      效果: "在迷雾中视野不受衰减，且能清晰分辨迷雾中的活物轮廓"
+    }, {
+      name: "猎血者",
+      品级: "精良",
+      效果: "对目标附加持续流血伤害，且向目标移动时速度小幅提升"
+    }, {
+      name: "破障之刃",
+      品级: "精良",
+      效果: "武器在反复击打防护物时更容易找到薄弱点并加速破坏"
+    }, {
+      name: "潜伏者之息",
+      品级: "精良",
+      效果: "静止不动时，自身气息与周围环境融为一体，极难被感知或侦测"
+    }, {
+      name: "工头",
+      品级: "精良",
+      效果: "手下干活效率增加，所在建筑产出增加"
+    }, {
+      name: "血涌",
+      品级: "精良",
+      效果: "受伤后血液流速加快，短时间内力量和反应速度提升"
+    }, {
+      name: "稳手",
+      品级: "精良",
+      效果: "在极端压力下（战场、高空、剧烈颠簸），手部动作依然稳定，不颤抖、不偏移"
+    }, {
+      name: "瘴气免疫",
+      品级: "精良",
+      效果: "对腐尸鬼、迷雾沼泽等来源的低级瘴气与病菌具有天然抗性，不易感染"
+    }, {
+      name: "攀岩者",
+      品级: "精良",
+      效果: "双手与双脚的抓握力远超常人，可攀爬近乎垂直的岩壁与粗糙墙面"
+    }, {
+      name: "只要活着",
+      品级: "唯一",
+      效果: "被动生效，只要生命尚未终结，持有者的存在本身即为向命运投下的一枚微小砝码；基于求生意志，略微修正一切行为的成功判定概率"
+    }, {
+      name: "噬魂",
+      品级: "唯一",
+      效果: "可在战斗中不断吞噬生命恢复自身状态且增加攻击力，其间大幅增加获取到的经验值，战斗结束后增加的攻击力失效"
+    }, {
+      name: "不死鸟",
+      品级: "唯一",
+      效果: "遭受致命一击时锁血1滴，并传送到薪火附近；冷却一个潮汐周期（7天）一次，触发后陷入极度虚弱3日（六维-70%）"
+    }, {
+      name: "告死",
+      品级: "唯一",
+      效果: "当你作出的选项或所在的场地必死时，看到未来的走向，必死之局可更改"
+    }, {
+      name: "圣光祭司",
+      品级: "唯一",
+      效果: "可基于自身和从属赐福，赐福消化精神力，赐福效果视赐福者与被赐福者阶位而定"
+    }, {
+      name: "深渊回声",
+      品级: "唯一",
+      效果: "在濒死或极度精神压力下，可被动获得一段来自深渊的模糊呓语片段，包含某种力量或知识"
+    }, {
+      name: "神弃者",
+      品级: "唯一",
+      效果: "神圣类技能对持有者效果大幅衰减；同时持有者免疫大部分基于信仰或神圣的负面判定"
+    }, {
+      name: "共厄",
+      品级: "唯一",
+      效果: "持有者受到的任何负面效果都会等量施加到发起者身上"
+    }, {
+      name: "因果倒置",
+      品级: "唯一",
+      效果: "每月一次，可将一次即将发生在自己身上的「不利结果」，转移给一个与自己有「因果关联」的对象"
+    }, {
+      name: "天眼",
+      品级: "唯一",
+      效果: "集中精神力注视某物或某人时，可短暂看穿其表面的伪装或掩饰，洞悉其真实的意图或本质"
+    }, {
+      name: "隐者",
+      品级: "唯一",
+      效果: "迷雾对持有者的敌意大幅降低，普通迷雾生物在非激怒状态下会更倾向于忽略持有者"
     } ];
     const 过往池 = [ {
       name: "荒野拾荒者",
@@ -128,20 +284,48 @@ var __webpack_modules__ = {
         const candidates = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
         const selectedTalent = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
         const selectedBg = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+        const isCustomBg = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+        const customBg = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
+        const customDir = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
         const error = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
         const submitting = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
         function 抽天赋() {
           candidates.value = _.shuffle(_data__WEBPACK_IMPORTED_MODULE_1__["天赋池"]).slice(0, 5);
           selectedTalent.value = null;
         }
-        const canSubmit = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => !!name.value.trim() && !!selectedTalent.value && !!selectedBg.value && !submitting.value);
+        function selectBg(b) {
+          selectedBg.value = b;
+          isCustomBg.value = false;
+        }
+        function selectCustomBg() {
+          selectedBg.value = null;
+          isCustomBg.value = true;
+        }
+        const canSubmit = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => !!name.value.trim() && !!selectedTalent.value && (!!selectedBg.value || isCustomBg.value && !!customBg.value.trim()) && !submitting.value);
+        function 过往信息() {
+          if (isCustomBg.value) {
+            const 描述 = customBg.value.trim();
+            const 方向 = customDir.value.trim() || "由过往自行决定";
+            return {
+              name: 描述,
+              描述,
+              权能方向: 方向
+            };
+          }
+          const bg = selectedBg.value;
+          return {
+            name: bg.name,
+            描述: bg.描述,
+            权能方向: bg.权能方向
+          };
+        }
         async function submit() {
           if (!canSubmit.value) return;
           submitting.value = true;
           error.value = "";
           try {
             const talent = selectedTalent.value;
-            const bg = selectedBg.value;
+            const bg = 过往信息();
             const n = name.value.trim();
             const message_id = getCurrentMessageId();
             const mvu = Mvu.getMvuData({
@@ -180,10 +364,16 @@ var __webpack_modules__ = {
           candidates,
           selectedTalent,
           selectedBg,
+          isCustomBg,
+          customBg,
+          customDir,
           error,
           submitting,
           抽天赋,
+          selectBg,
+          selectCustomBg,
           canSubmit,
+          过往信息,
           submit,
           get 过往池() {
             return _data__WEBPACK_IMPORTED_MODULE_1__["过往池"];
@@ -250,18 +440,22 @@ var __webpack_modules__ = {
     const _hoisted_16 = {
       class: "bg-dir"
     };
-    const _hoisted_17 = [ "disabled" ];
-    const _hoisted_18 = {
+    const _hoisted_17 = {
+      key: 0,
+      class: "custom-bg"
+    };
+    const _hoisted_18 = [ "disabled" ];
+    const _hoisted_19 = {
       key: 0,
       class: "error"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
-      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ _cache[5] || (_cache[5] = (0, 
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ _cache[8] || (_cache[8] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "title"
-      }, "迷雾的馈赠", -1)), _cache[6] || (_cache[6] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      }, "迷雾的馈赠", -1)), _cache[9] || (_cache[9] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "subtitle"
-      }, "踏入迷雾之前，先决定你是谁", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [ _cache[1] || (_cache[1] = (0, 
+      }, "踏入迷雾之前，先决定你是谁", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [ _cache[3] || (_cache[3] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "label"
       }, "姓名", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -270,7 +464,7 @@ var __webpack_modules__ = {
         placeholder: "你的名字（西式音译，2-4 字）",
         maxlength: "8"
       }, null, 512), [ [ vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.name ] ]) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_3, [ _cache[3] || (_cache[3] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_3, [ _cache[5] || (_cache[5] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "label"
       }, "天赋 · 降临自带", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -278,7 +472,7 @@ var __webpack_modules__ = {
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "draw-btn",
         onClick: $setup.抽天赋
-      }, "抽取天赋"), _cache[2] || (_cache[2] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, "抽取天赋"), _cache[4] || (_cache[4] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "hint"
       }, "每次抽五选一，可无限重抽", -1)) ]), $setup.candidates.length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [ ((0, 
@@ -288,7 +482,7 @@ var __webpack_modules__ = {
         key: t.name,
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "talent-card", {
           selected: $setup.selectedTalent?.name === t.name,
-          rare: t.品级 === "稀有",
+          elite: t.品级 === "精良",
           unique: t.品级 === "唯一"
         } ]),
         onClick: $event => $setup.selectedTalent = t
@@ -297,7 +491,7 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(t.品级), 1) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(t.效果), 1) ], 10, _hoisted_5))), 128)) ])) : ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, "点击「抽取天赋」开始")) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_11, [ _cache[4] || (_cache[4] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_11, [ _cache[7] || (_cache[7] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "label"
       }, "过往 · 决定三阶权能方向", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [ ((0, 
@@ -306,19 +500,41 @@ var __webpack_modules__ = {
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: b.name,
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "bg-card", {
-          selected: $setup.selectedBg?.name === b.name
+          selected: $setup.selectedBg?.name === b.name && !$setup.isCustomBg
         } ]),
-        onClick: $event => $setup.selectedBg = b
+        onClick: $event => $setup.selectBg(b)
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.描述), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, "权能方向：" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.权能方向), 1) ], 10, _hoisted_13))), 128)) ]) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.权能方向), 1) ], 10, _hoisted_13))), 128)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "bg-card", {
+          selected: $setup.isCustomBg
+        } ]),
+        onClick: $setup.selectCustomBg
+      }, [ ..._cache[6] || (_cache[6] = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: "bg-name"
+      }, "自由输入", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: "bg-desc"
+      }, "自行决定你的来历与权能方向", -1) ]) ], 2) ]), $setup.isCustomBg ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = $event => $setup.customBg = $event),
+        class: "custom-input",
+        rows: "3",
+        placeholder: "写下你的过往（来历、经历、擅长之事）…"
+      }, null, 512), [ [ vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.customBg ] ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = $event => $setup.customDir = $event),
+        class: "custom-input",
+        placeholder: "权能方向（可选，如：火焰与净化）"
+      }, null, 512), [ [ vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.customDir ] ]) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "submit-btn",
         disabled: !$setup.canSubmit,
         onClick: $setup.submit
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.submitting ? "正在进入迷雾…" : "进入迷雾"), 9, _hoisted_17), $setup.error ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, (0, 
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.submitting ? "正在进入迷雾…" : "进入迷雾"), 9, _hoisted_18), $setup.error ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.error), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
     }
   },
@@ -478,7 +694,7 @@ let __webpack_exports__ = {};
 })();</script><style>/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-15.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/造人界面/App.vue?vue&type=style&index=0&id=4fb97bed&lang=scss&scoped=true ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.creation-card[data-v-4fb97bed]{width:100%;max-width:720px;margin:0 auto;padding:16px;background-color:var(--c-surface);border:1px solid var(--c-border);box-shadow:0 2px 10px rgba(0,0,0,0.5);color:var(--c-ash);font-size:13px;line-height:1.4;display:flex;flex-direction:column;gap:16px}.title[data-v-4fb97bed]{color:var(--c-ember);font-size:18px;font-weight:bold;text-align:center}.subtitle[data-v-4fb97bed]{color:var(--c-muted);text-align:center;font-size:12px;margin-top:-10px}.section[data-v-4fb97bed]{display:flex;flex-direction:column;gap:8px}.label[data-v-4fb97bed]{color:var(--c-ember);font-size:13px;font-weight:bold}.name-input[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);color:var(--c-ash);padding:8px 10px;border-radius:2px;font-family:inherit;font-size:13px}.name-input[data-v-4fb97bed]:focus{outline:none;border-color:var(--c-ember)}.draw-row[data-v-4fb97bed]{display:flex;align-items:center;gap:10px}.draw-btn[data-v-4fb97bed]{background:var(--c-surface-2);color:var(--c-ember);border:1px solid var(--c-ember);padding:6px 14px;border-radius:2px;cursor:pointer;font-family:inherit}.draw-btn[data-v-4fb97bed]:hover{background:rgba(224,138,60,0.12)}.hint[data-v-4fb97bed]{color:var(--c-muted);font-size:11px}.placeholder[data-v-4fb97bed]{color:var(--c-muted);font-size:12px;padding:12px;border:1px dashed var(--c-border);text-align:center}.talent-grid[data-v-4fb97bed]{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}.talent-card[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px;padding:8px;cursor:pointer}.talent-card[data-v-4fb97bed]:hover{border-color:var(--c-ember)}.talent-card.selected[data-v-4fb97bed]{border-color:var(--c-ember);background:rgba(224,138,60,0.1)}.talent-card.rare .talent-grade[data-v-4fb97bed]{color:var(--c-rare)}.talent-card.unique .talent-grade[data-v-4fb97bed]{color:var(--c-unique)}.talent-head[data-v-4fb97bed]{display:flex;justify-content:space-between;align-items:center}.talent-name[data-v-4fb97bed]{color:var(--c-ash);font-weight:bold}.talent-grade[data-v-4fb97bed]{color:var(--c-muted);font-size:10px}.talent-desc[data-v-4fb97bed]{color:var(--c-muted);font-size:11px;margin-top:4px}.bg-grid[data-v-4fb97bed]{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}.bg-card[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px;padding:8px;cursor:pointer}.bg-card[data-v-4fb97bed]:hover{border-color:var(--c-ember)}.bg-card.selected[data-v-4fb97bed]{border-color:var(--c-ember);background:rgba(224,138,60,0.1)}.bg-name[data-v-4fb97bed]{color:var(--c-ash);font-weight:bold}.bg-desc[data-v-4fb97bed]{color:var(--c-muted);font-size:11px;margin-top:4px}.bg-dir[data-v-4fb97bed]{color:var(--c-ember);font-size:11px;margin-top:4px}.submit-btn[data-v-4fb97bed]{background:var(--c-ember);color:#1a1d20;border:none;padding:10px;border-radius:2px;font-size:15px;font-weight:bold;cursor:pointer;font-family:inherit}.submit-btn[data-v-4fb97bed]:disabled{opacity:0.4;cursor:not-allowed}.error[data-v-4fb97bed]{color:var(--c-danger);font-size:12px;text-align:center}
+.creation-card[data-v-4fb97bed]{width:100%;max-width:720px;margin:0 auto;padding:16px;background-color:var(--c-surface);border:1px solid var(--c-border);box-shadow:0 2px 10px rgba(0,0,0,0.5);color:var(--c-ash);font-size:13px;line-height:1.4;display:flex;flex-direction:column;gap:16px}.title[data-v-4fb97bed]{color:var(--c-ember);font-size:18px;font-weight:bold;text-align:center}.subtitle[data-v-4fb97bed]{color:var(--c-muted);text-align:center;font-size:12px;margin-top:-10px}.section[data-v-4fb97bed]{display:flex;flex-direction:column;gap:8px}.label[data-v-4fb97bed]{color:var(--c-ember);font-size:13px;font-weight:bold}.name-input[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);color:var(--c-ash);padding:8px 10px;border-radius:2px;font-family:inherit;font-size:13px}.name-input[data-v-4fb97bed]:focus{outline:none;border-color:var(--c-ember)}.draw-row[data-v-4fb97bed]{display:flex;align-items:center;gap:10px}.draw-btn[data-v-4fb97bed]{background:var(--c-surface-2);color:var(--c-ember);border:1px solid var(--c-ember);padding:6px 14px;border-radius:2px;cursor:pointer;font-family:inherit}.draw-btn[data-v-4fb97bed]:hover{background:rgba(224,138,60,0.12)}.hint[data-v-4fb97bed]{color:var(--c-muted);font-size:11px}.placeholder[data-v-4fb97bed]{color:var(--c-muted);font-size:12px;padding:12px;border:1px dashed var(--c-border);text-align:center}.talent-grid[data-v-4fb97bed]{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px}.talent-card[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px;padding:8px;cursor:pointer}.talent-card[data-v-4fb97bed]:hover{border-color:var(--c-ember)}.talent-card.selected[data-v-4fb97bed]{border-color:var(--c-ember);background:rgba(224,138,60,0.1)}.talent-card.elite .talent-grade[data-v-4fb97bed]{color:var(--c-rare)}.talent-card.unique .talent-grade[data-v-4fb97bed]{color:var(--c-unique)}.talent-head[data-v-4fb97bed]{display:flex;justify-content:space-between;align-items:center}.talent-name[data-v-4fb97bed]{color:var(--c-ash);font-weight:bold}.talent-grade[data-v-4fb97bed]{color:var(--c-muted);font-size:10px}.talent-desc[data-v-4fb97bed]{color:var(--c-muted);font-size:11px;margin-top:4px}.bg-grid[data-v-4fb97bed]{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}.bg-card[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px;padding:8px;cursor:pointer}.bg-card[data-v-4fb97bed]:hover{border-color:var(--c-ember)}.bg-card.selected[data-v-4fb97bed]{border-color:var(--c-ember);background:rgba(224,138,60,0.1)}.bg-name[data-v-4fb97bed]{color:var(--c-ash);font-weight:bold}.bg-desc[data-v-4fb97bed]{color:var(--c-muted);font-size:11px;margin-top:4px}.bg-dir[data-v-4fb97bed]{color:var(--c-ember);font-size:11px;margin-top:4px}.custom-bg[data-v-4fb97bed]{display:flex;flex-direction:column;gap:6px}.custom-input[data-v-4fb97bed]{background:var(--c-surface-2);border:1px solid var(--c-border);color:var(--c-ash);padding:8px 10px;border-radius:2px;font-family:inherit;font-size:12px;resize:vertical}.custom-input[data-v-4fb97bed]:focus{outline:none;border-color:var(--c-ember)}.submit-btn[data-v-4fb97bed]{background:var(--c-ember);color:#1a1d20;border:none;padding:10px;border-radius:2px;font-size:15px;font-weight:bold;cursor:pointer;font-family:inherit}.submit-btn[data-v-4fb97bed]:disabled{opacity:0.4;cursor:not-allowed}.error[data-v-4fb97bed]{color:var(--c-danger);font-size:12px;text-align:center}
 /*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-16.use[1]!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./src/迷雾薪火/界面/造人界面/global.css ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************/
