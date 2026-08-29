@@ -596,8 +596,22 @@ var __webpack_modules__ = {
       setup(__props, {expose: __expose}) {
         __expose();
         const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
+        const 系数 = {
+          一阶见习: 50,
+          二阶精英: 100,
+          三阶王者: 200,
+          四阶史诗: 400,
+          五阶传奇: 800
+        };
+        const 等级 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => parseInt((store.data.人物面板.等级 || "LV.1").replace(/\D/g, ""), 10) || 1);
+        const 经验需求 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 等级.value * (系数[store.data.人物面板.阶位] || 1600));
+        const 经验百分比 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.min(100, Math.round(store.data.人物面板.经验值 / Math.max(1, 经验需求.value) * 100)));
         const __returned__ = {
-          store
+          store,
+          系数,
+          等级,
+          经验需求,
+          经验百分比
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -1656,15 +1670,21 @@ var __webpack_modules__ = {
       class: "exp"
     };
     const _hoisted_11 = {
-      class: "bottom-row"
+      class: "exp-track"
     };
     const _hoisted_12 = {
-      class: "fire"
+      class: "exp-tip"
     };
     const _hoisted_13 = {
-      class: "realm"
+      class: "bottom-row"
     };
     const _hoisted_14 = {
+      class: "fire"
+    };
+    const _hoisted_15 = {
+      class: "realm"
+    };
+    const _hoisted_16 = {
       key: 0,
       class: "break"
     };
@@ -1682,18 +1702,24 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.阶位), 1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.等级), 1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, "经验 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.经验值) + " / 池 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.经验池), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.经验值) + " / " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.经验需求), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "pollution", {
           danger: $setup.store.data.人物面板.污染指数 >= 60
         } ])
       }, " 污染 " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.污染指数), 3) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, "薪火 · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: "exp-fill",
+        style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+          width: $setup.经验百分比 + "%"
+        })
+      }, null, 4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.等级) + " → " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.等级 + 1), 1) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, "薪火 · " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.薪火等级) + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.薪火特殊名 ? `「${$setup.store.data.领地.薪火特殊名}」` : ""), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.评级链), 1), $setup.store.data.人物面板.破限状态 !== "无" ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.领地.评级链), 1), $setup.store.data.人物面板.破限状态 !== "无" ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.破限状态), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ]);
     }
@@ -5153,7 +5179,7 @@ let __webpack_exports__ = {};
 })();</script><style>/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/HeaderBar.vue?vue&type=style&index=0&id=dd7553fa&lang=scss&scoped=true ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.header-bar[data-v-dd7553fa]{padding:10px;border-bottom:1px solid var(--c-border);background:linear-gradient(180deg,rgba(224,138,60,0.06),transparent)}.top-row[data-v-dd7553fa],.mid-row[data-v-dd7553fa],.bottom-row[data-v-dd7553fa]{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.top-row[data-v-dd7553fa]{font-size:12px}.top-row .location[data-v-dd7553fa]{color:var(--c-ember);font-weight:bold}.top-row .date[data-v-dd7553fa],.top-row .time[data-v-dd7553fa]{color:var(--c-muted)}.mid-row[data-v-dd7553fa]{margin-top:6px;font-size:13px}.mid-row .tier[data-v-dd7553fa]{color:var(--c-ember)}.mid-row .name[data-v-dd7553fa]{color:var(--c-ash);font-weight:bold}.mid-row .exp[data-v-dd7553fa]{color:var(--c-muted);font-size:12px}.mid-row .pollution[data-v-dd7553fa]{margin-left:auto;color:var(--c-muted)}.mid-row .pollution.danger[data-v-dd7553fa]{color:var(--c-danger);animation:pulse-dd7553fa 1.2s infinite}.bottom-row[data-v-dd7553fa]{margin-top:6px;font-size:12px;color:var(--c-muted)}.bottom-row .fire[data-v-dd7553fa]{color:var(--c-ember)}.bottom-row .break[data-v-dd7553fa]{color:var(--c-ember);border:1px solid var(--c-ember);padding:0 4px;border-radius:2px}@keyframes pulse-dd7553fa{0%,100%{opacity:1}50%{opacity:0.4}}
+.header-bar[data-v-dd7553fa]{padding:10px;border-bottom:1px solid var(--c-border);background:linear-gradient(180deg,rgba(224,138,60,0.06),transparent)}.top-row[data-v-dd7553fa],.mid-row[data-v-dd7553fa],.bottom-row[data-v-dd7553fa]{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.top-row[data-v-dd7553fa]{font-size:12px}.top-row .location[data-v-dd7553fa]{color:var(--c-ember);font-weight:bold}.top-row .date[data-v-dd7553fa],.top-row .time[data-v-dd7553fa]{color:var(--c-muted)}.mid-row[data-v-dd7553fa]{margin-top:6px;font-size:13px}.mid-row .tier[data-v-dd7553fa]{color:var(--c-ember)}.mid-row .name[data-v-dd7553fa]{color:var(--c-ash);font-weight:bold}.mid-row .exp[data-v-dd7553fa]{color:var(--c-muted);font-size:12px}.mid-row .pollution[data-v-dd7553fa]{margin-left:auto;color:var(--c-muted)}.mid-row .pollution.danger[data-v-dd7553fa]{color:var(--c-danger);animation:pulse-dd7553fa 1.2s infinite}.exp-track[data-v-dd7553fa]{position:relative;height:10px;margin-top:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:5px;overflow:hidden}.exp-fill[data-v-dd7553fa]{height:100%;background:linear-gradient(90deg,#b06b2a,var(--c-ember));transition:width 0.3s ease}.exp-tip[data-v-dd7553fa]{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#1a1d20;font-weight:bold}.bottom-row[data-v-dd7553fa]{margin-top:6px;font-size:12px;color:var(--c-muted)}.bottom-row .fire[data-v-dd7553fa]{color:var(--c-ember)}.bottom-row .break[data-v-dd7553fa]{color:var(--c-ember);border:1px solid var(--c-ember);padding:0 4px;border-radius:2px}@keyframes pulse-dd7553fa{0%,100%{opacity:1}50%{opacity:0.4}}
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/HexagonStats.vue?vue&type=style&index=0&id=5ab1f332&lang=scss&scoped=true ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
