@@ -581,10 +581,7 @@ var __webpack_modules__ = {
         function xy(i, r) {
           return [ CX + r * Math.cos(ang(i)), CY + r * Math.sin(ang(i)) ];
         }
-        const maxScale = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-          const vals = attrs.map(a => store.data.人物面板.六维[a]?.数值 ?? 0);
-          return Math.max(10, Math.ceil(Math.max(...vals) / 10) * 10);
-        });
+        const maxScale = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 30);
         const gridHexagons = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => [ .25, .5, .75, 1 ].map(lv => attrs.map((_, i) => xy(i, R * lv).join(",")).join(" ")));
         const axes = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => attrs.map((_, i) => xy(i, R)));
         const dataPolygon = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => attrs.map((a, i) => {

@@ -391,8 +391,12 @@ var __webpack_modules__ = {
             if (b && !isCustomBg.value) {
               if (b.职业) {
                 _.set(mvu, "stat_data.人物面板.职业", b.职业);
-                _.set(mvu, "stat_data.任务栏.突破任务.状态", "已完成");
-                _.set(mvu, "stat_data.任务栏.突破任务.进度", "3/3");
+                _.set(mvu, "stat_data.任务栏.突破任务.名称", "固基");
+                _.set(mvu, "stat_data.任务栏.突破任务.类型", "突破任务");
+                _.set(mvu, "stat_data.任务栏.突破任务.目标", `稳固「${b.职业}」根基：主职业满级（LV.5）后完成转职，晋升二阶精英`);
+                _.set(mvu, "stat_data.任务栏.突破任务.进度", "0/5");
+                _.set(mvu, "stat_data.任务栏.突破任务.状态", "进行中");
+                _.set(mvu, "stat_data.任务栏.突破任务.奖励", "晋升二阶精英");
                 _.set(mvu, "stat_data.任务栏.已完成计数", 1);
               }
               if (b.技能) {
@@ -445,7 +449,7 @@ var __webpack_modules__ = {
               refresh: "affected"
             });
             await generate({
-              user_input: `（系统）角色已创建：姓名「${n}」，天赋「${talent.name}」（${talent.品级}·${talent.效果}），过往「${bg.name}」（${bg.描述}）。开局加成：${bg.开局}。` + `请以第三人称、暗黑生存领主文风展开第一幕：${n}在黑泥沼的薪火旁醒来，薪火将熄，雾中有腐尸鬼的啃咬声，火堆旁围着五名流民。用网文开头的吸引力与互动小说的可回应性来写，结尾原样输出 <StatusPlaceHolderImpl/>。`,
+              user_input: `（系统）角色已创建：姓名「${n}」，天赋「${talent.name}」（${talent.品级}·${talent.效果}），过往「${bg.name}」（${bg.描述}）。开局加成：${bg.开局}。` + `若过往中自带职业（开局就职），突破任务应为「固基」（稳固职业、升入二阶），不要是集思成职；若未就职则保持集思成职（集齐3片职业信息碎片）。` + `请以第三人称、暗黑生存领主文风展开第一幕：${n}在黑泥沼的薪火旁醒来，薪火将熄，雾中有腐尸鬼的啃咬声，火堆旁围着五名流民。用网文开头的吸引力与互动小说的可回应性来写，结尾原样输出 <StatusPlaceHolderImpl/>。`,
               should_stream: true
             });
           } catch (e) {
