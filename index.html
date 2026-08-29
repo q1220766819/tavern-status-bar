@@ -84,12 +84,17 @@ var __webpack_modules__ = {
       if (s.includes("白") || s.includes("普通")) return "白";
       return "灰";
     }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "灰", "白", "绿", "蓝", "黑紫" ])).prefault("灰");
-    const 资源详情 = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
+    const 资源详情 = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(n => ({
+      存量: n,
+      收支: 0,
+      趋势: "—",
+      收支明细: ""
+    })), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       存量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
       收支: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
       趋势: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("—"),
       收支明细: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-    });
+    }) ]);
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -99,7 +104,7 @@ var __webpack_modules__ = {
         六维: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "力量", "体质", "敏捷", "感知", "精神", "魅力" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           数值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.boolean().prefault(false)
-        })),
+        }).prefault({})).prefault({}),
         未分配属性点: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         阶位: 阶位Schema,
         职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -107,14 +112,14 @@ var __webpack_modules__ = {
         等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("LV.1"),
         经验值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         经验池: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-        天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
-        技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
+        技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         破限状态,
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-        状态效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        状态效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         权能: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         仪典: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         伟业传唱度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
@@ -125,7 +130,7 @@ var __webpack_modules__ = {
           脚部: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           右手: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           颈部: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-        })
+        }).prefault({})
       }).prefault({}),
       时间: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -148,11 +153,11 @@ var __webpack_modules__ = {
           职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           博弈阶段
-        }),
-        势力关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
-        外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({})
-      }),
-      地图: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        }).prefault({}),
+        势力关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
+        外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({})
+      }).prefault({}),
+      地图: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
       领地: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         薪火等级,
         薪火特殊名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -164,7 +169,7 @@ var __webpack_modules__ = {
           晶币: 资源详情,
           金币: 资源详情,
           粮食: 资源详情
-        }),
+        }).prefault({}),
         人口: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           现有人数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           庇护上限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
@@ -172,28 +177,28 @@ var __webpack_modules__ = {
           后勤人员: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           老幼妇孺: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           状况说明: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-        }),
-        建筑列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        }).prefault({}),
+        建筑列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         防御值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         忠诚度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         恐慌度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         防御成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         忠诚成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         恐慌成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         入侵预警: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           倒计时: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           时间单位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("小时"),
           强度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           波数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           魔物概况: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-        })
+        }).prefault({})
       }).prefault({}),
-      背包: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+      背包: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
       知识: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        职业碎片进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        职业碎片进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         古代文字破译度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-        魔物图鉴: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({})
+        魔物图鉴: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({})
       }).prefault({}),
       任务栏: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         突破任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -205,13 +210,13 @@ var __webpack_modules__ = {
           失败惩罚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           发布者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           状态: 任务状态
-        }),
-        活跃任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
-        附近动向: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        }).prefault({}),
+        活跃任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
+        附近动向: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         已完成计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
       }).prefault({}),
       世界状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        高庭声望: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        高庭声望: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         伪超凡注意度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         外神注视度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         薪火注视度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0)
@@ -220,9 +225,9 @@ var __webpack_modules__ = {
         神火纯度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         信仰基数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         神国完整度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-        权柄列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}),
+        权柄列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         神考进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        路线值: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "战争", "毁灭", "创造" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0))
+        路线值: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "战争", "毁灭", "创造" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0)).prefault({})
       }).prefault({})
     });
   },
@@ -683,43 +688,57 @@ var __webpack_modules__ = {
         const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
         const selectedItem = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
         const slotModal = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+        const bookModal = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
         const itemNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.背包 ?? {}).filter(k => k !== "$meta"));
-        const 背包 = k => store.data.背包?.[k] ?? {};
+        const 背包 = k => {
+          const v = store.data.背包?.[k];
+          return v && typeof v === "object" ? v : {};
+        };
         const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
         const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.装备栏 ?? {});
-        const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.value.map(s => 装备栏.value[s]).filter(Boolean));
+        const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
+          try {
+            return 槽位.value.map(s => 装备栏.value[s]).filter(Boolean);
+          } catch {
+            return [];
+          }
+        });
         const 属性项 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-          const 六 = store.data.人物面板.六维 ?? {};
-          const g = k => 六[k]?.数值 ?? 0;
-          const sum = f => 装备中物品.value.reduce((a, n) => a + (背包(n)[f] || 0), 0);
-          const items = [ {
-            name: "攻击力",
-            base: g("力量") * 2 + g("敏捷") * .5,
-            equip: sum("攻击"),
-            total: 0
-          }, {
-            name: "防御力",
-            base: g("体质") * 2 + g("力量") * .5,
-            equip: sum("防御"),
-            total: 0
-          }, {
-            name: "血量",
-            base: g("体质") * 100 + g("力量") * 80 + 120,
-            equip: sum("血量"),
-            total: 0
-          }, {
-            name: "体力",
-            base: g("体质") * 80 + g("敏捷") * 70 + 100,
-            equip: sum("体力"),
-            total: 0
-          }, {
-            name: "精神力",
-            base: g("精神") * 80 + g("感知") * 70 + 100,
-            equip: sum("精神力"),
-            total: 0
-          } ];
-          items.forEach(i => i.total = i.base + i.equip);
-          return items;
+          try {
+            const 六 = store.data.人物面板.六维 ?? {};
+            const g = k => 六[k]?.数值 ?? 0;
+            const sum = f => 装备中物品.value.reduce((a, n) => a + (背包(n)[f] || 0), 0);
+            const items = [ {
+              name: "攻击力",
+              base: g("力量") * 2 + g("敏捷") * .5,
+              equip: sum("攻击"),
+              total: 0
+            }, {
+              name: "防御力",
+              base: g("体质") * 2 + g("力量") * .5,
+              equip: sum("防御"),
+              total: 0
+            }, {
+              name: "血量",
+              base: g("体质") * 100 + g("力量") * 80 + 120,
+              equip: sum("血量"),
+              total: 0
+            }, {
+              name: "体力",
+              base: g("体质") * 80 + g("敏捷") * 70 + 100,
+              equip: sum("体力"),
+              total: 0
+            }, {
+              name: "精神力",
+              base: g("精神") * 80 + g("感知") * 70 + 100,
+              equip: sum("精神力"),
+              total: 0
+            } ];
+            items.forEach(i => i.total = i.base + i.equip);
+            return items;
+          } catch {
+            return [];
+          }
         });
         const 品质类 = q => {
           if (q === "黑紫") return "q-black";
@@ -781,7 +800,7 @@ var __webpack_modules__ = {
           } else if (cat === "书籍") {
             acts.push({
               label: "阅读",
-              run: () => alert(item.词条 || "空白的书")
+              run: () => bookModal.value = item.词条 || "空白的书"
             });
           } else if (cat === "消耗品") {
             acts.push({
@@ -808,6 +827,7 @@ var __webpack_modules__ = {
           store,
           selectedItem,
           slotModal,
+          bookModal,
           itemNames,
           背包,
           槽位,
@@ -985,14 +1005,25 @@ var __webpack_modules__ = {
       setup(__props, {expose: __expose}) {
         __expose();
         const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
+        const modal = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+        const open = (kind, name) => modal.value = {
+          kind,
+          name
+        };
+        const closeModal = () => modal.value = null;
         const activeNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.任务栏.活跃任务 ?? {}).filter(k => k !== "$meta"));
         const 动向Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.任务栏.附近动向 ?? {}).filter(k => k !== "$meta"));
         const 动向 = k => store.data.任务栏.附近动向?.[k] ?? {};
+        const 活跃任务 = k => store.data.任务栏.活跃任务?.[k] ?? {};
         const __returned__ = {
           store,
+          modal,
+          open,
+          closeModal,
           activeNames,
           动向Keys,
-          动向
+          动向,
+          活跃任务
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -1075,7 +1106,19 @@ var __webpack_modules__ = {
         const flowText = v => v == null ? "—" : v > 0 ? "+" + v : String(v);
         const flowClass = v => v != null && v > 0 ? "pos" : v != null && v < 0 ? "neg" : "";
         const 人口 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.领地.人口 ?? {});
-        const 人口百分比 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.min(100, Math.round((人口.value.现有人数 ?? 0) / Math.max(1, 人口.value.庇护上限 ?? 1) * 100)));
+        const 薪火人口上限 = {
+          微弱: 5,
+          初燃: 10,
+          炽烈: 40,
+          彻夜: 100,
+          永燃: 250,
+          蜕凡圣火: 1e3,
+          神国薪庭: 1e4,
+          至高王焰: 5e4,
+          唯一界火: 2e5
+        };
+        const 庇护上限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 薪火人口上限[store.data.领地.薪火等级] ?? 人口.value.庇护上限 ?? 0);
+        const 人口百分比 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.min(100, Math.round((人口.value.现有人数 ?? 0) / Math.max(1, 庇护上限.value) * 100)));
         const 人口色 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 人口百分比.value >= 100 ? "var(--c-danger)" : 人口百分比.value > 85 ? "#e0a83c" : "var(--c-ember)");
         const 状态名 = {
           防御值: "防御",
@@ -1132,6 +1175,8 @@ var __webpack_modules__ = {
           flowText,
           flowClass,
           人口,
+          薪火人口上限,
+          庇护上限,
           人口百分比,
           人口色,
           状态名,
@@ -1771,9 +1816,18 @@ var __webpack_modules__ = {
       key: 1,
       class: "muted"
     };
+    const _hoisted_30 = {
+      class: "modal-card"
+    };
+    const _hoisted_31 = {
+      class: "modal-head"
+    };
+    const _hoisted_32 = {
+      class: "detail"
+    };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [ _cache[8] || (_cache[8] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [ _cache[10] || (_cache[10] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "战斗属性（基础 + 装备 = 总额）", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
@@ -1784,15 +1838,15 @@ var __webpack_modules__ = {
         class: "attr-line"
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(a.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.base)) + " ", 1), _cache[5] || (_cache[5] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.base)) + " ", 1), _cache[7] || (_cache[7] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "op"
-      }, "+", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.equip)) + " ", 1), _cache[6] || (_cache[6] = (0, 
+      }, "+", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.equip)) + " ", 1), _cache[8] || (_cache[8] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "op"
-      }, "=", -1)), _cache[7] || (_cache[7] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()), (0, 
+      }, "=", -1)), _cache[9] || (_cache[9] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.total)), 1) ]) ]))), 128)) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ _cache[9] || (_cache[9] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ _cache[11] || (_cache[11] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "装备栏", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [ ((0, 
@@ -1816,7 +1870,7 @@ var __webpack_modules__ = {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "cell", $setup.品质类($setup.背包(n).品质) ]),
         title: $setup.背包(n).词条 || "",
         onClick: $event => $setup.selectedItem = n
-      }, [ _cache[10] || (_cache[10] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      }, [ _cache[12] || (_cache[12] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "cell-icon"
       }, "◆", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [ (0, 
@@ -1871,6 +1925,20 @@ var __webpack_modules__ = {
         class: "action",
         onClick: _cache[3] || (_cache[3] = $event => $setup.卸下($setup.slotModal))
       }, "卸下") ], 64)) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, "空位")) ]) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.bookModal ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        key: 2,
+        class: "modal-backdrop",
+        onClick: _cache[6] || (_cache[6] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => $setup.bookModal = null, [ "self" ]))
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [ _cache[13] || (_cache[13] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "modal-title"
+      }, "阅读", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        class: "modal-close",
+        onClick: _cache[5] || (_cache[5] = $event => $setup.bookModal = null)
+      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.bookModal), 1) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
     }
   },
@@ -2316,36 +2384,91 @@ var __webpack_modules__ = {
       key: 0,
       class: "line muted"
     };
-    const _hoisted_11 = {
+    const _hoisted_11 = [ "onClick" ];
+    const _hoisted_12 = {
       class: "t-name"
     };
-    const _hoisted_12 = {
+    const _hoisted_13 = {
       class: "line"
     };
-    const _hoisted_13 = {
+    const _hoisted_14 = {
       class: "t-progress"
     };
-    const _hoisted_14 = {
+    const _hoisted_15 = {
       class: "block"
     };
-    const _hoisted_15 = {
+    const _hoisted_16 = {
       class: "block-title"
     };
-    const _hoisted_16 = {
+    const _hoisted_17 = {
       key: 0,
       class: "line muted"
     };
-    const _hoisted_17 = {
+    const _hoisted_18 = [ "onClick" ];
+    const _hoisted_19 = {
       class: "t-name"
     };
-    const _hoisted_18 = {
+    const _hoisted_20 = {
       class: "line"
     };
-    const _hoisted_19 = {
+    const _hoisted_21 = {
       class: "t-progress"
     };
-    const _hoisted_20 = {
+    const _hoisted_22 = {
       class: "line muted"
+    };
+    const _hoisted_23 = {
+      class: "modal-card"
+    };
+    const _hoisted_24 = {
+      class: "modal-head"
+    };
+    const _hoisted_25 = {
+      class: "modal-title"
+    };
+    const _hoisted_26 = {
+      class: "modal-body"
+    };
+    const _hoisted_27 = {
+      key: 0,
+      class: "detail-block"
+    };
+    const _hoisted_28 = {
+      key: 1,
+      class: "detail-block"
+    };
+    const _hoisted_29 = {
+      key: 2,
+      class: "detail-block"
+    };
+    const _hoisted_30 = {
+      key: 3,
+      class: "detail-block"
+    };
+    const _hoisted_31 = {
+      key: 4,
+      class: "detail-block"
+    };
+    const _hoisted_32 = {
+      key: 5,
+      class: "detail-block"
+    };
+    const _hoisted_33 = {
+      key: 6,
+      class: "detail-block dim"
+    };
+    const _hoisted_34 = {
+      class: "detail-block"
+    };
+    const _hoisted_35 = {
+      class: "detail-block"
+    };
+    const _hoisted_36 = {
+      class: "detail-block"
+    };
+    const _hoisted_37 = {
+      key: 0,
+      class: "detail-block"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
@@ -2367,34 +2490,92 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.activeNames, n => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: n,
-        class: "task"
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0, 
+        class: "task",
+        onClick: $event => $setup.open("active", n)
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.名称 || n), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.目标), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.进度) + " · " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.状态), 1) ]))), 128)) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, "附近动向（" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.目标), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.进度) + " · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.状态), 1) ], 8, _hoisted_11))), 128)) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, "附近动向（" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向Keys.length) + "）", 1), !$setup.动向Keys.length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, "暂无附近动向")) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, "暂无附近动向")) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.动向Keys, k => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: k,
-        class: "task"
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, "【" + (0, 
+        class: "task",
+        onClick: $event => $setup.open("hint", k)
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, "【" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向(k).类型 || "动向") + "】" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(k), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向(k).内容), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(k), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向(k).内容), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 时效：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向(k).时效 || "未知"), 1), $setup.动向(k).关联 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" · 关联：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向(k).关联), 1) ], 64)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ]))), 128)) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, "已完成任务：" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.已完成计数), 1) ]);
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ], 8, _hoisted_18))), 128)) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, "已完成任务：" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.已完成计数), 1), $setup.modal ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        key: 0,
+        class: "modal-backdrop",
+        onClick: (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.closeModal, [ "self" ])
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_25, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.modal.kind === "active" ? $setup.活跃任务($setup.modal.name)?.名称 || $setup.modal.name : $setup.modal.name), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        class: "modal-close",
+        onClick: $setup.closeModal
+      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [ $setup.modal.kind === "active" ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, [ $setup.活跃任务($setup.modal.name)?.目标 ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_27, [ _cache[1] || (_cache[1] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "目标", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务($setup.modal.name)?.目标), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.活跃任务($setup.modal.name)?.进度 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, [ _cache[2] || (_cache[2] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "进度", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务($setup.modal.name)?.进度), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.活跃任务($setup.modal.name)?.状态 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [ _cache[3] || (_cache[3] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "状态", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务($setup.modal.name)?.状态), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.活跃任务($setup.modal.name)?.奖励 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_30, [ _cache[4] || (_cache[4] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "奖励", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务($setup.modal.name)?.奖励), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.活跃任务($setup.modal.name)?.失败惩罚 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_31, [ _cache[5] || (_cache[5] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "失败惩罚", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务($setup.modal.name)?.失败惩罚), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.活跃任务($setup.modal.name)?.发布者 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_32, [ _cache[6] || (_cache[6] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "发布者", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务($setup.modal.name)?.发布者), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$setup.活跃任务($setup.modal.name)?.目标 && !$setup.活跃任务($setup.modal.name)?.奖励 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_33, "（任务详情未填写）")) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ], 64)) : ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [ _cache[7] || (_cache[7] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "类型", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向($setup.modal.name).类型 || "未知"), 1) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [ _cache[8] || (_cache[8] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "内容", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向($setup.modal.name).内容 || "（未填写）"), 1) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [ _cache[9] || (_cache[9] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "时效", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向($setup.modal.name).时效 || "未知"), 1) ]), $setup.动向($setup.modal.name).关联 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_37, [ _cache[10] || (_cache[10] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "关联任务", -1)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向($setup.modal.name).关联), 1) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ], 64)) ]) ]) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=template&id=6289629d&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -2557,85 +2738,81 @@ var __webpack_modules__ = {
       class: "detail-brief"
     };
     const _hoisted_52 = {
-      key: 1,
-      class: "detail-text dim"
-    };
-    const _hoisted_53 = {
       class: "detail-text"
     };
-    const _hoisted_54 = [ "onClick" ];
-    const _hoisted_55 = {
+    const _hoisted_53 = [ "onClick" ];
+    const _hoisted_54 = {
       class: "row-name"
     };
-    const _hoisted_56 = {
+    const _hoisted_55 = {
       class: "row-count"
     };
-    const _hoisted_57 = {
+    const _hoisted_56 = {
       key: 0
     };
-    const _hoisted_58 = [ "onClick" ];
-    const _hoisted_59 = {
+    const _hoisted_57 = [ "onClick" ];
+    const _hoisted_58 = {
       class: "row-name"
     };
-    const _hoisted_60 = {
+    const _hoisted_59 = {
       class: "row-sub"
     };
-    const _hoisted_61 = {
+    const _hoisted_60 = {
       key: 1,
       class: "empty"
     };
-    const _hoisted_62 = {
+    const _hoisted_61 = {
       class: "detail-title"
     };
-    const _hoisted_63 = {
+    const _hoisted_62 = {
       class: "detail-meta"
+    };
+    const _hoisted_63 = {
+      class: "chip"
     };
     const _hoisted_64 = {
       class: "chip"
     };
     const _hoisted_65 = {
+      key: 0,
       class: "chip"
     };
     const _hoisted_66 = {
-      key: 0,
+      key: 1,
       class: "chip"
     };
     const _hoisted_67 = {
-      key: 1,
       class: "chip"
     };
     const _hoisted_68 = {
-      class: "chip"
-    };
-    const _hoisted_69 = {
       key: 0,
       class: "detail-block"
     };
-    const _hoisted_70 = {
+    const _hoisted_69 = {
       key: 1,
       class: "detail-block dim"
     };
-    const _hoisted_71 = {
+    const _hoisted_70 = {
       key: 2,
       class: "detail-block"
     };
-    const _hoisted_72 = {
+    const _hoisted_71 = {
       key: 3,
       class: "detail-block dim"
     };
-    const _hoisted_73 = {
+    const _hoisted_72 = {
       key: 4,
       class: "detail-block"
     };
-    const _hoisted_74 = {
+    const _hoisted_73 = {
       key: 5,
       class: "detail-block dim"
     };
-    const _hoisted_75 = {
+    const _hoisted_74 = {
       key: 6,
       class: "detail-block"
     };
-    const _hoisted_76 = {
+    const _hoisted_75 = {
       key: 7,
       class: "detail-block dim"
     };
@@ -2691,8 +2868,8 @@ var __webpack_modules__ = {
         }))
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口.现有人数 ?? 0) + " / " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口.庇护上限 ?? 0), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口百分比) + "%", 1) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.庇护上限), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口百分比) + "%", 1) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "pop-fill",
         style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
@@ -2827,13 +3004,20 @@ var __webpack_modules__ = {
         key: 6
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.modal.name), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_50, " Lv." + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).等级 ?? 1) + " · 耐久 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).耐久 ?? "?"), 1) ]), $setup.建筑($setup.modal.name).简介 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_50, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Lv." + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).等级 ?? 1), 1), $setup.建筑($setup.modal.name).耐久 != null ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" · 耐久 " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).耐久), 1) ], 64)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.建筑($setup.modal.name).分区 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" · " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).分区), 1) ], 64)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ]), $setup.建筑($setup.modal.name).简介 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_51, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).简介), 1)) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_52, "（简介未填写）")), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).详情 || "（详情未填写，请让 AI 按图鉴规范补全：耐久/尺寸+百分比效果+联动+特殊机制）"), 1) ], 64)) : $setup.modal.type === "npc-cats" ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).简介), 1)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑($setup.modal.name).详情 || "（详情未填写，请让 AI 按图鉴规范补全：耐久/尺寸+百分比效果+联动+特殊机制）"), 1) ], 64)) : $setup.modal.type === "npc-cats" ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 7
       }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.NPC分类, c => (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -2843,16 +3027,16 @@ var __webpack_modules__ = {
           type: "npc-list",
           category: c
         })
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_55, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_56, (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_54, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_55, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.分类NPC(c).length), 1), _cache[12] || (_cache[12] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "chev"
-      }, "›", -1)) ], 8, _hoisted_54)), 64)) : $setup.modal.type === "npc-list" ? ((0, 
+      }, "›", -1)) ], 8, _hoisted_53)), 64)) : $setup.modal.type === "npc-list" ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 8
       }, [ $setup.分类NPC($setup.modal.category).length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_57, [ ((0, 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_56, [ ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.分类NPC($setup.modal.category), n => ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
@@ -2863,8 +3047,8 @@ var __webpack_modules__ = {
           name: n,
           category: $setup.modal.category
         })
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_59, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_60, [ (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_58, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_59, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).阶位 || ""), 1), $setup.NPC(n).忠诚 != null ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
@@ -2872,47 +3056,47 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), _cache[13] || (_cache[13] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "chev"
-      }, "›", -1)) ], 8, _hoisted_58))), 128)) ])) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_61, "该分类暂无关键NPC")) ], 64)) : $setup.modal.type === "npc-detail" ? ((0, 
+      }, "›", -1)) ], 8, _hoisted_57))), 128)) ])) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_60, "该分类暂无关键NPC")) ], 64)) : $setup.modal.type === "npc-detail" ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 9
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.modal.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_64, "年龄 " + (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.modal.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_63, "年龄 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).年龄 || "?"), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_65, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_64, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).阶位 || "阶位未知"), 1), $setup.NPC($setup.modal.name).等级 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" LV." + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).等级), 1) ], 64)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), $setup.NPC($setup.modal.name).忠诚 != null ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_66, "忠诚 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_65, "忠诚 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).忠诚), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.NPC($setup.modal.name).野心 != null ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_67, "野心 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_66, "野心 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).野心), 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_68, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_67, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).状态 || "在岗"), 1) ]), $setup.NPC($setup.modal.name).过往 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_69, [ _cache[14] || (_cache[14] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_68, [ _cache[14] || (_cache[14] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "过往", -1)), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).过往), 1) ])) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_70, [ ..._cache[15] || (_cache[15] = [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_69, [ ..._cache[15] || (_cache[15] = [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "过往", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("（未填写）", -1) ]) ])), $setup.NPC($setup.modal.name).职业 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_71, [ _cache[16] || (_cache[16] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_70, [ _cache[16] || (_cache[16] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "职业", -1)), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).职业), 1) ])) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_72, [ ..._cache[17] || (_cache[17] = [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_71, [ ..._cache[17] || (_cache[17] = [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "职业", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("（未填写）", -1) ]) ])), $setup.NPC($setup.modal.name).力量体系 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_73, [ _cache[18] || (_cache[18] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_72, [ _cache[18] || (_cache[18] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "力量体系", -1)), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).力量体系), 1) ])) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_74, [ ..._cache[19] || (_cache[19] = [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_73, [ ..._cache[19] || (_cache[19] = [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "力量体系", -1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("（未填写，按阶位写权能/伟业/传说/权域）", -1) ]) ])), $setup.NPC($setup.modal.name).技能 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_75, [ _cache[20] || (_cache[20] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_74, [ _cache[20] || (_cache[20] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "技能", -1)), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC($setup.modal.name).技能), 1) ])) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_76, [ ..._cache[21] || (_cache[21] = [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_75, [ ..._cache[21] || (_cache[21] = [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "技能", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("（未填写）", -1) ]) ])) ], 64)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
@@ -4935,7 +5119,7 @@ let __webpack_exports__ = {};
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TaskPanel.vue?vue&type=style&index=0&id=558cb288&lang=scss&scoped=true ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-558cb288]{display:flex;flex-direction:column;gap:8px}.block .block-title[data-v-558cb288]{color:var(--c-ember);font-size:12px;margin-bottom:4px}.block .line[data-v-558cb288]{color:var(--c-ash);font-size:12px;padding-left:8px}.block .muted[data-v-558cb288]{color:var(--c-muted)}.breakthrough[data-v-558cb288]{padding:8px;background:var(--c-surface-2);border:1px solid var(--c-ember);border-radius:2px}.breakthrough .bt-name[data-v-558cb288]{color:var(--c-ember);font-weight:bold;font-size:13px}.breakthrough .bt-progress[data-v-558cb288]{display:flex;justify-content:space-between;margin-top:4px;color:var(--c-ash)}.breakthrough .bt-progress .status[data-v-558cb288]{color:var(--c-muted)}.breakthrough .reward[data-v-558cb288]{color:var(--c-ash)}.task[data-v-558cb288]{margin-bottom:6px;padding:6px 8px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px}.task .t-name[data-v-558cb288]{color:var(--c-ash);font-size:12px;font-weight:bold}.task .t-progress[data-v-558cb288]{color:var(--c-muted);font-size:12px;padding-left:8px}
+.panel[data-v-558cb288]{display:flex;flex-direction:column;gap:8px}.block .block-title[data-v-558cb288]{color:var(--c-ember);font-size:12px;margin-bottom:4px}.block .line[data-v-558cb288]{color:var(--c-ash);font-size:12px;padding-left:8px}.block .muted[data-v-558cb288]{color:var(--c-muted)}.breakthrough[data-v-558cb288]{padding:8px;background:var(--c-surface-2);border:1px solid var(--c-ember);border-radius:2px}.breakthrough .bt-name[data-v-558cb288]{color:var(--c-ember);font-weight:bold;font-size:13px}.breakthrough .bt-progress[data-v-558cb288]{display:flex;justify-content:space-between;margin-top:4px;color:var(--c-ash)}.breakthrough .bt-progress .status[data-v-558cb288]{color:var(--c-muted)}.breakthrough .reward[data-v-558cb288]{color:var(--c-ash)}.task[data-v-558cb288]{width:100%;margin-bottom:6px;padding:6px 8px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:2px;cursor:pointer;font-family:inherit;text-align:left}.task[data-v-558cb288]:hover{border-color:var(--c-ember)}.task .t-name[data-v-558cb288]{color:var(--c-ash);font-size:12px;font-weight:bold}.task .t-progress[data-v-558cb288]{color:var(--c-muted);font-size:12px;padding-left:8px}.modal-backdrop[data-v-558cb288]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-558cb288]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-head[data-v-558cb288]{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.modal-title[data-v-558cb288]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-558cb288]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-558cb288]:hover{color:var(--c-ember)}.modal-body[data-v-558cb288]{display:flex;flex-direction:column;gap:6px}.detail-block[data-v-558cb288]{color:var(--c-ash);font-size:13px;line-height:1.6}.detail-block b[data-v-558cb288]{color:var(--c-ember);margin-right:6px}.dim[data-v-558cb288]{color:var(--c-muted);opacity:0.7}
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
