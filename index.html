@@ -755,6 +755,12 @@ var __webpack_modules__ = {
             黑紫: 50
           };
           const price = (价格[item.品质 || ""] || 1) * (item.数量 || 1);
+          if (!store.data.领地.资源.金币) store.data.领地.资源.金币 = {
+            存量: 0,
+            收支: 0,
+            趋势: "—",
+            收支明细: ""
+          };
           store.data.领地.资源.金币.存量 = (store.data.领地.资源.金币.存量 || 0) + price;
           delete store.data.背包[n];
           selectedItem.value = null;
