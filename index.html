@@ -877,9 +877,9 @@ var __webpack_modules__ = {
           西北: 225
         };
         const 距离r = {
-          近: 45,
-          中: 90,
-          远: 135
+          近: 50,
+          中: 100,
+          远: 150
         };
         const 类型类 = {
           营地: "t-camp",
@@ -891,13 +891,13 @@ var __webpack_modules__ = {
         };
         const 地点Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.地图 ?? {}).filter(k => k !== "$meta"));
         const 地点 = k => store.data.地图?.[k] ?? {};
-        function pos(方位, 距离, baseR = 60) {
+        function pos(方位, 距离) {
           const ang = 方向角[方位 || "北"] ?? -90;
-          const r = 距离r[距离 || "中"] ?? baseR;
+          const r = 距离r[距离 || "中"] ?? 60;
           const rad = ang * Math.PI / 180;
           return {
-            x: 160 + r * Math.cos(rad),
-            y: 160 + r * Math.sin(rad)
+            x: 170 + r * Math.cos(rad),
+            y: 170 + r * Math.sin(rad)
           };
         }
         const 已发现 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 地点Keys.value.map(k => {
@@ -906,14 +906,15 @@ var __webpack_modules__ = {
           return {
             name: k,
             ...pos(p.方位, p.距离),
-            类型类: 类型类[p.类型] || ""
+            类型类: 类型类[p.类型] || "t-mist",
+            发现状态: p.发现状态 || "已发现未探索"
           };
         }).filter(Boolean));
         const 未知 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 地点Keys.value.map(k => {
           const p = 地点(k);
           if ((p.发现状态 || "") !== "未知") return null;
           return {
-            ...pos(p.方位, p.距离, 60),
+            ...pos(p.方位, p.距离),
             提示: `${p.方位 || "某方向"}·${p.类型 || "迷雾深处"}有微弱火光`
           };
         }).filter(Boolean));
@@ -1015,6 +1016,48 @@ var __webpack_modules__ = {
         const 动向Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.任务栏.附近动向 ?? {}).filter(k => k !== "$meta"));
         const 动向 = k => store.data.任务栏.附近动向?.[k] ?? {};
         const 活跃任务 = k => store.data.任务栏.活跃任务?.[k] ?? {};
+        const 突破任务 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
+          const 阶 = store.data.人物面板.阶位;
+          const map = {
+            一阶见习: {
+              名称: "集思成职",
+              目标: "集齐3片职业信息碎片，就职战斗职业"
+            },
+            二阶精英: {
+              名称: "铸源",
+              目标: "构筑能量之源 + 完成晋升仪典 + 容纳权能"
+            },
+            三阶王者: {
+              名称: "立伟业",
+              目标: "完成一项伟业"
+            },
+            四阶史诗: {
+              名称: "铸传说",
+              目标: "伟业规则固化 + 斩断退路"
+            },
+            五阶传奇: {
+              名称: "听门声",
+              目标: '听见"门"的声音（世界排异启动）'
+            }
+          };
+          const t = map[阶];
+          const s = store.data.任务栏.突破任务 ?? {};
+          if (!t) return {
+            名称: "未获取",
+            目标: "（暂未获得突破渠道与方法）",
+            进度: "",
+            状态: "",
+            奖励: ""
+          };
+          const 匹配 = s.名称 === t.名称;
+          return {
+            名称: t.名称,
+            目标: t.目标,
+            进度: 匹配 ? s.进度 || "" : "",
+            状态: 匹配 ? s.状态 || "进行中" : "进行中",
+            奖励: 匹配 ? s.奖励 || "" : ""
+          };
+        });
         const __returned__ = {
           store,
           modal,
@@ -1023,7 +1066,8 @@ var __webpack_modules__ = {
           activeNames,
           动向Keys,
           动向,
-          活跃任务
+          活跃任务,
+          突破任务
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -1953,27 +1997,25 @@ var __webpack_modules__ = {
       class: "panel"
     };
     const _hoisted_2 = {
-      viewBox: "0 0 320 320",
+      viewBox: "0 0 340 340",
       class: "map"
     };
     const _hoisted_3 = [ "x2", "y2" ];
-    const _hoisted_4 = [ "cx", "cy", "onClick" ];
-    const _hoisted_5 = [ "x", "y" ];
+    const _hoisted_4 = [ "cx", "cy" ];
+    const _hoisted_5 = [ "cx", "cy", "onClick" ];
     const _hoisted_6 = [ "x", "y" ];
-    const _hoisted_7 = {
+    const _hoisted_7 = [ "x", "y" ];
+    const _hoisted_8 = {
       class: "modal-card"
     };
-    const _hoisted_8 = {
+    const _hoisted_9 = {
       class: "modal-head"
     };
-    const _hoisted_9 = {
+    const _hoisted_10 = {
       class: "modal-title"
     };
-    const _hoisted_10 = {
-      class: "detail-meta"
-    };
     const _hoisted_11 = {
-      class: "chip"
+      class: "detail-meta"
     };
     const _hoisted_12 = {
       class: "chip"
@@ -1982,62 +2024,73 @@ var __webpack_modules__ = {
       class: "chip"
     };
     const _hoisted_14 = {
-      key: 0,
       class: "chip"
     };
     const _hoisted_15 = {
       key: 0,
-      class: "detail-text"
+      class: "chip"
     };
     const _hoisted_16 = {
+      key: 0,
+      class: "detail-text"
+    };
+    const _hoisted_17 = {
       key: 1,
       class: "detail-text dim"
     };
-    const _hoisted_17 = {
+    const _hoisted_18 = {
       key: 2,
       class: "detail-text"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_2, [ _cache[2] || (_cache[2] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
-        cx: "160",
-        cy: "160",
-        r: "150",
-        class: "fog"
-      }, null, -1)), _cache[3] || (_cache[3] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
-        cx: "160",
-        cy: "160",
-        r: "13",
-        class: "camp"
-      }, null, -1)), _cache[4] || (_cache[4] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("text", {
-        x: "160",
-        y: "148",
-        class: "camp-label",
-        "text-anchor": "middle"
-      }, "营地", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)('<defs data-v-7203f04a><radialGradient id="fogGrad" cx="50%" cy="50%" r="65%" data-v-7203f04a><stop offset="0%" stop-color="#2a2f34" data-v-7203f04a></stop><stop offset="70%" stop-color="#1b2025" data-v-7203f04a></stop><stop offset="100%" stop-color="#12161a" data-v-7203f04a></stop></radialGradient><radialGradient id="campGlow" cx="50%" cy="50%" r="50%" data-v-7203f04a><stop offset="0%" stop-color="#ffb35c" stop-opacity="0.9" data-v-7203f04a></stop><stop offset="60%" stop-color="#e08a3c" stop-opacity="0.5" data-v-7203f04a></stop><stop offset="100%" stop-color="#e08a3c" stop-opacity="0" data-v-7203f04a></stop></radialGradient></defs><circle cx="170" cy="170" r="160" fill="url(#fogGrad)" stroke="#3a3f3c" data-v-7203f04a></circle>', 2)), ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.已发现, p => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("g", {
         key: p.name
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("line", {
-        x1: 160,
-        y1: 160,
+        x1: 170,
+        y1: 170,
         x2: p.x,
         y2: p.y,
         class: "link"
       }, null, 8, _hoisted_3), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
         cx: p.x,
         cy: p.y,
-        r: 7,
+        r: 9,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "ring", {
+          explored: p.发现状态 === "已探索"
+        } ])
+      }, null, 10, _hoisted_4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
+        cx: p.x,
+        cy: p.y,
+        r: 6,
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "node", p.类型类 ]),
         onClick: $event => $setup.open(p.name)
-      }, null, 10, _hoisted_4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("text", {
+      }, null, 10, _hoisted_5), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("text", {
         x: p.x,
-        y: p.y - 10,
+        y: p.y - 12,
         class: "node-label",
         "text-anchor": "middle"
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(p.name), 9, _hoisted_5) ]))), 128)), ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(p.name), 9, _hoisted_6) ]))), 128)), _cache[3] || (_cache[3] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
+        cx: "170",
+        cy: "170",
+        r: "26",
+        fill: "url(#campGlow)"
+      }, null, -1)), _cache[4] || (_cache[4] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
+        cx: "170",
+        cy: "170",
+        r: "8",
+        class: "camp-core"
+      }, null, -1)), _cache[5] || (_cache[5] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("text", {
+        x: "170",
+        y: "144",
+        class: "camp-label",
+        "text-anchor": "middle"
+      }, "营地", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.未知, u => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("text", {
         key: u.提示,
@@ -2045,31 +2098,29 @@ var __webpack_modules__ = {
         y: u.y,
         class: "unknown",
         "text-anchor": "middle"
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(u.提示), 9, _hoisted_6))), 128)) ])), _cache[6] || (_cache[6] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        class: "muted"
-      }, "点击已发现地点查看详情；未知方位以迷雾提示显示", -1)), $setup.modal ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(u.提示), 9, _hoisted_7))), 128)) ])), _cache[7] || (_cache[7] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)('<div class="legend" data-v-7203f04a><span class="lg" data-v-7203f04a><i class="dot t-camp" data-v-7203f04a></i>营地</span><span class="lg" data-v-7203f04a><i class="dot t-manor" data-v-7203f04a></i>庄园</span><span class="lg" data-v-7203f04a><i class="dot t-town" data-v-7203f04a></i>城镇</span><span class="lg" data-v-7203f04a><i class="dot t-ruin" data-v-7203f04a></i>遗迹</span><span class="lg" data-v-7203f04a><i class="dot t-danger" data-v-7203f04a></i>危险区</span><span class="lg" data-v-7203f04a><i class="dot t-mist" data-v-7203f04a></i>迷雾深处</span></div><div class="muted" data-v-7203f04a>点击已发现地点查看详情；未知方位以迷雾提示显示</div>', 2)), $setup.modal ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: 0,
         class: "modal-backdrop",
         onClick: _cache[1] || (_cache[1] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => $setup.modal = null, [ "self" ]))
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.modal), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-close",
         onClick: _cache[0] || (_cache[0] = $event => $setup.modal = null)
-      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).类型 || "类型未知"), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).方位 || "方位未知") + " · " + (0, 
+      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).类型 || "类型未知"), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).方位 || "方位未知") + " · " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).距离 || "距离未知"), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).发现状态 || "未知"), 1), $setup.地点($setup.modal).危险度 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, "危险度 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).发现状态 || "未知"), 1), $setup.地点($setup.modal).危险度 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, "危险度 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).危险度), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), $setup.地点($setup.modal).简介 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).简介), 1)) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, "（简介未探明）")), $setup.地点($setup.modal).产出 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [ _cache[5] || (_cache[5] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, "（简介未探明）")), $setup.地点($setup.modal).产出 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [ _cache[6] || (_cache[6] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "已知产出：", -1)), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).产出), 1) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ])) : (0, 
@@ -2476,15 +2527,13 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "突破任务", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.突破任务.名称 || "无"), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.突破任务.目标), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.突破任务.进度), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.突破任务.状态), 1) ]), $setup.store.data.任务栏.突破任务.奖励 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.突破任务.名称), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.突破任务.目标), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.突破任务.进度), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.突破任务.状态), 1) ]), $setup.突破任务.奖励 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, "奖励：" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.突破任务.奖励), 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, "活跃任务（" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.突破任务.奖励), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, "活跃任务（" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.activeNames.length) + "/6）", 1), !$setup.activeNames.length ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, "暂无活跃任务")) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
@@ -5131,7 +5180,7 @@ let __webpack_exports__ = {};
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-7203f04a]{display:flex;flex-direction:column;gap:6px}.map[data-v-7203f04a]{width:100%;height:auto;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:4px}.fog[data-v-7203f04a]{fill:rgba(20,24,28,0.85);stroke:var(--c-border)}.camp[data-v-7203f04a]{fill:var(--c-ember);filter:drop-shadow(0 0 6px var(--c-ember))}.camp-label[data-v-7203f04a]{fill:var(--c-ember);font-size:9px;font-weight:bold}.link[data-v-7203f04a]{stroke:var(--c-border);stroke-width:1;stroke-dasharray:3 3}.node[data-v-7203f04a]{stroke:var(--c-border);stroke-width:1;cursor:pointer}.node.t-camp[data-v-7203f04a]{fill:#5fa86b}.node.t-manor[data-v-7203f04a]{fill:var(--c-rare)}.node.t-town[data-v-7203f04a]{fill:#e0a83c}.node.t-ruin[data-v-7203f04a]{fill:#8a8a8a}.node.t-danger[data-v-7203f04a]{fill:var(--c-danger)}.node.t-mist[data-v-7203f04a]{fill:#4a4f55}.node-label[data-v-7203f04a]{fill:var(--c-ash);font-size:8px}.unknown[data-v-7203f04a]{fill:var(--c-muted);font-size:8px;opacity:0.7}.muted[data-v-7203f04a]{color:var(--c-muted);font-size:11px}.modal-backdrop[data-v-7203f04a]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-7203f04a]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-head[data-v-7203f04a]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.modal-title[data-v-7203f04a]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-7203f04a]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-7203f04a]:hover{color:var(--c-ember)}.detail-meta[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.chip[data-v-7203f04a]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-text[data-v-7203f04a]{color:var(--c-ash);font-size:12px;line-height:1.6}.detail-text b[data-v-7203f04a]{color:var(--c-ember)}.dim[data-v-7203f04a]{color:var(--c-muted);opacity:0.7}
+.panel[data-v-7203f04a]{display:flex;flex-direction:column;gap:6px}.map[data-v-7203f04a]{width:100%;height:auto;border:1px solid var(--c-border);border-radius:6px}.link[data-v-7203f04a]{stroke:#4a4f55;stroke-width:1;stroke-dasharray:3 3;opacity:0.8}.ring[data-v-7203f04a]{fill:none;stroke:var(--c-muted);stroke-width:1;stroke-dasharray:2 2}.ring.explored[data-v-7203f04a]{stroke:var(--c-ember);stroke-dasharray:none}.node[data-v-7203f04a]{stroke:#1a1d20;stroke-width:1.5;cursor:pointer;filter:drop-shadow(0 0 3px rgba(0,0,0,0.6))}.node.t-camp[data-v-7203f04a]{fill:#5fa86b}.node.t-manor[data-v-7203f04a]{fill:var(--c-rare)}.node.t-town[data-v-7203f04a]{fill:#e0a83c}.node.t-ruin[data-v-7203f04a]{fill:#8a8a8a}.node.t-danger[data-v-7203f04a]{fill:var(--c-danger)}.node.t-mist[data-v-7203f04a]{fill:#4a4f55}.camp-core[data-v-7203f04a]{fill:#ffb35c;filter:drop-shadow(0 0 6px #e08a3c)}.camp-label[data-v-7203f04a]{fill:#ffb35c;font-size:9px;font-weight:bold}.node-label[data-v-7203f04a]{fill:var(--c-ash);font-size:8px}.unknown[data-v-7203f04a]{fill:var(--c-muted);font-size:8px;opacity:0.75}.legend[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:8px;padding:4px 2px}.legend .lg[data-v-7203f04a]{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--c-muted)}.legend .lg .dot[data-v-7203f04a]{width:8px;height:8px;border-radius:50%;display:inline-block}.legend .lg .dot.t-camp[data-v-7203f04a]{background:#5fa86b}.legend .lg .dot.t-manor[data-v-7203f04a]{background:var(--c-rare)}.legend .lg .dot.t-town[data-v-7203f04a]{background:#e0a83c}.legend .lg .dot.t-ruin[data-v-7203f04a]{background:#8a8a8a}.legend .lg .dot.t-danger[data-v-7203f04a]{background:var(--c-danger)}.legend .lg .dot.t-mist[data-v-7203f04a]{background:#4a4f55}.muted[data-v-7203f04a]{color:var(--c-muted);font-size:11px}.modal-backdrop[data-v-7203f04a]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-7203f04a]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-head[data-v-7203f04a]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.modal-title[data-v-7203f04a]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-7203f04a]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-7203f04a]:hover{color:var(--c-ember)}.detail-meta[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.chip[data-v-7203f04a]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-text[data-v-7203f04a]{color:var(--c-ash);font-size:12px;line-height:1.6}.detail-text b[data-v-7203f04a]{color:var(--c-ember)}.dim[data-v-7203f04a]{color:var(--c-muted);opacity:0.7}
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/App.vue?vue&type=style&index=0&id=15d684db&lang=scss&scoped=true ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
