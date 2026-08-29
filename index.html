@@ -94,7 +94,12 @@ var __webpack_modules__ = {
       收支: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
       趋势: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("—"),
       收支明细: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-    }) ]);
+    }) ]).default({
+      存量: 0,
+      收支: 0,
+      趋势: "—",
+      收支明细: ""
+    });
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
