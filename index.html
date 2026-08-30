@@ -21,7 +21,6 @@ var __webpack_modules__ = {
       }
       return s;
     }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum(阶位枚举)).prefault("一阶见习");
-    const 技能类型 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => String(v).includes("被动") ? "被动" : "主动").pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "主动", "被动" ])).prefault("主动");
     const 破限状态 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
       const s = String(v);
       if (s.includes("三")) return "三破限";
@@ -76,14 +75,6 @@ var __webpack_modules__ = {
       if (s.includes("异变")) return "已异变";
       return "进行中";
     }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "进行中", "已异变", "已完成" ])).prefault("进行中");
-    const 装备品质 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
-      const s = String(v);
-      if (s.includes("黑紫") || s.includes("完美") || s.includes("紫")) return "黑紫";
-      if (s.includes("蓝") || s.includes("稀有")) return "蓝";
-      if (s.includes("绿") || s.includes("精良")) return "绿";
-      if (s.includes("白") || s.includes("普通")) return "白";
-      return "灰";
-    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "灰", "白", "绿", "蓝", "黑紫" ])).prefault("灰");
     const 资源详情 = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(n => ({
       存量: n,
       收支: 0,
@@ -750,13 +741,8 @@ var __webpack_modules__ = {
         };
         const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
         const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.装备栏 ?? {});
-        const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-          try {
-            return 槽位.value.map(s => 装备栏.value[s]).filter(Boolean);
-          } catch {
-            return [];
-          }
-        });
+        const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.map(s => 装备栏.value[s]).filter(Boolean));
+        const 槽位物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => slotModal.value ? 装备栏.value[slotModal.value] || "" : "");
         const 属性项 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           try {
             const 六 = store.data.人物面板.六维 ?? {};
@@ -802,12 +788,17 @@ var __webpack_modules__ = {
           return "";
         };
         const 部位 = item => item.部位 || (item.分类 === "武器" ? "右手" : item.分类 === "装备" ? "躯干" : "");
+        function openSlot(s) {
+          slotModal.value = s;
+        }
         function 穿戴(n) {
           const item = 背包(n);
           const slot = 部位(item);
           if (!slot) return;
-          if (!store.data.人物面板.装备栏) store.data.人物面板.装备栏 = {};
-          store.data.人物面板.装备栏[slot] = n;
+          store.data.人物面板.装备栏 = {
+            ...store.data.人物面板.装备栏,
+            [slot]: n
+          };
           selectedItem.value = null;
         }
         function 卸下(slot) {
@@ -887,9 +878,11 @@ var __webpack_modules__ = {
           槽位,
           装备栏,
           装备中物品,
+          槽位物品,
           属性项,
           品质类,
           部位,
+          openSlot,
           穿戴,
           卸下,
           丢弃,
@@ -963,7 +956,7 @@ var __webpack_modules__ = {
             类型类: 类型类[p.类型] || "t-mist",
             发现状态: p.发现状态 || "已发现未探索"
           };
-        }).filter(Boolean));
+        }).filter(v => !!v));
         const 未知 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 地点Keys.value.map(k => {
           const p = 地点(k);
           if ((p.发现状态 || "") !== "未知") return null;
@@ -971,7 +964,7 @@ var __webpack_modules__ = {
             ...pos(p.方位, p.距离),
             提示: `${p.方位 || "某方向"}·${p.类型 || "迷雾深处"}有微弱火光`
           };
-        }).filter(Boolean));
+        }).filter(v => !!v));
         const __returned__ = {
           store,
           modal,
@@ -2263,7 +2256,7 @@ var __webpack_modules__ = {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "slot", {
           filled: !!$setup.装备栏[s]
         } ]),
-        onClick: $event => _ctx.openSlot(s)
+        onClick: $event => $setup.openSlot(s)
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.装备栏[s] || "空"), 1) ], 10, _hoisted_7)), 64)) ]) ]), (0, 
@@ -2320,17 +2313,17 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.slotModal), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-close",
         onClick: _cache[2] || (_cache[2] = $event => $setup.slotModal = null)
-      }, "×") ]), $setup.装备栏[$setup.slotModal] ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+      }, "×") ]), $setup.槽位物品 ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "chip", $setup.品质类($setup.背包($setup.装备栏[$setup.slotModal]).品质) ])
-      }, "品质：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.装备栏[$setup.slotModal]).品质 || "?"), 3), $setup.背包($setup.装备栏[$setup.slotModal]).词条 ? ((0, 
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "chip", $setup.品质类($setup.背包($setup.槽位物品).品质) ])
+      }, "品质：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.槽位物品).品质 || "?"), 3), $setup.背包($setup.槽位物品).词条 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.装备栏[$setup.slotModal]).词条), 1)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.槽位物品).词条), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "action",
-        onClick: _cache[3] || (_cache[3] = $event => $setup.卸下($setup.slotModal))
+        onClick: _cache[3] || (_cache[3] = $event => $setup.slotModal && $setup.卸下($setup.slotModal))
       }, "卸下") ], 64)) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, "空位")) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.bookModal ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -2935,10 +2928,10 @@ var __webpack_modules__ = {
         class: "task",
         onClick: $event => $setup.open("active", n)
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.名称 || n), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.目标), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.进度) + " · " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.任务栏.活跃任务[n]?.状态), 1) ], 8, _hoisted_11))), 128)) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务(n).名称 || n), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务(n).目标), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务(n).进度) + " · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.活跃任务(n).状态), 1) ], 8, _hoisted_11))), 128)) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, "附近动向（" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向Keys.length) + "）", 1), !$setup.动向Keys.length ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, "暂无附近动向")) : (0, 
