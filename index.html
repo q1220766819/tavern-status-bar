@@ -117,6 +117,23 @@ var __webpack_modules__ = {
       类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("事件"),
       内容: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
     }), zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(() => ({})) ]).prefault({});
+    const 外部NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
+      所属: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      出身: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      位置: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      身份: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean).join("\n")), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string() ]).prefault(""),
+      能力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      好感: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+      野心: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean)), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(s => s ? s.split(/[；;\n]/).map(x => x.trim()).filter(Boolean) : []) ]).prefault([]),
+      由来: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      阶位: 阶位Schema,
+      等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -188,7 +205,7 @@ var __webpack_modules__ = {
           博弈阶段
         }).prefault({}),
         势力关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
-        外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({})
+        外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 外部NPCItem).prefault({})
       }).prefault({}),
       地图: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
       领地: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -270,6 +287,7 @@ var __webpack_modules__ = {
     __webpack_require__.d(__webpack_exports__, {
       事件数组: () => 事件数组,
       亚修档案: () => 亚修档案,
+      关系度档位: () => 关系度档位,
       力量体系行: () => 力量体系行,
       外部档案: () => 外部档案,
       头行: () => 头行,
@@ -296,6 +314,22 @@ var __webpack_modules__ = {
       if (s?.includes("负伤")) return "#e0a83c";
       if (s?.includes("外出")) return "var(--c-rare)";
       return "#5fa86b";
+    };
+    const 档位色板 = {
+      仇恨: "var(--c-danger)",
+      敌对: "#e07a3c",
+      疏离: "#6a6a6a",
+      中立: "#c9c2b4",
+      友好: "#5fa86b",
+      亲密: "#6b8cbf",
+      信赖: "var(--c-unique)"
+    };
+    const 档位色 = d => 档位色板[d || ""] || "#6a6a6a";
+    const 档位区间 = [ [ "仇恨", 0, 15 ], [ "敌对", 16, 30 ], [ "疏离", 31, 45 ], [ "中立", 46, 60 ], [ "友好", 61, 75 ], [ "亲密", 76, 90 ], [ "信赖", 91, 100 ] ];
+    const 关系度档位 = v => {
+      if (v == null) return "中立";
+      for (const [name, lo, hi] of 档位区间) if (v >= lo && v <= hi) return name;
+      return "中立";
     };
     const 事件数组 = v => {
       if (v == null) return [];
@@ -399,7 +433,59 @@ var __webpack_modules__ = {
       return rows;
     }
     function 外部档案(name, p) {
-      return [ 头行(name, p.阶位 || "阶位未知"), 档案行("出身", p.出身 || "未知"), 档案行("好感", p.好感 != null ? String(p.好感) : "?"), 档案行("主要能力", p.能力 || "（未填写）"), 档案行("关系由来", p.由来 || "（未填写）"), 档案行("当前位置", p.位置 || "未知") ];
+      const rows = [];
+      const 好感 = p.好感 != null && p.好感 !== "" && !Number.isNaN(Number(p.好感)) ? Number(p.好感) : null;
+      rows.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-head"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-name"
+      }, name), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-tier"
+      }, `${p.阶位 || "阶位未知"}${p.等级 ? " " + p.等级 : ""}`), 好感 != null ? (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-favor",
+        style: {
+          background: 档位色(关系度档位(好感))
+        }
+      }, `${关系度档位(好感)} · ${好感}`) : null ]));
+      const 所属 = [ p.所属 || p.出身 || "无固定所属", p.位置 ].filter(Boolean).join(" · ") || "未知";
+      rows.push(档案行("所属", 所属));
+      rows.push(档案行("年龄", p.年龄 || "未知"));
+      rows.push(档案行("身份", p.身份 || "未知"));
+      rows.push(档案行("职业", p.职业 || "未知"));
+      rows.push(档案行("技能", 文本化(p.技能 || p.能力) || "（未填写）"));
+      const 野 = p.野心 != null && p.野心 !== "" && !Number.isNaN(Number(p.野心)) ? Number(p.野心) : null;
+      rows.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-row"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label"
+      }, "好感"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-value big",
+        style: 好感 != null ? {
+          color: 忠诚色(好感)
+        } : {}
+      }, 好感 != null ? String(好感) : "?"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label sub"
+      }, "野心"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-value big",
+        style: 野 != null ? {
+          color: 野心色(野)
+        } : {}
+      }, 野 != null ? String(野) : "?") ]));
+      const evts = 事件数组(p.关键事件);
+      rows.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-row"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label"
+      }, "关键事件"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-value events"
+      }, evts.length ? evts.map(e => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "evt"
+      }, e)) : [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "evt dim"
+      }, "暂无交集") ]) ]));
+      const 体 = 力量体系行(p);
+      if (体) rows.push(档案行(体.label, 体.value));
+      return rows;
     }
     function 亚修档案(name, a) {
       return [ 头行(name, `${a.阶位 || "?"}${a.体系词 ? " · " + a.体系词 : ""}`), 档案行("天赋", a.天赋 || "未知"), 档案行("职业", a.职业 || "未知"), 档案行("破限", a.破限 && a.破限 !== "无" ? a.破限 : "无"), 档案行("好感", a.好感 != null ? String(a.好感) : "?"), 档案行("忠诚", a.忠诚 != null ? String(a.忠诚) : "?"), 档案行("敬畏", a.敬畏 != null ? String(a.敬畏) : "?"), 档案行("债务", a.债务 || "无"), 档案行("秘密", a.秘密 || "无"), 档案行("博弈阶段", a.博弈阶段 || "平行发展") ];
@@ -1536,6 +1622,7 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
     var _useModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useModal */ "./src/迷雾薪火/界面/状态栏/components/useModal.ts");
+    var _npcDetail__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./npcDetail */ "./src/迷雾薪火/界面/状态栏/components/npcDetail.ts");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "RelationshipPanel",
       setup(__props, {expose: __expose}) {
@@ -1684,7 +1771,7 @@ var __webpack_modules__ = {
             class: "fs-unknown"
           }, "未探明——派遣斥候或与其贸易可获取情报") ]) ]) ];
           open({
-            title: name,
+            title: "",
             path: [ "势力关系", name ],
             level: 2,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
@@ -1693,38 +1780,13 @@ var __webpack_modules__ = {
           });
         }
         function openNPC(name) {
-          const p = 外部NPC(name);
-          const blocks = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-meta"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "chip"
-          }, p.出身 || "出身未知"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "chip"
-          }, p.阶位 || "阶位未知"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "chip"
-          }, `好感 ${p.好感 ?? "?"}`) ]) ];
-          if (p.能力) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "主要能力"), p.能力 ])); else blocks.push((0, 
-          vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block dim"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "主要能力"), "（未填写）" ]));
-          if (p.由来) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "关系由来"), p.由来 ])); else blocks.push((0, 
-          vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block dim"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "关系由来"), "（未填写）" ]));
-          if (p.位置) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "当前位置"), p.位置 ]));
           open({
             title: name,
             path: [ "外部NPC", name ],
             level: 2,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-              class: "list"
-            }, blocks)
+              class: "arch-body"
+            }, (0, _npcDetail__WEBPACK_IMPORTED_MODULE_3__["外部档案"])(name, 外部NPC(name)))
           });
         }
         const __returned__ = {
@@ -6725,7 +6787,7 @@ let __webpack_exports__ = {};
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-44558a69]{display:flex;flex-direction:column;gap:10px}.block[data-v-44558a69]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-44558a69]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.faction-row[data-v-44558a69]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.faction-card[data-v-44558a69]{position:relative;flex:0 0 150px;height:96px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 12px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;text-align:left;color:var(--c-muted)}.faction-card.neutral[data-v-44558a69]{border-color:var(--c-border)}.faction-card[data-v-44558a69]:hover{filter:brightness(1.15)}.faction-card .faction-badge[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-name[data-v-44558a69]{color:var(--c-ash);font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}.faction-card .faction-sub[data-v-44558a69]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.faction-card .faction-tier[data-v-44558a69]{align-self:flex-start;color:#1a1d20;font-size:10px;font-weight:bold;border-radius:3px;padding:1px 6px;line-height:16px}.faction-card .faction-tier.neutral-band[data-v-44558a69]{background:var(--c-border)}.faction-empty[data-v-44558a69]{padding:20px 12px;text-align:center}.faction-empty .empty-line[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.7}.faction-empty .empty-hint[data-v-44558a69]{margin-top:8px;color:var(--c-muted);font-size:11px;opacity:0.7}.muted[data-v-44558a69]{color:var(--c-muted);font-size:12px}.detail-meta[data-v-44558a69]{display:flex;flex-wrap:wrap;gap:6px}.chip[data-v-44558a69]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-block[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.detail-block b[data-v-44558a69]{color:var(--c-ember);margin-right:6px}.dim[data-v-44558a69]{color:var(--c-muted);opacity:0.7}.fs-body[data-v-44558a69]{display:flex;flex-direction:column}.fs-head[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}.fs-name-row[data-v-44558a69]{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fs-name[data-v-44558a69]{color:var(--c-ember);font-size:20px;font-weight:bold}.fs-badge[data-v-44558a69]{color:#1a1d20;font-size:11px;font-weight:bold;border-radius:3px;padding:1px 8px;line-height:18px;flex-shrink:0}.fs-relrow[data-v-44558a69]{display:flex;align-items:center;gap:8px}.fs-reltrack[data-v-44558a69]{position:relative;flex:1;height:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px}.fs-reltick[data-v-44558a69]{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #1a1d20}.fs-relval[data-v-44558a69]{color:var(--c-muted);font-size:11px;width:26px;text-align:right;flex-shrink:0}.fs-meta[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-div[data-v-44558a69]{height:1px;background:var(--c-border);margin:10px 0}.fs-block[data-v-44558a69]{display:flex;flex-direction:column;gap:6px}.fs-sub[data-v-44558a69]{color:#c9a062;font-size:11px;letter-spacing:3px}.fs-subrow[data-v-44558a69]{display:flex;align-items:center;justify-content:space-between}.fs-subcount[data-v-44558a69]{color:var(--c-muted);font-size:11px}.fs-text[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.fs-field[data-v-44558a69]{display:flex;gap:10px;align-items:flex-start}.fs-label[data-v-44558a69]{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px}.fs-val[data-v-44558a69]{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;word-break:break-word}.fs-npcs[data-v-44558a69]{display:flex;flex-direction:column;gap:2px;max-height:150px;overflow-y:auto}.fs-npc[data-v-44558a69]{color:var(--c-ash);font-size:12px;line-height:1.5;padding:4px 0;border-bottom:1px dashed var(--c-border)}.fs-npc[data-v-44558a69]:last-child{border-bottom:none}.fs-unknown[data-v-44558a69]{color:var(--c-muted);font-size:12px;opacity:0.75}.list[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}
+.panel[data-v-44558a69]{display:flex;flex-direction:column;gap:10px}.block[data-v-44558a69]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-44558a69]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.faction-row[data-v-44558a69]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.faction-card[data-v-44558a69]{position:relative;flex:0 0 150px;height:96px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 12px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;text-align:left;color:var(--c-muted)}.faction-card.neutral[data-v-44558a69]{border-color:var(--c-border)}.faction-card[data-v-44558a69]:hover{filter:brightness(1.15)}.faction-card .faction-badge[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-name[data-v-44558a69]{color:var(--c-ash);font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}.faction-card .faction-sub[data-v-44558a69]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.faction-card .faction-tier[data-v-44558a69]{align-self:flex-start;color:#1a1d20;font-size:10px;font-weight:bold;border-radius:3px;padding:1px 6px;line-height:16px}.faction-card .faction-tier.neutral-band[data-v-44558a69]{background:var(--c-border)}.faction-empty[data-v-44558a69]{padding:20px 12px;text-align:center}.faction-empty .empty-line[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.7}.faction-empty .empty-hint[data-v-44558a69]{margin-top:8px;color:var(--c-muted);font-size:11px;opacity:0.7}.muted[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-body[data-v-44558a69]{display:flex;flex-direction:column}.fs-head[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}.fs-name-row[data-v-44558a69]{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fs-name[data-v-44558a69]{color:var(--c-ember);font-size:20px;font-weight:bold}.fs-badge[data-v-44558a69]{color:#1a1d20;font-size:11px;font-weight:bold;border-radius:3px;padding:1px 8px;line-height:18px;flex-shrink:0}.fs-relrow[data-v-44558a69]{display:flex;align-items:center;gap:8px}.fs-reltrack[data-v-44558a69]{position:relative;flex:1;height:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px}.fs-reltick[data-v-44558a69]{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #1a1d20}.fs-relval[data-v-44558a69]{color:var(--c-muted);font-size:11px;width:26px;text-align:right;flex-shrink:0}.fs-meta[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-div[data-v-44558a69]{height:1px;background:var(--c-border);margin:10px 0}.fs-block[data-v-44558a69]{display:flex;flex-direction:column;gap:6px}.fs-sub[data-v-44558a69]{color:#c9a062;font-size:11px;letter-spacing:3px}.fs-subrow[data-v-44558a69]{display:flex;align-items:center;justify-content:space-between}.fs-subcount[data-v-44558a69]{color:var(--c-muted);font-size:11px}.fs-text[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.fs-field[data-v-44558a69]{display:flex;gap:10px;align-items:flex-start}.fs-label[data-v-44558a69]{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px}.fs-val[data-v-44558a69]{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;word-break:break-word}.fs-npcs[data-v-44558a69]{display:flex;flex-direction:column;gap:2px;max-height:150px;overflow-y:auto}.fs-npc[data-v-44558a69]{color:var(--c-ash);font-size:12px;line-height:1.5;padding:4px 0;border-bottom:1px dashed var(--c-border)}.fs-npc[data-v-44558a69]:last-child{border-bottom:none}.fs-unknown[data-v-44558a69]{color:var(--c-muted);font-size:12px;opacity:0.75}
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/InventoryPanel.vue?vue&type=style&index=0&id=25b57b9b&lang=scss&scoped=true ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -6754,7 +6816,7 @@ let __webpack_exports__ = {};
 /*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./src/迷雾薪火/界面/状态栏/global.css ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************/
-*{box-sizing:border-box;margin:0;padding:0}:root{--c-ember:#e08a3c;--c-surface:#1a1d20;--c-surface-2:#23272b;--c-ash:#c9c2b4;--c-muted:#7c7a72;--c-danger:#b0413e;--c-border:#3a3f3c;--c-rare:#6b8cbf;--c-unique:#d4af37;--font-body:'Courier New','Microsoft YaHei','Sarasa Mono SC',monospace}body{background:transparent;font-family:var(--font-body)}.arch-body{display:flex;flex-direction:column}.arch-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:2px 0 10px;border-bottom:1px solid var(--c-border);margin-bottom:4px;.arch-name{color:var(--c-ember);font-size:16px;font-weight:bold}.arch-tier{color:var(--c-muted);font-size:12px}.arch-status{font-size:11px;border:1px solid;border-radius:2px;padding:0 6px;line-height:18px}}.arch-row{display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px dashed var(--c-border)}.arch-label{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px;&.sub{letter-spacing:0;margin-left:8px}}.arch-value{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;&.big{font-size:18px;font-weight:bold;line-height:1.2}&.dim,.dim{color:var(--c-muted);opacity:0.7}&.events{display:flex;flex-direction:column;gap:4px}}.evt{color:var(--c-ash);font-size:13px;line-height:1.5;padding-left:14px;position:relative;&::before{content:'▸';position:absolute;left:0;color:var(--c-ember)}}
+*{box-sizing:border-box;margin:0;padding:0}:root{--c-ember:#e08a3c;--c-surface:#1a1d20;--c-surface-2:#23272b;--c-ash:#c9c2b4;--c-muted:#7c7a72;--c-danger:#b0413e;--c-border:#3a3f3c;--c-rare:#6b8cbf;--c-unique:#d4af37;--font-body:'Courier New','Microsoft YaHei','Sarasa Mono SC',monospace}body{background:transparent;font-family:var(--font-body)}.arch-body{display:flex;flex-direction:column}.arch-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:2px 0 10px;border-bottom:1px solid var(--c-border);margin-bottom:4px;.arch-name{color:var(--c-ember);font-size:16px;font-weight:bold}.arch-tier{color:var(--c-muted);font-size:12px}.arch-status{font-size:11px;border:1px solid;border-radius:2px;padding:0 6px;line-height:18px}.arch-favor{font-size:11px;font-weight:bold;color:#1a1d20;border-radius:3px;padding:1px 8px;line-height:18px}}.arch-row{display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px dashed var(--c-border)}.arch-label{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px;&.sub{letter-spacing:0;margin-left:8px}}.arch-value{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;&.big{font-size:18px;font-weight:bold;line-height:1.2}&.dim,.dim{color:var(--c-muted);opacity:0.7}&.events{display:flex;flex-direction:column;gap:4px}}.evt{color:var(--c-ash);font-size:13px;line-height:1.5;padding-left:14px;position:relative;&::before{content:'▸';position:absolute;left:0;color:var(--c-ember)}}
 
 </style></head>
 <body>
