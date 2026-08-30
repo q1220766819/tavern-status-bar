@@ -1556,15 +1556,28 @@ var __webpack_modules__ = {
           信赖: "var(--c-unique)"
         };
         const 档位色 = d => 档位色板[d || ""] || "#6a6a6a";
-        const 档位区间 = [ [ "仇恨", 0, 14 ], [ "敌对", 15, 29 ], [ "疏离", 30, 44 ], [ "中立", 45, 59 ], [ "友好", 60, 74 ], [ "亲密", 75, 89 ], [ "信赖", 90, 100 ] ];
+        const 档位区间 = [ [ "仇恨", 0, 15 ], [ "敌对", 16, 30 ], [ "疏离", 31, 45 ], [ "中立", 46, 60 ], [ "友好", 61, 75 ], [ "亲密", 76, 90 ], [ "信赖", 91, 100 ] ];
         const 关系度档位 = v => {
           if (v == null) return "中立";
           for (const [name, lo, hi] of 档位区间) if (v >= lo && v <= hi) return name;
           return "中立";
         };
+        const 档位中值 = {
+          仇恨: 8,
+          敌对: 23,
+          疏离: 38,
+          中立: 53,
+          友好: 68,
+          亲密: 83,
+          信赖: 95
+        };
         const 势力档位 = f => {
           if (typeof f.关系度 === "number") return 关系度档位(f.关系度);
           return f.档位 || "中立";
+        };
+        const 势力关系值 = f => {
+          if (typeof f.关系度 === "number") return Math.max(0, Math.min(100, f.关系度));
+          return 档位中值[势力档位(f)] ?? 50;
         };
         const 档位文字 = f => {
           const tier = 势力档位(f);
@@ -1574,54 +1587,108 @@ var __webpack_modules__ = {
           if (s?.includes("开战")) return "⚔ 开战";
           return s || "";
         };
-        const 麾下文本 = v => {
-          if (v == null || v === "") return "未知";
-          if (typeof v === "string") return v;
-          if (Array.isArray(v)) return v.map(n => {
-            if (typeof n === "string") return n;
-            return `${n.姓名 || ""}${n.阶位 ? " · " + n.阶位 : ""}${n.能力 ? "｜" + n.能力 : ""}`.trim();
-          }).join("\n");
-          return String(v);
+        const 状态底色 = s => {
+          if (s?.includes("开战")) return "var(--c-danger)";
+          if (s?.includes("渗透")) return "#9a5bcc";
+          if (s?.includes("附属")) return "#d4af37";
+          if (s?.includes("贸易")) return "#5fa86b";
+          if (s?.includes("同盟")) return "#6b8cbf";
+          return "#6a6a6a";
         };
+        const 麾下行 = v => {
+          if (v == null || v === "") return [];
+          const items = Array.isArray(v) ? v : typeof v === "string" ? v.split(/\n|；/).map(s => s.trim()).filter(Boolean) : [ v ];
+          return items.map(x => {
+            if (typeof x === "string") return x;
+            if (x && typeof x === "object") return [ x.姓名 || x.name || "", x.阶位 || x.tier || "", x.能力 || x.简介 || x.描述 || "" ].filter(Boolean).join(" · ");
+            return String(x);
+          }).filter(Boolean);
+        };
+        const fsField = (label, value) => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+          class: "fs-field"
+        }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+          class: "fs-label"
+        }, label), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+          class: "fs-val",
+          style: value ? {} : {
+            color: "var(--c-muted)",
+            opacity: .75
+          }
+        }, value || "未知") ]);
         function open势力(name) {
           const f = 势力(name);
           const tier = 势力档位(f);
           const tcol = 档位色(tier);
+          const rel = 势力关系值(f);
+          const npcRows = 麾下行(f.NPC列表);
           const blocks = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "fhead"
+            class: "fs-head"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-name-row"
           }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "fhead-name"
+            class: "fs-name"
           }, name), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "chip",
+            class: "fs-badge",
             style: {
-              color: tcol,
-              borderColor: tcol
+              background: tcol
             }
-          }, 档位文字(f)), f.状态 ? (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "chip"
+          }, tier), f.状态 ? (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+            class: "fs-badge",
+            style: {
+              background: 状态底色(f.状态)
+            }
           }, 状态徽章(f.状态)) : null ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "关系由来"), f.成因 || "未知" ]), (0, 
+            class: "fs-relrow"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-reltrack"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-reltick",
+            style: {
+              left: rel + "%",
+              background: tcol
+            }
+          }) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+            class: "fs-relval"
+          }, String(rel)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-meta"
+          }, `${f.领袖 || "领袖未知"}${f.评级 ? " · " + f.评级 : ""}`) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-div"
+          }), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-block"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-sub"
+          }, "关系由来"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-text"
+          }, f.成因 || "尚无往来") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-div"
+          }), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-block"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-sub"
+          }, "势力概况"), fsField("管理风格", f.管理风格), fsField("主要产出", f.主要产出), fsField("特殊建筑", f.特殊建筑) ]), (0, 
           vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "管理风格"), f.管理风格 || "未知" ]), (0, 
-          vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "主要产出"), f.主要产出 || "未知" ]), (0, 
-          vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "特殊建筑"), f.特殊建筑 || "未知" ]), (0, 
-          vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "麾下重要人物"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "pre"
-          }, 麾下文本(f.NPC列表)) ]) ];
+            class: "fs-div"
+          }), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-block"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-subrow"
+          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+            class: "fs-sub"
+          }, "麾下重要人物"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+            class: "fs-subcount"
+          }, npcRows.length ? `已知 ${npcRows.length} 人` : "") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-npcs"
+          }, npcRows.length ? npcRows.map(t => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-npc"
+          }, t)) : [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "fs-unknown"
+          }, "未探明——派遣斥候或与其贸易可获取情报") ]) ]) ];
           open({
             title: name,
             path: [ "势力关系", name ],
             level: 2,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-              class: "list"
+              class: "fs-body"
             }, blocks)
           });
         }
@@ -1671,10 +1738,14 @@ var __webpack_modules__ = {
           档位色,
           档位区间,
           关系度档位,
+          档位中值,
           势力档位,
+          势力关系值,
           档位文字,
           状态徽章,
-          麾下文本,
+          状态底色,
+          麾下行,
+          fsField,
           open势力,
           openNPC
         };
@@ -6654,7 +6725,7 @@ let __webpack_exports__ = {};
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-44558a69]{display:flex;flex-direction:column;gap:10px}.block[data-v-44558a69]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-44558a69]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.faction-row[data-v-44558a69]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.faction-card[data-v-44558a69]{position:relative;flex:0 0 150px;height:96px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 12px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;text-align:left;color:var(--c-muted)}.faction-card.neutral[data-v-44558a69]{border-color:var(--c-border)}.faction-card[data-v-44558a69]:hover{filter:brightness(1.15)}.faction-card .faction-badge[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-name[data-v-44558a69]{color:var(--c-ash);font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}.faction-card .faction-sub[data-v-44558a69]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.faction-card .faction-tier[data-v-44558a69]{align-self:flex-start;color:#1a1d20;font-size:10px;font-weight:bold;border-radius:3px;padding:1px 6px;line-height:16px}.faction-card .faction-tier.neutral-band[data-v-44558a69]{background:var(--c-border)}.faction-empty[data-v-44558a69]{padding:20px 12px;text-align:center}.faction-empty .empty-line[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.7}.faction-empty .empty-hint[data-v-44558a69]{margin-top:8px;color:var(--c-muted);font-size:11px;opacity:0.7}.muted[data-v-44558a69]{color:var(--c-muted);font-size:12px}.detail-meta[data-v-44558a69]{display:flex;flex-wrap:wrap;gap:6px}.chip[data-v-44558a69]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-block[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.detail-block b[data-v-44558a69]{color:var(--c-ember);margin-right:6px}.pre[data-v-44558a69]{white-space:pre-wrap}.dim[data-v-44558a69]{color:var(--c-muted);opacity:0.7}.fhead[data-v-44558a69]{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fhead .fhead-name[data-v-44558a69]{color:var(--c-ember);font-size:15px;font-weight:bold}.list[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}
+.panel[data-v-44558a69]{display:flex;flex-direction:column;gap:10px}.block[data-v-44558a69]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-44558a69]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.faction-row[data-v-44558a69]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.faction-card[data-v-44558a69]{position:relative;flex:0 0 150px;height:96px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 12px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;text-align:left;color:var(--c-muted)}.faction-card.neutral[data-v-44558a69]{border-color:var(--c-border)}.faction-card[data-v-44558a69]:hover{filter:brightness(1.15)}.faction-card .faction-badge[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-name[data-v-44558a69]{color:var(--c-ash);font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}.faction-card .faction-sub[data-v-44558a69]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.faction-card .faction-tier[data-v-44558a69]{align-self:flex-start;color:#1a1d20;font-size:10px;font-weight:bold;border-radius:3px;padding:1px 6px;line-height:16px}.faction-card .faction-tier.neutral-band[data-v-44558a69]{background:var(--c-border)}.faction-empty[data-v-44558a69]{padding:20px 12px;text-align:center}.faction-empty .empty-line[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.7}.faction-empty .empty-hint[data-v-44558a69]{margin-top:8px;color:var(--c-muted);font-size:11px;opacity:0.7}.muted[data-v-44558a69]{color:var(--c-muted);font-size:12px}.detail-meta[data-v-44558a69]{display:flex;flex-wrap:wrap;gap:6px}.chip[data-v-44558a69]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-block[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.detail-block b[data-v-44558a69]{color:var(--c-ember);margin-right:6px}.dim[data-v-44558a69]{color:var(--c-muted);opacity:0.7}.fs-body[data-v-44558a69]{display:flex;flex-direction:column}.fs-head[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}.fs-name-row[data-v-44558a69]{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fs-name[data-v-44558a69]{color:var(--c-ember);font-size:20px;font-weight:bold}.fs-badge[data-v-44558a69]{color:#1a1d20;font-size:11px;font-weight:bold;border-radius:3px;padding:1px 8px;line-height:18px;flex-shrink:0}.fs-relrow[data-v-44558a69]{display:flex;align-items:center;gap:8px}.fs-reltrack[data-v-44558a69]{position:relative;flex:1;height:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px}.fs-reltick[data-v-44558a69]{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #1a1d20}.fs-relval[data-v-44558a69]{color:var(--c-muted);font-size:11px;width:26px;text-align:right;flex-shrink:0}.fs-meta[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-div[data-v-44558a69]{height:1px;background:var(--c-border);margin:10px 0}.fs-block[data-v-44558a69]{display:flex;flex-direction:column;gap:6px}.fs-sub[data-v-44558a69]{color:#c9a062;font-size:11px;letter-spacing:3px}.fs-subrow[data-v-44558a69]{display:flex;align-items:center;justify-content:space-between}.fs-subcount[data-v-44558a69]{color:var(--c-muted);font-size:11px}.fs-text[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.fs-field[data-v-44558a69]{display:flex;gap:10px;align-items:flex-start}.fs-label[data-v-44558a69]{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px}.fs-val[data-v-44558a69]{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;word-break:break-word}.fs-npcs[data-v-44558a69]{display:flex;flex-direction:column;gap:2px;max-height:150px;overflow-y:auto}.fs-npc[data-v-44558a69]{color:var(--c-ash);font-size:12px;line-height:1.5;padding:4px 0;border-bottom:1px dashed var(--c-border)}.fs-npc[data-v-44558a69]:last-child{border-bottom:none}.fs-unknown[data-v-44558a69]{color:var(--c-muted);font-size:12px;opacity:0.75}.list[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/InventoryPanel.vue?vue&type=style&index=0&id=25b57b9b&lang=scss&scoped=true ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
