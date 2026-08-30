@@ -938,18 +938,48 @@ var __webpack_modules__ = {
         function 删除方案(name) {
           delete 服装方案.value[name];
         }
-        const 部位 = item => item.部位 || (item.分类 === "武器" ? "右手" : item.分类 === "装备" ? "躯干" : "");
+        const 部位 = (item, name) => {
+          if (item.部位) return item.部位;
+          if (item.分类 === "武器") return "右手";
+          if (item.分类 === "装备") return "躯干";
+          if (item.分类 === "饰品") return "颈部";
+          const t = `${name || ""}${item.词条 || ""}`;
+          if (/盔|冠|面具|眼罩/.test(t)) return "头部";
+          if (/甲|铠|袍|衣/.test(t)) return "躯干";
+          if (/靴|鞋|护腿|胫/.test(t)) return "脚部";
+          if (/盾|剑|刃|锤|矛|弓|枪|斧|匕首/.test(t)) return "右手";
+          if (/戒|链|坠|佩|饰|环|眼|徽章|耳/.test(t)) return "颈部";
+          return "";
+        };
+        const slotCandidates = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
+          const s = slotModal.value;
+          if (!s) return [];
+          return itemNames.value.filter(n => {
+            const it = 背包(n);
+            const p = 部位(it, n);
+            if (p === s) return true;
+            return p === "" && [ "武器", "装备", "饰品" ].includes(it.分类);
+          });
+        });
         function openSlot(s) {
           slotModal.value = s;
         }
         function 穿戴(n) {
           const item = 背包(n);
-          const slot = 部位(item);
+          const slot = 部位(item, n);
           if (!slot) return;
           store.data.人物面板.装备栏 = {
             ...store.data.人物面板.装备栏,
             [slot]: n
           };
+          selectedItem.value = null;
+        }
+        function 穿戴上槽位(slot, name) {
+          store.data.人物面板.装备栏 = {
+            ...store.data.人物面板.装备栏,
+            [slot]: name
+          };
+          slotModal.value = null;
           selectedItem.value = null;
         }
         function 卸下(slot) {
@@ -987,13 +1017,15 @@ var __webpack_modules__ = {
         const 操作 = n => {
           const item = 背包(n);
           const cat = item.分类 || "物品";
+          const slot = 部位(item, n);
           const acts = [];
-          if (cat === "武器" || cat === "装备") {
+          if (slot) {
             acts.push({
-              label: 部位(item) ? "穿戴" : "不可穿戴",
+              label: `穿戴（${slot}）`,
               run: () => 穿戴(n)
             });
-          } else if (cat === "书籍") {
+          }
+          if (cat === "书籍") {
             acts.push({
               label: "阅读",
               run: () => bookModal.value = item.词条 || "空白的书"
@@ -1008,11 +1040,12 @@ var __webpack_modules__ = {
               label: "使用（慎用）",
               run: () => 使用(n)
             });
+          } else if (cat === "材料") {
+            acts.push({
+              label: "出售",
+              run: () => 出售(n)
+            });
           }
-          if (cat === "材料") acts.push({
-            label: "出售",
-            run: () => 出售(n)
-          });
           acts.push({
             label: "丢弃",
             run: () => 丢弃(n)
@@ -1041,8 +1074,10 @@ var __webpack_modules__ = {
           穿上,
           删除方案,
           部位,
+          slotCandidates,
           openSlot,
           穿戴,
+          穿戴上槽位,
           卸下,
           丢弃,
           出售,
@@ -1974,6 +2009,7 @@ var __webpack_modules__ = {
           const q = query.value.trim();
           return !q || "亚修".includes(q);
         });
+        const 名录数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 领地Names.value.length + 外部Names.value.length + (show亚修.value ? 1 : 0));
         function 档案(name, source) {
           const rows = [];
           if (source === "宿敌") {
@@ -2049,6 +2085,7 @@ var __webpack_modules__ = {
           领地Names,
           外部Names,
           show亚修,
+          名录数,
           档案,
           open档案
         };
@@ -2756,16 +2793,17 @@ var __webpack_modules__ = {
       class: "detail"
     };
     const _hoisted_39 = {
-      key: 1,
-      class: "muted"
+      key: 0,
+      class: "muted dim"
     };
-    const _hoisted_40 = {
+    const _hoisted_40 = [ "onClick" ];
+    const _hoisted_41 = {
       class: "modal-card"
     };
-    const _hoisted_41 = {
+    const _hoisted_42 = {
       class: "modal-head"
     };
-    const _hoisted_42 = {
+    const _hoisted_43 = {
       class: "detail"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2901,20 +2939,33 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "action",
         onClick: _cache[5] || (_cache[5] = $event => $setup.slotModal && $setup.卸下($setup.slotModal))
-      }, "卸下") ], 64)) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, "空位")) ]) ])) : (0, 
+      }, "卸下") ], 64)) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [ _cache[15] || (_cache[15] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: "muted"
+      }, "空位 · 从背包选择装备", -1)), !$setup.slotCandidates.length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, "无可穿戴到该槽位的物品（装备类物品需带部位或分类为武器/装备/饰品）")) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.slotCandidates, c => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+        key: c,
+        class: "action",
+        onClick: $event => $setup.slotModal && $setup.穿戴上槽位($setup.slotModal, c)
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c), 9, _hoisted_40))), 128)) ], 64)) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.bookModal ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: 2,
         class: "modal-backdrop",
         onClick: _cache[8] || (_cache[8] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => $setup.bookModal = null, [ "self" ]))
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [ _cache[15] || (_cache[15] = (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [ _cache[16] || (_cache[16] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "modal-title"
       }, "阅读", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-close",
         onClick: _cache[7] || (_cache[7] = $event => $setup.bookModal = null)
-      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, (0, 
+      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.bookModal), 1) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
     }
@@ -4273,7 +4324,7 @@ var __webpack_modules__ = {
         class: "search",
         placeholder: "搜索人名…"
       }, null, 512), [ [ vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.query ] ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.filtered.length) + " 人", 1) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.名录数) + " 人", 1) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_4, [ _cache[4] || (_cache[4] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "group-title"
