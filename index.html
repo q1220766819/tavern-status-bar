@@ -211,6 +211,12 @@ var __webpack_modules__ = {
         附近动向: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         已完成计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
       }).prefault({}),
+      事件日志: zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
+        日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+        时段: 时间段,
+        类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("事件"),
+        内容: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+      })).prefault([]).transform(list => list.slice(-12)),
       世界状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         高庭声望: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         伪超凡注意度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
@@ -345,6 +351,9 @@ var __webpack_modules__ = {
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
   },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+  },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
   },
@@ -352,6 +361,12 @@ var __webpack_modules__ = {
     __webpack_require__.r(__webpack_exports__);
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=style&index=0&id=6289629d&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+  },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+  },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ModalHost.vue?vue&type=style&index=0&id=525f9b9c&scoped=true&lang=css"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -365,13 +380,15 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _components_HeaderBar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/HeaderBar.vue */ "./src/迷雾薪火/界面/状态栏/components/HeaderBar.vue");
-    var _components_CharacterPanel_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/CharacterPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/CharacterPanel.vue");
-    var _components_TerritoryPanel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TerritoryPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue");
-    var _components_TaskPanel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TaskPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/TaskPanel.vue");
-    var _components_RelationshipPanel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/RelationshipPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue");
-    var _components_InventoryPanel_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/InventoryPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/InventoryPanel.vue");
-    var _components_MapPanel_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/MapPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/MapPanel.vue");
-    var _components_ModalHost_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/ModalHost.vue */ "./src/迷雾薪火/界面/状态栏/components/ModalHost.vue");
+    var _components_QuickRef_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/QuickRef.vue */ "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue");
+    var _components_CharacterPanel_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/CharacterPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/CharacterPanel.vue");
+    var _components_TerritoryPanel_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TerritoryPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue");
+    var _components_TaskPanel_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/TaskPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/TaskPanel.vue");
+    var _components_RelationshipPanel_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/RelationshipPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue");
+    var _components_InventoryPanel_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/InventoryPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/InventoryPanel.vue");
+    var _components_MapPanel_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/MapPanel.vue */ "./src/迷雾薪火/界面/状态栏/components/MapPanel.vue");
+    var _components_TimelinePanel_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/TimelinePanel.vue */ "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue");
+    var _components_ModalHost_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/ModalHost.vue */ "./src/迷雾薪火/界面/状态栏/components/ModalHost.vue");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "App",
       setup(__props, {expose: __expose}) {
@@ -394,19 +411,24 @@ var __webpack_modules__ = {
         }, {
           id: "map",
           label: "地图"
+        }, {
+          id: "log",
+          label: "日志"
         } ];
         const active_tab = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("character");
         const __returned__ = {
           tabs,
           active_tab,
           HeaderBar: _components_HeaderBar_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-          CharacterPanel: _components_CharacterPanel_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-          TerritoryPanel: _components_TerritoryPanel_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-          TaskPanel: _components_TaskPanel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-          RelationshipPanel: _components_RelationshipPanel_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-          InventoryPanel: _components_InventoryPanel_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-          MapPanel: _components_MapPanel_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-          ModalHost: _components_ModalHost_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+          QuickRef: _components_QuickRef_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+          CharacterPanel: _components_CharacterPanel_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+          TerritoryPanel: _components_TerritoryPanel_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+          TaskPanel: _components_TaskPanel_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+          RelationshipPanel: _components_RelationshipPanel_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+          InventoryPanel: _components_InventoryPanel_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+          MapPanel: _components_MapPanel_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+          TimelinePanel: _components_TimelinePanel_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+          ModalHost: _components_ModalHost_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -472,6 +494,76 @@ var __webpack_modules__ = {
       }
     });
   },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => __WEBPACK_DEFAULT_EXPORT__
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+      __name: "ChangeBubble",
+      props: {
+        value: {
+          type: Number,
+          required: true
+        },
+        color: {
+          type: String,
+          required: false
+        }
+      },
+      setup(__props, {expose: __expose}) {
+        __expose();
+        const props = __props;
+        const prev = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(props.value);
+        const bubble = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
+        let seq = 0;
+        let timer = null;
+        (0, vue__WEBPACK_IMPORTED_MODULE_0__.watch)(() => props.value, cur => {
+          const old = prev.value;
+          prev.value = cur;
+          if (old == null || cur === old) return;
+          const d = Math.round((cur - old) * 100) / 100;
+          if (d === 0) return;
+          bubble.value = {
+            text: (d > 0 ? "+" : "") + d,
+            cls: d > 0 ? "up" : "down",
+            key: ++seq
+          };
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            bubble.value = null;
+          }, 1800);
+        });
+        (0, vue__WEBPACK_IMPORTED_MODULE_0__.onBeforeUnmount)(() => {
+          if (timer) clearTimeout(timer);
+        });
+        const __returned__ = {
+          props,
+          prev,
+          bubble,
+          get seq() {
+            return seq;
+          },
+          set seq(v) {
+            seq = v;
+          },
+          get timer() {
+            return timer;
+          },
+          set timer(v) {
+            timer = v;
+          }
+        };
+        Object.defineProperty(__returned__, "__isScriptSetup", {
+          enumerable: false,
+          value: true
+        });
+        return __returned__;
+      }
+    });
+  },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/CharacterPanel.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -482,6 +574,7 @@ var __webpack_modules__ = {
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
     var _HexagonStats_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HexagonStats.vue */ "./src/迷雾薪火/界面/状态栏/components/HexagonStats.vue");
     var _CategoryModal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CategoryModal.vue */ "./src/迷雾薪火/界面/状态栏/components/CategoryModal.vue");
+    var _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChangeBubble.vue */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "CharacterPanel",
       setup(__props, {expose: __expose}) {
@@ -599,7 +692,8 @@ var __webpack_modules__ = {
           categoryItems,
           openCategory,
           HexagonStats: _HexagonStats_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-          CategoryModal: _CategoryModal_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+          CategoryModal: _CategoryModal_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+          ChangeBubble: _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -617,6 +711,7 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
+    var _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChangeBubble.vue */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "HeaderBar",
       setup(__props, {expose: __expose}) {
@@ -637,7 +732,8 @@ var __webpack_modules__ = {
           系数,
           等级,
           经验需求,
-          经验百分比
+          经验百分比,
+          ChangeBubble: _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -1024,6 +1120,151 @@ var __webpack_modules__ = {
       }
     });
   },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => __WEBPACK_DEFAULT_EXPORT__
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
+    var _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChangeBubble.vue */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue");
+    const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+      __name: "QuickRef",
+      setup(__props, {expose: __expose}) {
+        __expose();
+        const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
+        const expanded = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+        const P = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板 ?? {});
+        const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
+        const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.装备栏 ?? {});
+        const 装备加成 = f => 槽位.reduce((a, s) => a + (store.data.背包?.[装备栏.value[s]]?.[f] || 0), 0);
+        const 六 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.六维 ?? {});
+        const g = k => 六.value[k]?.数值 ?? 0;
+        const 血上限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.round(g("体质") * 100 + g("力量") * 80 + 120 + 装备加成("血量")));
+        const 体上限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.round(g("体质") * 80 + g("敏捷") * 70 + 100 + 装备加成("体力")));
+        const 精上限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.round(g("精神") * 80 + g("感知") * 70 + 100 + 装备加成("精神力")));
+        const 血量 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.血量 ?? 血上限.value);
+        const 体力 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.体力 ?? 体上限.value);
+        const 精神力 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.精神力 ?? 精上限.value);
+        const 血pct = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.round(血量.value / Math.max(1, 血上限.value) * 100));
+        const 时间 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.时间 ?? {});
+        const 当前位置 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 时间.value.当前位置 || "未知之地");
+        const 日期 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 时间.value.日期 || "");
+        const 时间段 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 时间.value.时间段 || "");
+        const 结算计数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 时间.value.结算周期计数 ?? 1);
+        const 污染 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.污染指数 ?? 0);
+        const 伟业 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.伟业传唱度 ?? 0);
+        const 破限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.破限状态 ?? "无");
+        const 未分配属性点 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.未分配属性点 ?? 0);
+        const 姓名 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.姓名 || "无名");
+        const 阶位 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.阶位 || "");
+        const 等级 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.等级 || "");
+        const L = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.领地 ?? {});
+        const 薪火等级 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.薪火等级 || "");
+        const 特殊名 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.薪火特殊名 || "");
+        const 评级链 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.评级链 || "");
+        const 现有人数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.人口?.现有人数 ?? 0);
+        const 庇护上限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.人口?.庇护上限 ?? 0);
+        const 人口占用 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.min(100, Math.round(现有人数.value / Math.max(1, 庇护上限.value) * 100)));
+        const 防御 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.防御值 ?? 0);
+        const 忠诚 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.忠诚度 ?? 0);
+        const 恐慌 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.恐慌度 ?? 0);
+        const 入侵倒计时 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.入侵预警?.倒计时 ?? 0);
+        const 资源项 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
+          const R = L.value.资源 ?? {};
+          const keys = [ "晶石", "余烬", "贡献值", "晶币", "金币", "粮食" ];
+          return keys.map(k => ({
+            key: k,
+            存量: Number(R[k]?.存量 ?? 0)
+          }));
+        });
+        const W = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.世界状态 ?? {});
+        const 声望 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => W.value.高庭声望 ?? {});
+        const 伪超凡 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => W.value.伪超凡注意度 ?? 0);
+        const 外神 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => W.value.外神注视度 ?? 0);
+        const 薪火注视 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => W.value.薪火注视度 ?? 0);
+        const 路线值 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.神途进度?.路线值 ?? {});
+        const 有路线 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.values(路线值.value).some(v => v));
+        const 路线文本 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.entries(路线值.value).filter(([, v]) => v).map(([k, v]) => `${k}${v}`).join("·"));
+        const 背包数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.背包 ?? {}).filter(k => k !== "$meta").length);
+        const 装备数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.filter(s => 装备栏.value[s]).length);
+        const 任务数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.任务栏?.活跃任务 ?? {}).filter(k => k !== "$meta").length);
+        const 动向数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.任务栏?.附近动向 ?? {}).filter(k => k !== "$meta").length);
+        const 势力数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.关系?.势力关系 ?? {}).filter(k => k !== "$meta").length);
+        const 外部NPC数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.关系?.外部NPC ?? {}).filter(k => k !== "$meta").length);
+        const 地点数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.地图 ?? {}).filter(k => k !== "$meta").length);
+        const 建筑数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.领地?.建筑列表 ?? {}).filter(k => k !== "$meta").length);
+        const NPC数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.领地?.关键NPC ?? {}).filter(k => k !== "$meta").length);
+        const 日志数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => (store.data.事件日志 ?? []).length);
+        const __returned__ = {
+          store,
+          expanded,
+          P,
+          槽位,
+          装备栏,
+          装备加成,
+          六,
+          g,
+          血上限,
+          体上限,
+          精上限,
+          血量,
+          体力,
+          精神力,
+          血pct,
+          时间,
+          当前位置,
+          日期,
+          时间段,
+          结算计数,
+          污染,
+          伟业,
+          破限,
+          未分配属性点,
+          姓名,
+          阶位,
+          等级,
+          L,
+          薪火等级,
+          特殊名,
+          评级链,
+          现有人数,
+          庇护上限,
+          人口占用,
+          防御,
+          忠诚,
+          恐慌,
+          入侵倒计时,
+          资源项,
+          W,
+          声望,
+          伪超凡,
+          外神,
+          薪火注视,
+          路线值,
+          有路线,
+          路线文本,
+          背包数,
+          装备数,
+          任务数,
+          动向数,
+          势力数,
+          外部NPC数,
+          地点数,
+          建筑数,
+          NPC数,
+          日志数,
+          ChangeBubble: _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+        };
+        Object.defineProperty(__returned__, "__isScriptSetup", {
+          enumerable: false,
+          value: true
+        });
+        return __returned__;
+      }
+    });
+  },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -1274,8 +1515,9 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
     var _useModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useModal */ "./src/迷雾薪火/界面/状态栏/components/useModal.ts");
-    var zod__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! zod */ "zod");
-    var zod__WEBPACK_IMPORTED_MODULE_3___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_3__);
+    var _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ChangeBubble.vue */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue");
+    var zod__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! zod */ "zod");
+    var zod__WEBPACK_IMPORTED_MODULE_4___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_4__);
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "TerritoryPanel",
       setup(__props, {expose: __expose}) {
@@ -1578,7 +1820,47 @@ var __webpack_modules__ = {
           open建筑详情,
           open关键NPC,
           open关键NPC列表,
-          open关键NPC详情
+          open关键NPC详情,
+          ChangeBubble: _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+        };
+        Object.defineProperty(__returned__, "__isScriptSetup", {
+          enumerable: false,
+          value: true
+        });
+        return __returned__;
+      }
+    });
+  },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => __WEBPACK_DEFAULT_EXPORT__
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
+    const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+      __name: "TimelinePanel",
+      setup(__props, {expose: __expose}) {
+        __expose();
+        const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
+        const logs = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => [ ...store.data.事件日志 ?? [] ].reverse());
+        const 类型色板 = {
+          战斗: "var(--c-danger)",
+          探索: "#5fa86b",
+          社交: "#6b8cbf",
+          建设: "#e0a83c",
+          成长: "#9a5bcc",
+          异变: "#c44d8a",
+          经济: "var(--c-unique)",
+          灾难: "#a33a36"
+        };
+        const 类型色 = t => 类型色板[t || ""] || "var(--c-muted)";
+        const __returned__ = {
+          store,
+          logs,
+          类型色板,
+          类型色
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -1607,8 +1889,9 @@ var __webpack_modules__ = {
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["HeaderBar"]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_2, [ ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["HeaderBar"]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["QuickRef"]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_2, [ ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.tabs, tab => (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         key: tab.id,
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -1634,6 +1917,9 @@ var __webpack_modules__ = {
       })) : $setup.active_tab === "map" ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["MapPanel"], {
         key: 5
+      })) : $setup.active_tab === "log" ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["TimelinePanel"], {
+        key: 6
       })) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ModalHost"]) ]);
     }
@@ -1722,6 +2008,34 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, "无")) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ])) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+    }
+  },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=template&id=e35b2aa2&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      render: () => render
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const _hoisted_1 = {
+      class: "cb-pos"
+    };
+    function render(_ctx, _cache, $props, $setup, $data, $options) {
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_1, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+        name: "cb"
+      }, {
+        default: (0, vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(() => [ $setup.bubble ? ((0, 
+        vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+          key: $setup.bubble.key,
+          class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "cb", $setup.bubble.cls ]),
+          style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)($props.color ? {
+            color: $props.color
+          } : {})
+        }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.bubble.text), 7)) : (0, 
+        vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]),
+        _: 1
+      }) ]);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/CharacterPanel.vue?vue&type=template&id=4f5e906e&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -1845,8 +2159,12 @@ var __webpack_modules__ = {
         class: "vital"
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v.name), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v.cur) + " / " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v.max), 1) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v.cur) + " / " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v.max) + " ", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: v.cur,
+        color: v.color
+      }, null, 8, [ "value", "color" ]) ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "vital-fill",
         style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
@@ -2026,9 +2344,13 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.阶位), 1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.等级), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, "经验 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.经验值) + " / " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.经验需求), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("经验 " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.经验值) + " ", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: $setup.store.data.人物面板.经验值 ?? 0,
+        color: "#e0a83c"
+      }, null, 8, [ "value" ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" / " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.经验需求), 1) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "pollution", {
           danger: $setup.store.data.人物面板.污染指数 >= 60
         } ])
@@ -2540,6 +2862,251 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["RenderNode"], {
         node: entry.content
       }, null, 8, [ "node" ]) ]) ], 6) ], 14, _hoisted_2))), 128)) ]);
+    }
+  },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=template&id=1ffd7239&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      render: () => render
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const _hoisted_1 = {
+      class: "qr-item loc"
+    };
+    const _hoisted_2 = {
+      class: "qr-item"
+    };
+    const _hoisted_3 = {
+      class: "qr-mini"
+    };
+    const _hoisted_4 = {
+      class: "qr-mini"
+    };
+    const _hoisted_5 = {
+      class: "qr-item"
+    };
+    const _hoisted_6 = {
+      class: "qr-counts"
+    };
+    const _hoisted_7 = {
+      class: "chev"
+    };
+    const _hoisted_8 = {
+      key: 0,
+      class: "qr-body"
+    };
+    const _hoisted_9 = {
+      class: "qr-row"
+    };
+    const _hoisted_10 = {
+      class: "row-v"
+    };
+    const _hoisted_11 = {
+      class: "row-v"
+    };
+    const _hoisted_12 = {
+      class: "row-v"
+    };
+    const _hoisted_13 = {
+      key: 0,
+      class: "row-v"
+    };
+    const _hoisted_14 = {
+      class: "qr-row"
+    };
+    const _hoisted_15 = {
+      class: "row-v"
+    };
+    const _hoisted_16 = {
+      class: "row-v"
+    };
+    const _hoisted_17 = {
+      class: "row-v"
+    };
+    const _hoisted_18 = {
+      class: "row-v"
+    };
+    const _hoisted_19 = {
+      key: 0,
+      class: "row-v danger"
+    };
+    const _hoisted_20 = {
+      class: "qr-row"
+    };
+    const _hoisted_21 = {
+      class: "res-k"
+    };
+    const _hoisted_22 = {
+      class: "qr-row"
+    };
+    const _hoisted_23 = {
+      class: "row-v"
+    };
+    const _hoisted_24 = {
+      class: "row-v"
+    };
+    const _hoisted_25 = {
+      class: "row-v"
+    };
+    const _hoisted_26 = {
+      key: 0,
+      class: "row-v"
+    };
+    const _hoisted_27 = {
+      class: "qr-row"
+    };
+    const _hoisted_28 = {
+      class: "row-v"
+    };
+    const _hoisted_29 = {
+      key: 0
+    };
+    const _hoisted_30 = {
+      class: "row-v"
+    };
+    const _hoisted_31 = {
+      key: 0
+    };
+    const _hoisted_32 = {
+      class: "row-v"
+    };
+    const _hoisted_33 = {
+      key: 0
+    };
+    const _hoisted_34 = {
+      class: "row-v"
+    };
+    const _hoisted_35 = {
+      class: "row-v"
+    };
+    const _hoisted_36 = {
+      class: "row-v"
+    };
+    const _hoisted_37 = {
+      class: "row-v"
+    };
+    function render(_ctx, _cache, $props, $setup, $data, $options) {
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "qr", {
+          open: $setup.expanded
+        } ])
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        class: "qr-bar",
+        onClick: _cache[0] || (_cache[0] = $event => $setup.expanded = !$setup.expanded)
+      }, [ _cache[1] || (_cache[1] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "qr-title"
+      }, "⬡ 全局速查", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_1, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.当前位置), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_2, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.日期) + " · " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.时间段), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "qr-mini", $setup.血pct >= 40 ? "ok" : "bad" ])
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ♥ " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.血量) + " ", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: $setup.血量,
+        color: "#e07a3c"
+      }, null, 8, [ "value" ]) ], 2), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ● " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.体力) + " ", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: $setup.体力,
+        color: "#5fa86b"
+      }, null, 8, [ "value" ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ✦ " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.精神力) + " ", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: $setup.精神力,
+        color: "#6b8cbf"
+      }, null, 8, [ "value" ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "qr-item", {
+          danger: $setup.污染 >= 60
+        } ])
+      }, "☣" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.污染), 3), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "qr-item", {
+          danger: $setup.恐慌 >= 75
+        } ])
+      }, "恐" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.恐慌), 3), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, "结算 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.结算计数) + "/7", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, "📦" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包数) + " · ⚔" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.任务数) + " · 🗺" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.expanded ? "▴" : "▾"), 1) ]), $setup.expanded ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [ _cache[2] || (_cache[2] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "row-k"
+      }, "状态", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.姓名) + " · " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.阶位) + " " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.等级) + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.破限 !== "无" ? " · " + $setup.破限 : ""), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, "污染 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.污染) + "/100", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, "伟业传唱 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.伟业) + "/100", 1), $setup.未分配属性点 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, "可用属性点 +" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.未分配属性点), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [ _cache[3] || (_cache[3] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "row-k"
+      }, "领地", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, "薪火 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.薪火等级) + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.特殊名 ? `「${$setup.特殊名}」` : "") + " · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.评级链), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, "人口 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.现有人数) + "/" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.庇护上限) + "（" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口占用) + "%）", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, "防" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.防御), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_18, "忠" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.忠诚), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "row-v", {
+          danger: $setup.恐慌 >= 75
+        } ])
+      }, "恐" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.恐慌), 3), $setup.入侵倒计时 > 0 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_19, "⚠ 入侵 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.入侵倒计时) + "h", 1)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [ _cache[4] || (_cache[4] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "row-k"
+      }, "资源", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.资源项, r => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+        key: r.key,
+        class: "row-v res"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.key), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.存量) + " ", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: r.存量
+      }, null, 8, [ "value" ]) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [ _cache[5] || (_cache[5] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "row-k"
+      }, "世界", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.声望, (v, k) => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+        key: k,
+        class: "row-v"
+      }, "庭·" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(k) + " " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v), 1))), 128)), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_23, "伪超凡注视 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.伪超凡) + "/100", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_24, "外神注视 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外神) + "/100", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_25, "薪火注视 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.薪火注视) + "/100", 1), $setup.有路线 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_26, "路线 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.路线文本), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [ _cache[6] || (_cache[6] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "row-k"
+      }, "速览", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_28, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("背包×" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包数), 1), $setup.装备数 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_29, "（穿" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.装备数) + "）", 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_30, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("活跃任务×" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.任务数), 1), $setup.动向数 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_31, " · 动向" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向数), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_32, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("势力×" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.势力数), 1), $setup.外部NPC数 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_33, " · 外部NPC" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外部NPC数), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_34, "地点×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_35, "建筑×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_36, "关键NPC×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_37, "日志 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.日志数) + " 条", 1) ]) ])) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ], 2);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=template&id=44558a69&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -3127,8 +3694,11 @@ var __webpack_modules__ = {
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.资源名[r]), 1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.资源(r).趋势 || "—"), 1) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.资源(r).存量 ?? 0), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.资源(r).存量 ?? 0) + " ", 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: $setup.资源(r).存量 ?? 0
+      }, null, 8, [ "value" ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "res-flow", $setup.flowClass($setup.资源(r).收支) ])
       }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.flowText($setup.资源(r).收支)), 3) ], 8, _hoisted_7)), 64)) ]) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [ _cache[3] || (_cache[3] = (0, 
@@ -3164,7 +3734,10 @@ var __webpack_modules__ = {
           width: s.pct + "%",
           background: s.color
         })
-      }, null, 4) ]) ], 8, _hoisted_18))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ _cache[8] || (_cache[8] = (0, 
+      }, null, 4) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
+        value: s.pct,
+        color: s.color
+      }, null, 8, [ "value", "color" ]) ], 8, _hoisted_18))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ _cache[8] || (_cache[8] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "建筑拓扑（点节点看建筑）", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, 
@@ -3240,6 +3813,98 @@ var __webpack_modules__ = {
       }, "›", -1) ]) ]) ]);
     }
   },
+  "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      render: () => render
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const _hoisted_1 = {
+      class: "panel"
+    };
+    const _hoisted_2 = {
+      class: "block"
+    };
+    const _hoisted_3 = {
+      key: 0,
+      class: "empty"
+    };
+    const _hoisted_4 = {
+      key: 1,
+      class: "timeline"
+    };
+    const _hoisted_5 = {
+      class: "tl-rail"
+    };
+    const _hoisted_6 = {
+      key: 0,
+      class: "tl-line"
+    };
+    const _hoisted_7 = {
+      class: "tl-body"
+    };
+    const _hoisted_8 = {
+      class: "tl-head"
+    };
+    const _hoisted_9 = {
+      class: "tl-time"
+    };
+    const _hoisted_10 = {
+      class: "tl-content"
+    };
+    const _hoisted_11 = {
+      class: "legend"
+    };
+    function render(_ctx, _cache, $props, $setup, $data, $options) {
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [ _cache[1] || (_cache[1] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: "block-title"
+      }, "事件时间轴", -1)), !$setup.logs.length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [ ..._cache[0] || (_cache[0] = [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 尚无事件记录", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "muted"
+      }, "重大事件（战斗/突破/发现/入侵/建设/异变）发生后，AI 会自动写入", -1) ]) ])) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [ ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.logs, (e, i) => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        key: i,
+        class: "tl-item"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "tl-dot",
+        style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+          background: $setup.类型色(e.类型)
+        })
+      }, null, 4), i < $setup.logs.length - 1 ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "tl-type",
+        style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+          color: $setup.类型色(e.类型),
+          borderColor: $setup.类型色(e.类型)
+        })
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.类型 || "事件"), 5), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.日期) + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.时段 && e.时段 !== "上午" ? " · " + e.时段 : ""), 1) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e.内容 || "（内容未记录）"), 1) ]) ]))), 128)) ])) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.类型色板, (c, k) => (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        key: k,
+        class: "lg"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+        class: "dot",
+        style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+          background: c
+        })
+      }, null, 4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(k), 1) ])), 64)) ]) ]);
+    }
+  },
   "./src/迷雾薪火/界面/状态栏/App.vue"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -3263,6 +3928,19 @@ var __webpack_modules__ = {
     var _CategoryModal_vue_vue_type_style_index_0_id_4688510c_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CategoryModal.vue?vue&type=style&index=0&id=4688510c&lang=scss&scoped=true */ "./src/迷雾薪火/界面/状态栏/components/CategoryModal.vue?vue&type=style&index=0&id=4688510c&lang=scss&scoped=true");
     var _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js");
     const __exports__ = (0, _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_CategoryModal_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__["default"], [ [ "render", _CategoryModal_vue_vue_type_template_id_4688510c_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render ], [ "__scopeId", "data-v-4688510c" ], [ "__file", "src/迷雾薪火/界面/状态栏/components/CategoryModal.vue" ] ]);
+    if (false) {}
+    const __WEBPACK_DEFAULT_EXPORT__ = __exports__;
+  },
+  "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => __WEBPACK_DEFAULT_EXPORT__
+    });
+    var _ChangeBubble_vue_vue_type_template_id_e35b2aa2_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ChangeBubble.vue?vue&type=template&id=e35b2aa2&scoped=true&ts=true */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=template&id=e35b2aa2&scoped=true&ts=true");
+    var _ChangeBubble_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChangeBubble.vue?vue&type=script&setup=true&lang=ts */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=script&setup=true&lang=ts");
+    var _ChangeBubble_vue_vue_type_style_index_0_id_e35b2aa2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css");
+    var _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js");
+    const __exports__ = (0, _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_ChangeBubble_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__["default"], [ [ "render", _ChangeBubble_vue_vue_type_template_id_e35b2aa2_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render ], [ "__scopeId", "data-v-e35b2aa2" ], [ "__file", "src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue" ] ]);
     if (false) {}
     const __WEBPACK_DEFAULT_EXPORT__ = __exports__;
   },
@@ -3344,6 +4022,19 @@ var __webpack_modules__ = {
     if (false) {}
     const __WEBPACK_DEFAULT_EXPORT__ = __exports__;
   },
+  "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => __WEBPACK_DEFAULT_EXPORT__
+    });
+    var _QuickRef_vue_vue_type_template_id_1ffd7239_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuickRef.vue?vue&type=template&id=1ffd7239&scoped=true&ts=true */ "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=template&id=1ffd7239&scoped=true&ts=true");
+    var _QuickRef_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuickRef.vue?vue&type=script&setup=true&lang=ts */ "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=script&setup=true&lang=ts");
+    var _QuickRef_vue_vue_type_style_index_0_id_1ffd7239_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true */ "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true");
+    var _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js");
+    const __exports__ = (0, _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_QuickRef_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__["default"], [ [ "render", _QuickRef_vue_vue_type_template_id_1ffd7239_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render ], [ "__scopeId", "data-v-1ffd7239" ], [ "__file", "src/迷雾薪火/界面/状态栏/components/QuickRef.vue" ] ]);
+    if (false) {}
+    const __WEBPACK_DEFAULT_EXPORT__ = __exports__;
+  },
   "./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -3383,6 +4074,19 @@ var __webpack_modules__ = {
     if (false) {}
     const __WEBPACK_DEFAULT_EXPORT__ = __exports__;
   },
+  "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => __WEBPACK_DEFAULT_EXPORT__
+    });
+    var _TimelinePanel_vue_vue_type_template_id_70c34100_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true */ "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true");
+    var _TimelinePanel_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TimelinePanel.vue?vue&type=script&setup=true&lang=ts */ "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=script&setup=true&lang=ts");
+    var _TimelinePanel_vue_vue_type_style_index_0_id_70c34100_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true */ "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true");
+    var _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js");
+    const __exports__ = (0, _node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_TimelinePanel_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_1__["default"], [ [ "render", _TimelinePanel_vue_vue_type_template_id_70c34100_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render ], [ "__scopeId", "data-v-70c34100" ], [ "__file", "src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue" ] ]);
+    if (false) {}
+    const __WEBPACK_DEFAULT_EXPORT__ = __exports__;
+  },
   "./src/迷雾薪火/界面/状态栏/App.vue?vue&type=style&index=0&id=15d684db&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_47_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_sass_loader_17_0_0_sass_1_103_1_webpack_5_109_2_node_modules_sass_loader_dist_cjs_index_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_App_vue_vue_type_style_index_0_id_15d684db_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./App.vue?vue&type=style&index=0&id=15d684db&lang=scss&scoped=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/App.vue?vue&type=style&index=0&id=15d684db&lang=scss&scoped=true");
@@ -3411,6 +4115,10 @@ var __webpack_modules__ = {
     __webpack_require__.r(__webpack_exports__);
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_47_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_sass_loader_17_0_0_sass_1_103_1_webpack_5_109_2_node_modules_sass_loader_dist_cjs_index_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_MapPanel_vue_vue_type_style_index_0_id_7203f04a_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true");
   },
+  "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_47_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_sass_loader_17_0_0_sass_1_103_1_webpack_5_109_2_node_modules_sass_loader_dist_cjs_index_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_QuickRef_vue_vue_type_style_index_0_id_1ffd7239_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true");
+  },
   "./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_47_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_sass_loader_17_0_0_sass_1_103_1_webpack_5_109_2_node_modules_sass_loader_dist_cjs_index_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_RelationshipPanel_vue_vue_type_style_index_0_id_44558a69_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true");
@@ -3422,6 +4130,14 @@ var __webpack_modules__ = {
   "./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=style&index=0&id=6289629d&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_47_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_sass_loader_17_0_0_sass_1_103_1_webpack_5_109_2_node_modules_sass_loader_dist_cjs_index_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TerritoryPanel_vue_vue_type_style_index_0_id_6289629d_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./TerritoryPanel.vue?vue&type=style&index=0&id=6289629d&lang=scss&scoped=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=style&index=0&id=6289629d&lang=scss&scoped=true");
+  },
+  "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_47_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_sass_loader_17_0_0_sass_1_103_1_webpack_5_109_2_node_modules_sass_loader_dist_cjs_index_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TimelinePanel_vue_vue_type_style_index_0_id_70c34100_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../../node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true");
+  },
+  "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_mini_css_extract_plugin_2_10_2_webpack_5_109_2_node_modules_mini_css_extract_plugin_dist_loader_js_node_modules_pnpm_css_loader_7_1_4_webpack_5_109_2_node_modules_css_loader_dist_cjs_js_clonedRuleSet_48_use_1_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_pnpm_postcss_loader_8_2_1_postcs_d066eba6038c65082196053f3d69a966_node_modules_postcss_loader_dist_cjs_js_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ChangeBubble_vue_vue_type_style_index_0_id_e35b2aa2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!../../../../../node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/mini-css-extract-plugin@2.10.2_webpack@5.109.2/node_modules/mini-css-extract-plugin/dist/loader.js!./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css");
   },
   "./src/迷雾薪火/界面/状态栏/components/ModalHost.vue?vue&type=style&index=0&id=525f9b9c&scoped=true&lang=css"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
@@ -3440,6 +4156,13 @@ var __webpack_modules__ = {
       default: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_CategoryModal_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__["default"]
     });
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_CategoryModal_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./CategoryModal.vue?vue&type=script&setup=true&lang=ts */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/CategoryModal.vue?vue&type=script&setup=true&lang=ts");
+  },
+  "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ChangeBubble_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__["default"]
+    });
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ChangeBubble_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./ChangeBubble.vue?vue&type=script&setup=true&lang=ts */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=script&setup=true&lang=ts");
   },
   "./src/迷雾薪火/界面/状态栏/components/CharacterPanel.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
@@ -3483,6 +4206,13 @@ var __webpack_modules__ = {
     });
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ModalHost_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./ModalHost.vue?vue&type=script&setup=true&lang=ts */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ModalHost.vue?vue&type=script&setup=true&lang=ts");
   },
+  "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_QuickRef_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__["default"]
+    });
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_QuickRef_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./QuickRef.vue?vue&type=script&setup=true&lang=ts */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=script&setup=true&lang=ts");
+  },
   "./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -3504,6 +4234,13 @@ var __webpack_modules__ = {
     });
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TerritoryPanel_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./TerritoryPanel.vue?vue&type=script&setup=true&lang=ts */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=script&setup=true&lang=ts");
   },
+  "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=script&setup=true&lang=ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      default: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TimelinePanel_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__["default"]
+    });
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TimelinePanel_vue_vue_type_script_setup_true_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./TimelinePanel.vue?vue&type=script&setup=true&lang=ts */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=script&setup=true&lang=ts");
+  },
   "./src/迷雾薪火/界面/状态栏/App.vue?vue&type=template&id=15d684db&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -3517,6 +4254,13 @@ var __webpack_modules__ = {
       render: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_CategoryModal_vue_vue_type_template_id_4688510c_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render
     });
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_CategoryModal_vue_vue_type_template_id_4688510c_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./CategoryModal.vue?vue&type=template&id=4688510c&scoped=true&ts=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/CategoryModal.vue?vue&type=template&id=4688510c&scoped=true&ts=true");
+  },
+  "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=template&id=e35b2aa2&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      render: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ChangeBubble_vue_vue_type_template_id_e35b2aa2_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render
+    });
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ChangeBubble_vue_vue_type_template_id_e35b2aa2_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./ChangeBubble.vue?vue&type=template&id=e35b2aa2&scoped=true&ts=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=template&id=e35b2aa2&scoped=true&ts=true");
   },
   "./src/迷雾薪火/界面/状态栏/components/CharacterPanel.vue?vue&type=template&id=4f5e906e&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
@@ -3560,6 +4304,13 @@ var __webpack_modules__ = {
     });
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_ModalHost_vue_vue_type_template_id_525f9b9c_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./ModalHost.vue?vue&type=template&id=525f9b9c&scoped=true&ts=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ModalHost.vue?vue&type=template&id=525f9b9c&scoped=true&ts=true");
   },
+  "./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=template&id=1ffd7239&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      render: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_QuickRef_vue_vue_type_template_id_1ffd7239_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render
+    });
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_QuickRef_vue_vue_type_template_id_1ffd7239_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./QuickRef.vue?vue&type=template&id=1ffd7239&scoped=true&ts=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=template&id=1ffd7239&scoped=true&ts=true");
+  },
   "./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=template&id=44558a69&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -3580,6 +4331,13 @@ var __webpack_modules__ = {
       render: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TerritoryPanel_vue_vue_type_template_id_6289629d_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render
     });
     var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TerritoryPanel_vue_vue_type_template_id_6289629d_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./TerritoryPanel.vue?vue&type=template&id=6289629d&scoped=true&ts=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=template&id=6289629d&scoped=true&ts=true");
+  },
+  "./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      render: () => _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TimelinePanel_vue_vue_type_template_id_70c34100_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__.render
+    });
+    var _node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_vue_components_node_modules_pnpm_unplugin_3_3_0_webpack_5_109_2_node_modules_unplugin_dist_webpack_loaders_transform_mjs_unplugin_auto_import_node_modules_pnpm_ts_loader_9_6_2_loader_util_f83a982f88ef9e76207204ba4c605698_node_modules_ts_loader_index_js_clonedRuleSet_42_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_4_node_modules_pnpm_vue_loader_17_4_2_vue_comp_4494d7206993ee9efd2b5bb1b637ceda_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_6_use_0_TimelinePanel_vue_vue_type_template_id_70c34100_scoped_true_ts_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!../../../../../node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!../../../../../node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!../../../../../node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true */ "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true");
   },
   "./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/exportHelper.js"(__unused_webpack_module, exports) {
     Object.defineProperty(exports, "__esModule", {
@@ -5265,10 +6023,19 @@ let __webpack_exports__ = {};
     (0, vue__WEBPACK_IMPORTED_MODULE_3__.createApp)(_App_vue__WEBPACK_IMPORTED_MODULE_1__["default"]).use((0, 
     pinia__WEBPACK_IMPORTED_MODULE_4__.createPinia)()).mount("#app");
   });
-})();</script><style>/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+})();</script><style>/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue?vue&type=style&index=0&id=e35b2aa2&scoped=true&lang=css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.cb-pos[data-v-e35b2aa2]{position:relative;display:inline-flex}.cb{&[data-v-e35b2aa2]{position:absolute;left:50%;top:-4px;transform:translateX(-50%);font-size:11px;font-weight:bold;pointer-events:none;white-space:nowrap;text-shadow:0 0 3px #000,0 0 6px rgba(0,0,0,0.6);z-index:5}&.up[data-v-e35b2aa2]{color:#5fa86b}&.down[data-v-e35b2aa2]{color:var(--c-danger)}}.cb-enter-active[data-v-e35b2aa2]{transition:opacity 0.15s ease,transform 0.15s ease}.cb-enter-from[data-v-e35b2aa2]{opacity:0;transform:translateX(-50%) translateY(6px)}.cb-leave-active[data-v-e35b2aa2]{transition:opacity 0.9s ease,transform 0.9s ease}.cb-leave-to[data-v-e35b2aa2]{opacity:0;transform:translateX(-50%) translateY(-16px)}
+
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/HeaderBar.vue?vue&type=style&index=0&id=dd7553fa&lang=scss&scoped=true ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 .header-bar[data-v-dd7553fa]{padding:10px;border-bottom:1px solid var(--c-border);background:linear-gradient(180deg,rgba(224,138,60,0.06),transparent)}.top-row[data-v-dd7553fa],.mid-row[data-v-dd7553fa],.bottom-row[data-v-dd7553fa]{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.top-row[data-v-dd7553fa]{font-size:12px}.top-row .location[data-v-dd7553fa]{color:var(--c-ember);font-weight:bold}.top-row .date[data-v-dd7553fa],.top-row .time[data-v-dd7553fa]{color:var(--c-muted)}.mid-row[data-v-dd7553fa]{margin-top:6px;font-size:13px}.mid-row .tier[data-v-dd7553fa]{color:var(--c-ember)}.mid-row .name[data-v-dd7553fa]{color:var(--c-ash);font-weight:bold}.mid-row .exp[data-v-dd7553fa]{color:var(--c-muted);font-size:12px}.mid-row .pollution[data-v-dd7553fa]{margin-left:auto;color:var(--c-muted)}.mid-row .pollution.danger[data-v-dd7553fa]{color:var(--c-danger);animation:pulse-dd7553fa 1.2s infinite}.exp-track[data-v-dd7553fa]{position:relative;height:10px;margin-top:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:5px;overflow:hidden}.exp-fill[data-v-dd7553fa]{height:100%;background:linear-gradient(90deg,#b06b2a,var(--c-ember));transition:width 0.3s ease}.exp-tip[data-v-dd7553fa]{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:#1a1d20;font-weight:bold}.bottom-row[data-v-dd7553fa]{margin-top:6px;font-size:12px;color:var(--c-muted)}.bottom-row .fire[data-v-dd7553fa]{color:var(--c-ember)}.bottom-row .break[data-v-dd7553fa]{color:var(--c-ember);border:1px solid var(--c-ember);padding:0 4px;border-radius:2px}@keyframes pulse-dd7553fa{0%,100%{opacity:1}50%{opacity:0.4}}
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/QuickRef.vue?vue&type=style&index=0&id=1ffd7239&lang=scss&scoped=true ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.qr[data-v-1ffd7239]{border-bottom:1px solid var(--c-border);background:var(--c-surface-2)}.qr-bar[data-v-1ffd7239]{width:100%;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:6px 10px;background:transparent;border:none;color:var(--c-muted);font-family:inherit;font-size:11px;cursor:pointer;text-align:left}.qr-bar[data-v-1ffd7239]:hover{background:rgba(224,138,60,0.05)}.qr-bar .qr-title[data-v-1ffd7239]{color:var(--c-ember);font-weight:bold;font-size:12px;flex-shrink:0}.qr-bar .loc[data-v-1ffd7239]{color:var(--c-ash)}.qr-bar .danger[data-v-1ffd7239]{color:var(--c-danger)}.qr-mini[data-v-1ffd7239]{display:inline-flex;align-items:center;color:var(--c-ash);font-weight:bold;line-height:1}.qr-mini.ok[data-v-1ffd7239]{color:var(--c-ash)}.qr-mini.bad[data-v-1ffd7239]{color:var(--c-danger)}.qr-counts[data-v-1ffd7239]{margin-left:auto;color:var(--c-ash)}.chev[data-v-1ffd7239]{color:var(--c-muted)}.qr-body[data-v-1ffd7239]{padding:2px 10px 8px;display:flex;flex-direction:column;gap:4px}.qr-row[data-v-1ffd7239]{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:11px;padding:2px 0;border-top:1px dashed var(--c-border)}.qr-row .row-k[data-v-1ffd7239]{color:var(--c-ember);font-weight:bold;flex-shrink:0;width:30px}.qr-row .row-v[data-v-1ffd7239]{color:var(--c-muted)}.qr-row .row-v.danger[data-v-1ffd7239]{color:var(--c-danger)}.qr-row .res[data-v-1ffd7239]{display:inline-flex;align-items:center}.qr-row .res .res-k[data-v-1ffd7239]{color:var(--c-ash);margin-right:2px}
 /*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/HexagonStats.vue?vue&type=style&index=0&id=5ab1f332&lang=scss&scoped=true ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -5301,6 +6068,10 @@ let __webpack_exports__ = {};
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 .panel[data-v-7203f04a]{display:flex;flex-direction:column;gap:6px}.map[data-v-7203f04a]{width:100%;height:auto;border:1px solid var(--c-border);border-radius:6px}.link[data-v-7203f04a]{stroke:#4a4f55;stroke-width:1;stroke-dasharray:3 3;opacity:0.8}.ring[data-v-7203f04a]{fill:none;stroke:var(--c-muted);stroke-width:1;stroke-dasharray:2 2}.ring.explored[data-v-7203f04a]{stroke:var(--c-ember);stroke-dasharray:none}.node[data-v-7203f04a]{stroke:#1a1d20;stroke-width:1.5;cursor:pointer;filter:drop-shadow(0 0 3px rgba(0,0,0,0.6))}.node.t-camp[data-v-7203f04a]{fill:#5fa86b}.node.t-manor[data-v-7203f04a]{fill:var(--c-rare)}.node.t-town[data-v-7203f04a]{fill:#e0a83c}.node.t-ruin[data-v-7203f04a]{fill:#8a8a8a}.node.t-danger[data-v-7203f04a]{fill:var(--c-danger)}.node.t-mist[data-v-7203f04a]{fill:#4a4f55}.camp-core[data-v-7203f04a]{fill:#ffb35c;filter:drop-shadow(0 0 6px #e08a3c)}.camp-label[data-v-7203f04a]{fill:#ffb35c;font-size:9px;font-weight:bold}.node-label[data-v-7203f04a]{fill:var(--c-ash);font-size:8px}.unknown[data-v-7203f04a]{fill:var(--c-muted);font-size:8px;opacity:0.75}.legend[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:8px;padding:4px 2px}.legend .lg[data-v-7203f04a]{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--c-muted)}.legend .lg .dot[data-v-7203f04a]{width:8px;height:8px;border-radius:50%;display:inline-block}.legend .lg .dot.t-camp[data-v-7203f04a]{background:#5fa86b}.legend .lg .dot.t-manor[data-v-7203f04a]{background:var(--c-rare)}.legend .lg .dot.t-town[data-v-7203f04a]{background:#e0a83c}.legend .lg .dot.t-ruin[data-v-7203f04a]{background:#8a8a8a}.legend .lg .dot.t-danger[data-v-7203f04a]{background:var(--c-danger)}.legend .lg .dot.t-mist[data-v-7203f04a]{background:#4a4f55}.muted[data-v-7203f04a]{color:var(--c-muted);font-size:11px}.modal-backdrop[data-v-7203f04a]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-7203f04a]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-head[data-v-7203f04a]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.modal-title[data-v-7203f04a]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-7203f04a]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-7203f04a]:hover{color:var(--c-ember)}.detail-meta[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.chip[data-v-7203f04a]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-text[data-v-7203f04a]{color:var(--c-ash);font-size:12px;line-height:1.6}.detail-text b[data-v-7203f04a]{color:var(--c-ember)}.dim[data-v-7203f04a]{color:var(--c-muted);opacity:0.7}
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=style&index=0&id=70c34100&lang=scss&scoped=true ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.panel[data-v-70c34100]{display:flex;flex-direction:column;gap:8px}.block[data-v-70c34100]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-70c34100]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.empty[data-v-70c34100]{color:var(--c-muted);font-size:12px;text-align:center;padding:24px 0;line-height:1.8}.empty .muted[data-v-70c34100]{font-size:11px;opacity:0.7}.timeline[data-v-70c34100]{display:flex;flex-direction:column}.tl-item[data-v-70c34100]{display:flex;gap:10px}.tl-rail[data-v-70c34100]{display:flex;flex-direction:column;align-items:center;width:10px;flex-shrink:0}.tl-dot[data-v-70c34100]{width:9px;height:9px;border-radius:50%;margin-top:4px;flex-shrink:0;box-shadow:0 0 4px rgba(0,0,0,0.5)}.tl-line[data-v-70c34100]{flex:1;width:1px;background:var(--c-border);margin:2px 0}.tl-body[data-v-70c34100]{flex:1;padding-bottom:14px;min-width:0}.tl-head[data-v-70c34100]{display:flex;align-items:center;gap:8px;margin-bottom:3px}.tl-type[data-v-70c34100]{font-size:10px;border:1px solid;border-radius:2px;padding:0 5px;line-height:16px;flex-shrink:0}.tl-time[data-v-70c34100]{color:var(--c-muted);font-size:11px}.tl-content[data-v-70c34100]{color:var(--c-ash);font-size:12px;line-height:1.6}.legend[data-v-70c34100]{display:flex;flex-wrap:wrap;gap:8px;padding:0 2px}.legend .lg[data-v-70c34100]{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--c-muted)}.legend .lg .dot[data-v-70c34100]{width:8px;height:8px;border-radius:50%;display:inline-block}
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ModalHost.vue?vue&type=style&index=0&id=525f9b9c&scoped=true&lang=css ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
