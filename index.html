@@ -97,15 +97,39 @@ var __webpack_modules__ = {
       if (typeof x === "object") return [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.content || "" ].filter(Boolean).join("——");
       return String(x);
     };
+    const 文本数组 = v => {
+      if (v == null) return [];
+      if (Array.isArray(v)) return v.map(条目文本).filter(Boolean);
+      if (typeof v === "string") return v.split(/[；;\n]/).map(s => s.trim()).filter(Boolean);
+      return [ 条目文本(v) ];
+    };
+    const 文本块 = v => typeof v === "string" ? v : 文本数组(v).join("\n");
+    const 清键 = s => {
+      const t = String(s).trim();
+      if (t.length >= 2 && t[0] === '"' && t[t.length - 1] === '"') return t.slice(1, -1);
+      if (t.length >= 2 && t[0] === "'" && t[t.length - 1] === "'") return t.slice(1, -1);
+      return t;
+    };
+    const 合并引号键 = obj => {
+      const out = {};
+      for (const k of Object.keys(obj || {})) {
+        const ck = 清键(k);
+        if (out[ck] === undefined) out[ck] = obj[k]; else if (out[ck] && typeof out[ck] === "object" && obj[k] && typeof obj[k] === "object") out[ck] = {
+          ...out[ck],
+          ...obj[k]
+        }; else out[ck] = obj[k];
+      }
+      return out;
+    };
     const 关键NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
       分区: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("后勤"),
       任职: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean).join("\n")), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string() ]).prefault(""),
+      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault(""),
       忠诚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
       野心: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean)), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(s => s ? s.split(/[；;\n]/).map(x => x.trim()).filter(Boolean) : []) ]).prefault([]),
+      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本数组).prefault([]),
       阶位: 阶位Schema,
       等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("在岗"),
@@ -124,11 +148,11 @@ var __webpack_modules__ = {
       年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       身份: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean).join("\n")), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string() ]).prefault(""),
+      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault(""),
       能力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       好感: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
       野心: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean)), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(s => s ? s.split(/[；;\n]/).map(x => x.trim()).filter(Boolean) : []) ]).prefault([]),
+      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本数组).prefault([]),
       由来: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       阶位: 阶位Schema,
       等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -155,7 +179,7 @@ var __webpack_modules__ = {
         经验值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         经验池: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
-        技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
+        技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
         破限状态,
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
@@ -206,7 +230,7 @@ var __webpack_modules__ = {
           博弈阶段
         }).prefault({}),
         势力关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
-        外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 外部NPCItem).prefault({})
+        外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 外部NPCItem).transform(合并引号键).prefault({})
       }).prefault({}),
       地图: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
       领地: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -236,7 +260,7 @@ var __webpack_modules__ = {
         防御成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         忠诚成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         恐慌成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 关键NPCItem).prefault({}),
+        关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 关键NPCItem).transform(合并引号键).prefault({}),
         入侵预警: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           倒计时: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           时间单位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("小时"),
@@ -1105,6 +1129,7 @@ var __webpack_modules__ = {
         const newOutfitName = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("");
         const itemNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.背包 ?? {}).filter(k => k !== "$meta"));
         const 去引号 = s => {
+          if (typeof s !== "string") return s == null ? "" : typeof s === "number" ? String(s) : "";
           const e = s.trim();
           if (e.length >= 2 && e[0] === '"' && e[e.length - 1] === '"') return e.slice(1, -1);
           if (e.length >= 2 && e[0] === "'" && e[e.length - 1] === "'") return e.slice(1, -1);
@@ -1390,6 +1415,7 @@ var __webpack_modules__ = {
           资源点: "t-res"
         };
         const 去引号 = s => {
+          if (typeof s !== "string") return s == null ? "" : typeof s === "number" ? String(s) : "";
           const e = s.trim();
           if (e.length >= 2 && e[0] === '"' && e[e.length - 1] === '"') return e.slice(1, -1);
           if (e.length >= 2 && e[0] === "'" && e[e.length - 1] === "'") return e.slice(1, -1);
