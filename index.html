@@ -1893,24 +1893,46 @@ var __webpack_modules__ = {
         const 关键NPC = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.领地.关键NPC ?? {});
         const NPC = name => 关键NPC.value[name] ?? {};
         const 分类NPC = cat => Object.keys(关键NPC.value).filter(n => n !== "$meta" && (关键NPC.value[n]?.分区 || "后勤") === cat);
-        const 选中NPC分类 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("后勤");
-        const 分类配置 = {
-          后勤: {
-            icon: "勤",
-            cls: "log"
-          },
-          战职: {
-            icon: "战",
-            cls: "com"
-          }
+        const NPC筛选 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("全部");
+        const NPC排序 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)("忠诚");
+        const NPC全部 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(关键NPC.value).filter(k => k !== "$meta"));
+        const NPC异常 = p => !!(p.状态 && p.状态 !== "在岗");
+        const 忠诚色点 = v => {
+          const n = typeof v === "number" ? v : Number(v || 0);
+          if (n > 80) return "#5fa86b";
+          if (n < 40) return "var(--c-danger)";
+          return "#c9c2b4";
         };
-        const 分类卡 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => [ "后勤", "战职" ].map(c => ({
-          name: c,
-          icon: 分类配置[c].icon,
-          cls: 分类配置[c].cls,
-          count: 分类NPC(c).length,
-          warn: 分类NPC(c).some(n => NPC(n).状态 && NPC(n).状态 !== "在岗")
-        })));
+        const 阶位序 = {
+          一阶见习: 1,
+          二阶精英: 2,
+          三阶王者: 3,
+          四阶史诗: 4,
+          五阶传奇: 5,
+          六阶超凡: 6,
+          七阶神话: 7,
+          八阶至高: 8,
+          九阶唯一: 9
+        };
+        const 阶位排位 = s => 阶位序[s || ""] || 0;
+        const NPC显示列表 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
+          const 列表 = NPC筛选.value === "全部" ? NPC全部.value : 分类NPC(NPC筛选.value);
+          const items = 列表.map(n => ({
+            name: n,
+            p: NPC(n),
+            分区: NPC(n).分区 || "后勤"
+          }));
+          const 优先级 = p => p.状态?.includes("失踪") || p.状态?.includes("负伤") ? 2 : NPC异常(p) ? 1 : 0;
+          const 忠 = p => typeof p.忠诚 === "number" ? p.忠诚 : Number(p.忠诚 || 0);
+          items.sort((a, b) => {
+            const pa = 优先级(a.p);
+            const pb = 优先级(b.p);
+            if (pa !== pb) return pb - pa;
+            if (NPC排序.value === "阶位") return 阶位排位(b.p.阶位) - 阶位排位(a.p.阶位);
+            return 忠(b.p) - 忠(a.p);
+          });
+          return items;
+        });
         const NPC状态类 = s => {
           if (s.includes("失踪")) return "ruined";
           if (s.includes("负伤")) return "up";
@@ -2038,9 +2060,14 @@ var __webpack_modules__ = {
           关键NPC,
           NPC,
           分类NPC,
-          选中NPC分类,
-          分类配置,
-          分类卡,
+          NPC筛选,
+          NPC排序,
+          NPC全部,
+          NPC异常,
+          忠诚色点,
+          阶位序,
+          阶位排位,
+          NPC显示列表,
           NPC状态类,
           hChip,
           hText,
@@ -3955,44 +3982,36 @@ var __webpack_modules__ = {
       class: "block"
     };
     const _hoisted_38 = {
-      class: "zone-row"
+      class: "npc-tabs"
     };
     const _hoisted_39 = [ "onClick" ];
     const _hoisted_40 = {
-      key: 0,
-      class: "zone-warn"
+      class: "npc-sortrow"
     };
     const _hoisted_41 = {
-      class: "zone-icon"
-    };
-    const _hoisted_42 = {
-      class: "zone-name"
-    };
-    const _hoisted_43 = {
-      class: "zone-count"
-    };
-    const _hoisted_44 = {
-      class: "build-list"
-    };
-    const _hoisted_45 = {
       key: 0,
       class: "empty"
     };
-    const _hoisted_46 = [ "onClick" ];
+    const _hoisted_42 = {
+      key: 1,
+      class: "npc-grid"
+    };
+    const _hoisted_43 = {
+      key: 0,
+      class: "empty span"
+    };
+    const _hoisted_44 = [ "onClick" ];
+    const _hoisted_45 = {
+      class: "npc-line1"
+    };
+    const _hoisted_46 = {
+      class: "npc-name"
+    };
     const _hoisted_47 = {
-      class: "brow-line"
+      class: "npc-line2"
     };
     const _hoisted_48 = {
-      class: "brow-name"
-    };
-    const _hoisted_49 = {
-      class: "brow-lv"
-    };
-    const _hoisted_50 = {
-      class: "brow-line2"
-    };
-    const _hoisted_51 = {
-      class: "brow-brief"
+      class: "npc-tier"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
@@ -4012,10 +4031,10 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 1
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, "距下次结算 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.距结算) + " 日", 1), _cache[0] || (_cache[0] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.距结算) + " 日", 1), _cache[3] || (_cache[3] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "alert-sub"
-      }, "暂无入侵预警", -1)) ], 64)) ], 2), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ _cache[1] || (_cache[1] = (0, 
+      }, "暂无入侵预警", -1)) ], 64)) ], 2), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ _cache[4] || (_cache[4] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "资源", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [ ((0, 
@@ -4034,7 +4053,7 @@ var __webpack_modules__ = {
       }, null, 8, [ "value" ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "res-flow", $setup.flowClass($setup.资源(r).收支) ])
       }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.flowText($setup.资源(r).收支)), 3) ], 8, _hoisted_7)), 64)) ]) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [ _cache[2] || (_cache[2] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [ _cache[5] || (_cache[5] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "人口", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -4050,7 +4069,7 @@ var __webpack_modules__ = {
           width: $setup.人口百分比 + "%",
           background: $setup.人口色
         })
-      }, null, 4) ]) ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [ _cache[3] || (_cache[3] = (0, 
+      }, null, 4) ]) ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [ _cache[6] || (_cache[6] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "领地状态", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -4070,7 +4089,7 @@ var __webpack_modules__ = {
       }, null, 4) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
         value: s.pct,
         color: s.color
-      }, null, 8, [ "value", "color" ]) ], 8, _hoisted_18))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ _cache[4] || (_cache[4] = (0, 
+      }, null, 8, [ "value", "color" ]) ], 8, _hoisted_18))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ _cache[7] || (_cache[7] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
       }, "建筑", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [ ((0, 
@@ -4113,43 +4132,62 @@ var __webpack_modules__ = {
         })
       }, null, 6) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_36, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑(n).简介 || "（暂无简介）"), 1) ]) ], 8, _hoisted_30))), 128)) ]) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [ _cache[5] || (_cache[5] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [ _cache[9] || (_cache[9] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "block-title"
-      }, "关键NPC", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [ ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.分类卡, c => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-        key: c.name,
-        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "zone-card", [ `nc-${c.cls}`, {
-          active: $setup.选中NPC分类 === c.name,
-          empty: c.count === 0
-        } ] ]),
-        onClick: $event => $setup.选中NPC分类 = c.name
-      }, [ c.warn ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_40)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_41, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c.icon), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_42, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_43, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c.count), 1) ], 10, _hoisted_39))), 128)) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [ !$setup.分类NPC($setup.选中NPC分类).length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_45, "该分类暂无关键NPC")) : (0, 
+      }, "关键NPC", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "npc-tab", {
+          active: $setup.NPC筛选 === "全部"
+        } ]),
+        onClick: _cache[0] || (_cache[0] = $event => $setup.NPC筛选 = "全部")
+      }, "全部", 2), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)([ "后勤", "战职" ], c => (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        key: c,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "npc-tab", {
+          active: $setup.NPC筛选 === c
+        } ]),
+        onClick: $event => $setup.NPC筛选 = c
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c) + " " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.分类NPC(c).length), 11, _hoisted_39)), 64)) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [ _cache[8] || (_cache[8] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "npc-sort-hint"
+      }, "排序", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "npc-sort", {
+          active: $setup.NPC排序 === "忠诚"
+        } ]),
+        onClick: _cache[1] || (_cache[1] = $event => $setup.NPC排序 = "忠诚")
+      }, "忠诚↓", 2), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "npc-sort", {
+          active: $setup.NPC排序 === "阶位"
+        } ]),
+        onClick: _cache[2] || (_cache[2] = $event => $setup.NPC排序 = "阶位")
+      }, "阶位↓", 2) ]), !$setup.NPC全部.length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_41, "尚无关键人物——招募与邂逅会在迷雾中到来")) : ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_42, [ !$setup.NPC显示列表.length ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_43, "该分类暂无人物")) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.分类NPC($setup.选中NPC分类), n => ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-        key: n,
-        class: "build-row",
-        onClick: $event => $setup.open关键NPC详情(n, $setup.选中NPC分类)
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_48, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_49, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).阶位 || "阶位未知") + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).等级 ? " " + $setup.NPC(n).等级 : ""), 1), $setup.NPC(n).状态 && $setup.NPC(n).状态 !== "在岗" ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.NPC显示列表, it => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+        key: it.name,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "npc-cell", {
+          dimmed: $setup.NPC异常(it.p)
+        } ]),
+        onClick: $event => $setup.open关键NPC详情(it.name, it.分区)
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "npc-dot",
+        style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+          background: $setup.忠诚色点(it.p.忠诚)
+        })
+      }, null, 4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_46, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(it.name), 1) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_48, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(it.p.阶位 || "阶位未知"), 1), $setup.NPC异常(it.p) ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
         key: 0,
-        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "brow-status", `bs-${$setup.NPC状态类($setup.NPC(n).状态)}` ])
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).状态), 3)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_51, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).任职 || $setup.NPC(n).过往 || "（暂无档案）"), 1) ]) ], 8, _hoisted_46))), 128)) ]) ]) ]);
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "npc-status", `bs-${$setup.NPC状态类(it.p.状态)}` ])
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(it.p.状态), 3)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ], 10, _hoisted_44))), 128)) ])) ]) ]);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -6604,7 +6642,7 @@ let __webpack_exports__ = {};
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TerritoryPanel.vue?vue&type=style&index=0&id=6289629d&lang=scss&scoped=true ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-6289629d]{display:flex;flex-direction:column;gap:10px}.invasion-bar[data-v-6289629d]{padding:8px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:3px;text-align:center;cursor:pointer;background:var(--c-surface-2)}.invasion-bar[data-v-6289629d]:hover{border-color:var(--c-ember)}.invasion-bar.active[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger);background:rgba(176,65,62,0.08)}.invasion-bar.active .alert-title[data-v-6289629d]{animation:blink-6289629d 1s infinite}.invasion-bar .alert-title[data-v-6289629d]{font-weight:bold;font-size:13px}.invasion-bar .alert-sub[data-v-6289629d]{color:var(--c-muted);font-size:11px;margin-top:2px}.block[data-v-6289629d]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-6289629d]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.resources[data-v-6289629d]{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.res[data-v-6289629d]{display:flex;flex-direction:column;gap:2px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:6px 8px;cursor:pointer;font-family:inherit;text-align:left}.res[data-v-6289629d]:hover{border-color:var(--c-ember)}.res .res-top[data-v-6289629d]{display:flex;justify-content:space-between;align-items:center}.res .label[data-v-6289629d]{color:var(--c-muted);font-size:11px}.res .trend[data-v-6289629d]{color:var(--c-ash);font-size:11px}.res .res-value[data-v-6289629d]{color:var(--c-ash);font-size:16px;font-weight:bold}.res .res-flow[data-v-6289629d]{color:var(--c-muted);font-size:11px}.res .res-flow.pos[data-v-6289629d]{color:#5fa86b}.res .res-flow.neg[data-v-6289629d]{color:var(--c-danger)}.pop-row[data-v-6289629d]{width:100%;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:6px 8px;cursor:pointer;font-family:inherit}.pop-row[data-v-6289629d]:hover{border-color:var(--c-ember)}.pop-row .pop-head[data-v-6289629d]{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}.pop-row .pop-head .pop-num[data-v-6289629d]{color:var(--c-ash)}.pop-row .pop-head .pop-pct[data-v-6289629d]{color:var(--c-muted)}.pop-row .pop-track[data-v-6289629d]{height:8px;background:var(--c-surface-2);border-radius:4px;overflow:hidden}.pop-row .pop-fill[data-v-6289629d]{height:100%;border-radius:3px;transition:width 0.3s ease}.stat-row[data-v-6289629d]{width:100%;display:flex;align-items:center;gap:8px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:5px 8px;cursor:pointer;font-family:inherit;margin-top:4px}.stat-row[data-v-6289629d]:hover{border-color:var(--c-ember)}.stat-row .stat-name[data-v-6289629d]{color:var(--c-muted);font-size:12px;width:34px;flex-shrink:0}.stat-row .stat-track[data-v-6289629d]{flex:1;height:8px;background:var(--c-surface-2);border-radius:4px;overflow:hidden}.stat-row .stat-fill[data-v-6289629d]{height:100%;border-radius:3px;transition:width 0.3s ease}.zone-row[data-v-6289629d]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.zone-card[data-v-6289629d]{position:relative;flex:0 0 110px;height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;color:var(--c-muted)}.zone-card .zone-icon[data-v-6289629d]{font-size:18px;line-height:1}.zone-card .zone-name[data-v-6289629d]{font-size:12px;font-weight:bold}.zone-card .zone-count[data-v-6289629d]{font-size:11px}.zone-card.zc-core[data-v-6289629d]{border-color:#e08a3c}.zone-card.zc-life[data-v-6289629d]{border-color:#5fa86b}.zone-card.zc-prod[data-v-6289629d]{border-color:#e0a83c}.zone-card.zc-sci[data-v-6289629d]{border-color:var(--c-rare)}.zone-card.zc-combat[data-v-6289629d]{border-color:var(--c-danger)}.zone-card.nc-log[data-v-6289629d]{border-color:#5fa86b}.zone-card.nc-com[data-v-6289629d]{border-color:var(--c-danger)}.zone-card.active[data-v-6289629d]{background:var(--c-surface-2);border-width:3px}.zone-card.active .zone-icon[data-v-6289629d],.zone-card.active .zone-name[data-v-6289629d]{color:var(--c-ember)}.zone-card.active .zone-count[data-v-6289629d]{color:var(--c-ash)}.zone-card.empty[data-v-6289629d]{opacity:0.4}.zone-card .zone-warn[data-v-6289629d]{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--c-danger);box-shadow:0 0 4px var(--c-danger)}.build-list[data-v-6289629d]{margin-top:8px;display:flex;flex-direction:column}.build-row[data-v-6289629d]{display:flex;flex-direction:column;gap:4px;width:100%;padding:8px 10px;background:var(--c-surface);border:none;border-bottom:1px solid var(--c-border);cursor:pointer;font-family:inherit;text-align:left}.build-row[data-v-6289629d]:hover{background:var(--c-surface-2)}.build-row .brow-line[data-v-6289629d]{display:flex;align-items:center;gap:8px}.build-row .brow-name[data-v-6289629d]{color:var(--c-ash);font-size:13px;font-weight:bold}.build-row .brow-lv[data-v-6289629d]{color:var(--c-muted);font-size:11px}.build-row .brow-status[data-v-6289629d]{margin-left:auto;font-size:10px;border:1px solid;border-radius:2px;padding:0 5px;line-height:16px}.build-row .brow-status.bs-up[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.build-row .brow-status.bs-ruined[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.build-row .brow-status.bs-cut[data-v-6289629d]{color:var(--c-rare);border-color:var(--c-rare)}.build-row .brow-status.bs-other[data-v-6289629d]{color:var(--c-muted);border-color:var(--c-muted)}.build-row .brow-line2[data-v-6289629d]{display:flex;align-items:center;gap:8px}.build-row .dur-track[data-v-6289629d]{flex-shrink:0;width:64px;height:5px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px;overflow:hidden}.build-row .dur-fill[data-v-6289629d]{height:100%;background:#5fa86b;border-radius:2px}.build-row .dur-fill.mid[data-v-6289629d]{background:#e0a83c}.build-row .dur-fill.low[data-v-6289629d]{background:var(--c-danger)}.build-row .brow-brief[data-v-6289629d]{flex:1;min-width:0;color:var(--c-muted);font-size:11px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty[data-v-6289629d]{color:var(--c-muted);font-size:12px;text-align:center;padding:12px}.muted[data-v-6289629d]{color:var(--c-muted);font-size:11px}.detail-meta[data-v-6289629d]{display:flex;flex-wrap:wrap;gap:6px}.chip[data-v-6289629d]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.chip.pos[data-v-6289629d]{color:#5fa86b;border-color:#5fa86b}.chip.neg[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.danger[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.dur-mid[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.chip.dur-low[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.st-up[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.chip.st-ruined[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.st-cut[data-v-6289629d]{color:var(--c-rare);border-color:var(--c-rare)}.detail-text[data-v-6289629d]{color:var(--c-ash);font-size:13px;line-height:1.7;white-space:pre-wrap}.detail-block[data-v-6289629d]{color:var(--c-ash);font-size:13px;line-height:1.6}.detail-block b[data-v-6289629d]{color:var(--c-ember);margin-right:6px}.dim[data-v-6289629d]{color:var(--c-muted);opacity:0.7}.list[data-v-6289629d]{display:flex;flex-direction:column;gap:6px}.empty[data-v-6289629d]{color:var(--c-muted);font-size:12px;text-align:center;padding:12px}@keyframes blink-6289629d{0%,100%{opacity:1}50%{opacity:0.5}}
+.panel[data-v-6289629d]{display:flex;flex-direction:column;gap:10px}.invasion-bar[data-v-6289629d]{padding:8px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:3px;text-align:center;cursor:pointer;background:var(--c-surface-2)}.invasion-bar[data-v-6289629d]:hover{border-color:var(--c-ember)}.invasion-bar.active[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger);background:rgba(176,65,62,0.08)}.invasion-bar.active .alert-title[data-v-6289629d]{animation:blink-6289629d 1s infinite}.invasion-bar .alert-title[data-v-6289629d]{font-weight:bold;font-size:13px}.invasion-bar .alert-sub[data-v-6289629d]{color:var(--c-muted);font-size:11px;margin-top:2px}.block[data-v-6289629d]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-6289629d]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.resources[data-v-6289629d]{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.res[data-v-6289629d]{display:flex;flex-direction:column;gap:2px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:6px 8px;cursor:pointer;font-family:inherit;text-align:left}.res[data-v-6289629d]:hover{border-color:var(--c-ember)}.res .res-top[data-v-6289629d]{display:flex;justify-content:space-between;align-items:center}.res .label[data-v-6289629d]{color:var(--c-muted);font-size:11px}.res .trend[data-v-6289629d]{color:var(--c-ash);font-size:11px}.res .res-value[data-v-6289629d]{color:var(--c-ash);font-size:16px;font-weight:bold}.res .res-flow[data-v-6289629d]{color:var(--c-muted);font-size:11px}.res .res-flow.pos[data-v-6289629d]{color:#5fa86b}.res .res-flow.neg[data-v-6289629d]{color:var(--c-danger)}.pop-row[data-v-6289629d]{width:100%;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:6px 8px;cursor:pointer;font-family:inherit}.pop-row[data-v-6289629d]:hover{border-color:var(--c-ember)}.pop-row .pop-head[data-v-6289629d]{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}.pop-row .pop-head .pop-num[data-v-6289629d]{color:var(--c-ash)}.pop-row .pop-head .pop-pct[data-v-6289629d]{color:var(--c-muted)}.pop-row .pop-track[data-v-6289629d]{height:8px;background:var(--c-surface-2);border-radius:4px;overflow:hidden}.pop-row .pop-fill[data-v-6289629d]{height:100%;border-radius:3px;transition:width 0.3s ease}.stat-row[data-v-6289629d]{width:100%;display:flex;align-items:center;gap:8px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:5px 8px;cursor:pointer;font-family:inherit;margin-top:4px}.stat-row[data-v-6289629d]:hover{border-color:var(--c-ember)}.stat-row .stat-name[data-v-6289629d]{color:var(--c-muted);font-size:12px;width:34px;flex-shrink:0}.stat-row .stat-track[data-v-6289629d]{flex:1;height:8px;background:var(--c-surface-2);border-radius:4px;overflow:hidden}.stat-row .stat-fill[data-v-6289629d]{height:100%;border-radius:3px;transition:width 0.3s ease}.zone-row[data-v-6289629d]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.zone-card[data-v-6289629d]{position:relative;flex:0 0 110px;height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;color:var(--c-muted)}.zone-card .zone-icon[data-v-6289629d]{font-size:18px;line-height:1}.zone-card .zone-name[data-v-6289629d]{font-size:12px;font-weight:bold}.zone-card .zone-count[data-v-6289629d]{font-size:11px}.zone-card.zc-core[data-v-6289629d]{border-color:#e08a3c}.zone-card.zc-life[data-v-6289629d]{border-color:#5fa86b}.zone-card.zc-prod[data-v-6289629d]{border-color:#e0a83c}.zone-card.zc-sci[data-v-6289629d]{border-color:var(--c-rare)}.zone-card.zc-combat[data-v-6289629d]{border-color:var(--c-danger)}.zone-card.active[data-v-6289629d]{background:var(--c-surface-2);border-width:3px}.zone-card.active .zone-icon[data-v-6289629d],.zone-card.active .zone-name[data-v-6289629d]{color:var(--c-ember)}.zone-card.active .zone-count[data-v-6289629d]{color:var(--c-ash)}.zone-card.empty[data-v-6289629d]{opacity:0.4}.zone-card .zone-warn[data-v-6289629d]{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--c-danger);box-shadow:0 0 4px var(--c-danger)}.build-list[data-v-6289629d]{margin-top:8px;display:flex;flex-direction:column}.build-row[data-v-6289629d]{display:flex;flex-direction:column;gap:4px;width:100%;padding:8px 10px;background:var(--c-surface);border:none;border-bottom:1px solid var(--c-border);cursor:pointer;font-family:inherit;text-align:left}.build-row[data-v-6289629d]:hover{background:var(--c-surface-2)}.build-row .brow-line[data-v-6289629d]{display:flex;align-items:center;gap:8px}.build-row .brow-name[data-v-6289629d]{color:var(--c-ash);font-size:13px;font-weight:bold}.build-row .brow-lv[data-v-6289629d]{color:var(--c-muted);font-size:11px}.build-row .brow-status[data-v-6289629d]{margin-left:auto;font-size:10px;border:1px solid;border-radius:2px;padding:0 5px;line-height:16px}.build-row .brow-status.bs-up[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.build-row .brow-status.bs-ruined[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.build-row .brow-status.bs-cut[data-v-6289629d]{color:var(--c-rare);border-color:var(--c-rare)}.build-row .brow-status.bs-other[data-v-6289629d]{color:var(--c-muted);border-color:var(--c-muted)}.build-row .brow-line2[data-v-6289629d]{display:flex;align-items:center;gap:8px}.build-row .dur-track[data-v-6289629d]{flex-shrink:0;width:64px;height:5px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px;overflow:hidden}.build-row .dur-fill[data-v-6289629d]{height:100%;background:#5fa86b;border-radius:2px}.build-row .dur-fill.mid[data-v-6289629d]{background:#e0a83c}.build-row .dur-fill.low[data-v-6289629d]{background:var(--c-danger)}.build-row .brow-brief[data-v-6289629d]{flex:1;min-width:0;color:var(--c-muted);font-size:11px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.empty[data-v-6289629d]{color:var(--c-muted);font-size:12px;text-align:center;padding:12px}.empty.span[data-v-6289629d]{grid-column:1/-1}.npc-tabs[data-v-6289629d]{display:flex;gap:8px;margin-bottom:8px}.npc-tab[data-v-6289629d]{height:28px;padding:0 12px;border-radius:14px;background:var(--c-surface);border:1px solid var(--c-border);color:var(--c-muted);font-size:12px;cursor:pointer;font-family:inherit}.npc-tab.active[data-v-6289629d]{background:var(--c-surface-2);border-color:var(--c-ember);color:var(--c-ember)}.npc-tab[data-v-6289629d]:hover{border-color:var(--c-ember)}.npc-sortrow[data-v-6289629d]{display:flex;align-items:center;gap:8px;margin-bottom:8px}.npc-sortrow .npc-sort-hint[data-v-6289629d]{color:var(--c-muted);font-size:11px}.npc-sortrow .npc-sort[data-v-6289629d]{background:transparent;border:none;color:var(--c-muted);font-size:11px;cursor:pointer;font-family:inherit;padding:2px 6px;border-radius:3px}.npc-sortrow .npc-sort.active[data-v-6289629d]{color:var(--c-ember);background:rgba(224,138,60,0.1)}.npc-sortrow .npc-sort[data-v-6289629d]:hover{color:var(--c-ember)}.npc-grid[data-v-6289629d]{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;max-height:300px;overflow-y:auto;padding-right:4px}.npc-cell[data-v-6289629d]{display:flex;flex-direction:column;gap:4px;padding:8px 10px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:6px;cursor:pointer;font-family:inherit;text-align:left;min-width:0}.npc-cell[data-v-6289629d]:hover{background:var(--c-surface-2)}.npc-cell.dimmed[data-v-6289629d]{opacity:0.55}.npc-cell .npc-line1[data-v-6289629d]{display:flex;align-items:center;gap:6px;min-width:0}.npc-cell .npc-dot[data-v-6289629d]{width:8px;height:8px;border-radius:50%;flex-shrink:0}.npc-cell .npc-name[data-v-6289629d]{color:var(--c-ash);font-size:13px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.npc-cell .npc-line2[data-v-6289629d]{display:flex;align-items:center;gap:6px;min-width:0}.npc-cell .npc-tier[data-v-6289629d]{color:var(--c-muted);font-size:11px}.npc-cell .npc-status[data-v-6289629d]{margin-left:auto;font-size:10px;border:1px solid;border-radius:2px;padding:0 4px;line-height:15px;flex-shrink:0}.npc-cell .npc-status.bs-up[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.npc-cell .npc-status.bs-ruined[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.npc-cell .npc-status.bs-cut[data-v-6289629d]{color:var(--c-rare);border-color:var(--c-rare)}.npc-cell .npc-status.bs-other[data-v-6289629d]{color:var(--c-muted);border-color:var(--c-muted)}.muted[data-v-6289629d]{color:var(--c-muted);font-size:11px}.detail-meta[data-v-6289629d]{display:flex;flex-wrap:wrap;gap:6px}.chip[data-v-6289629d]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.chip.pos[data-v-6289629d]{color:#5fa86b;border-color:#5fa86b}.chip.neg[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.danger[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.dur-mid[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.chip.dur-low[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.st-up[data-v-6289629d]{color:#e0a83c;border-color:#e0a83c}.chip.st-ruined[data-v-6289629d]{color:var(--c-danger);border-color:var(--c-danger)}.chip.st-cut[data-v-6289629d]{color:var(--c-rare);border-color:var(--c-rare)}.detail-text[data-v-6289629d]{color:var(--c-ash);font-size:13px;line-height:1.7;white-space:pre-wrap}.detail-block[data-v-6289629d]{color:var(--c-ash);font-size:13px;line-height:1.6}.detail-block b[data-v-6289629d]{color:var(--c-ember);margin-right:6px}.dim[data-v-6289629d]{color:var(--c-muted);opacity:0.7}.list[data-v-6289629d]{display:flex;flex-direction:column;gap:6px}.empty[data-v-6289629d]{color:var(--c-muted);font-size:12px;text-align:center;padding:12px}@keyframes blink-6289629d{0%,100%{opacity:1}50%{opacity:0.5}}
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TaskPanel.vue?vue&type=style&index=0&id=558cb288&lang=scss&scoped=true ***!
   \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
