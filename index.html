@@ -1061,12 +1061,12 @@ var __webpack_modules__ = {
         };
         const 档位色 = d => 档位色板[d || ""] || "#6a6a6a";
         const 评级大小 = {
-          一: 7,
-          二: 8,
-          三: 9,
-          四: 11,
-          五: 13,
-          六: 15
+          营地级: 7,
+          庄园级: 8,
+          城镇级: 9,
+          王都级: 11,
+          圣城级: 13,
+          神座之城: 15
         };
         const 势力Nodes = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           const list = 势力Keys.value;
@@ -1075,7 +1075,7 @@ var __webpack_modules__ = {
             const f = 势力(name);
             const ang = i / Math.max(1, n) * 360 - 90;
             const rad = ang * Math.PI / 180;
-            const r = 评级大小[(f.评级 || "三")[0]] ?? 8;
+            const r = 评级大小[f.评级] ?? 8;
             return {
               name,
               x: 170 + 125 * Math.cos(rad),
@@ -1349,7 +1349,6 @@ var __webpack_modules__ = {
         const 预警 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.领地.入侵预警 ?? {});
         const 距结算 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Math.max(0, 7 - (store.data.时间.结算周期计数 ?? 1)));
         const 建筑列表 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.领地.建筑列表 ?? {});
-        const 建筑分区 = [ "核心区", "生活区", "生产区", "科研区", "战斗区" ];
         const 建筑 = name => 建筑列表.value[name] ?? {};
         const 分区建筑 = zone => Object.keys(建筑列表.value).filter(n => n !== "$meta" && (建筑列表.value[n]?.分区 || "生活区") === zone);
         const 拓扑分区 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
@@ -1442,18 +1441,6 @@ var __webpack_modules__ = {
             }, blocks)
           });
         }
-        function h建筑分区() {
-          return (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "zone-grid"
-          }, 建筑分区.map(z => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("button", {
-            class: "zone-card",
-            onClick: () => open建筑列表(z)
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "zone-name"
-          }, z), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "zone-count"
-          }, `${分区建筑(z).length} 座`) ])));
-        }
         function open建筑列表(zone) {
           const 列表 = 分区建筑(zone);
           open({
@@ -1482,19 +1469,17 @@ var __webpack_modules__ = {
         }
         function open建筑详情(name, zone) {
           const b = 建筑(name);
+          const blocks = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "detail-meta"
+          }, [ hChip(`Lv.${b.等级 ?? 1}`), b.耐久 != null ? hChip(`耐久 ${b.耐久}`) : null, b.分区 ? hChip(b.分区) : null ]) ];
+          blocks.push(hText(b.详情 || "（详情未填写，请让 AI 按图鉴规范补全：耐久/尺寸+百分比效果+联动+特殊机制）"));
           open({
             title: name,
             path: [ "建筑", zone, name ],
             level: 3,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-              class: "detail-meta"
-            }, [ hChip(`Lv.${b.等级 ?? 1}`), b.耐久 != null ? hChip(`耐久 ${b.耐久}`) : null, b.分区 ? hChip(b.分区) : null ])
-          });
-          open({
-            title: "详情",
-            path: [ "建筑", zone, name, "详情" ],
-            level: 3,
-            content: hText(b.详情 || "（详情未填写，请让 AI 按图鉴规范补全：耐久/尺寸+百分比效果+联动+特殊机制）")
+              class: "list"
+            }, blocks)
           });
         }
         function open关键NPC() {
@@ -1538,7 +1523,9 @@ var __webpack_modules__ = {
         }
         function open关键NPC详情(name, cat) {
           const p = NPC(name);
-          const blocks = [];
+          const blocks = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "detail-meta"
+          }, [ hChip(`年龄 ${p.年龄 ?? "?"}`), hChip(`${p.阶位 || "阶位未知"}${p.等级 ? ` LV.${p.等级}` : ""}`), p.忠诚 != null ? hChip(`忠诚 ${p.忠诚}`) : null, p.野心 != null ? hChip(`野心 ${p.野心}`) : null, hChip(p.状态 || "在岗") ]) ];
           if (p.过往) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
             class: "detail-block"
           }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "过往"), p.过往 ]));
@@ -1551,21 +1538,16 @@ var __webpack_modules__ = {
           if (p.技能) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
             class: "detail-block"
           }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "技能"), p.技能 ]));
+          if (!blocks.slice(1).length) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+            class: "detail-block dim"
+          }, "（过往/职业/力量体系/技能均未填写）"));
           open({
             title: name,
             path: [ "关键NPC", cat, name ],
             level: 3,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-              class: "detail-meta"
-            }, [ hChip(`年龄 ${p.年龄 ?? "?"}`), hChip(`${p.阶位 || "阶位未知"}${p.等级 ? ` LV.${p.等级}` : ""}`), p.忠诚 != null ? hChip(`忠诚 ${p.忠诚}`) : null, p.野心 != null ? hChip(`野心 ${p.野心}`) : null, hChip(p.状态 || "在岗") ])
-          });
-          open({
-            title: "详情",
-            path: [ "关键NPC", cat, name, "详情" ],
-            level: 3,
-            content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
               class: "list"
-            }, blocks.length ? blocks : [ hText("（过往/职业/力量体系/技能均未填写）", "dim") ])
+            }, blocks)
           });
         }
         const __returned__ = {
@@ -1587,7 +1569,6 @@ var __webpack_modules__ = {
           预警,
           距结算,
           建筑列表,
-          建筑分区,
           建筑,
           分区建筑,
           拓扑分区,
@@ -1600,7 +1581,6 @@ var __webpack_modules__ = {
           open人口,
           open状态,
           open入侵,
-          h建筑分区,
           open建筑列表,
           open建筑详情,
           open关键NPC,
