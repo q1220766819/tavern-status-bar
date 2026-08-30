@@ -111,16 +111,25 @@ var __webpack_modules__ = {
       状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("在岗"),
       力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
     }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
+    const 事件日志Item = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
+      日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      时段: 时间段,
+      类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("事件"),
+      内容: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    }), zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(() => ({})) ]).prefault({});
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         外貌: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         过往: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        六维: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "力量", "体质", "敏捷", "感知", "精神", "魅力" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
+        六维: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "力量", "体质", "敏捷", "感知", "精神", "魅力" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           数值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.boolean().prefault(false)
-        }).prefault({})).prefault({}),
+        }), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(n => ({
+          数值: Number.isNaN(n) ? 0 : _.clamp(n, 0, 100),
+          破限: false
+        })) ]).prefault({})).prefault({}),
         未分配属性点: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         阶位: 阶位Schema,
         职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -239,12 +248,7 @@ var __webpack_modules__ = {
         附近动向: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         已完成计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
       }).prefault({}),
-      事件日志: zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        时段: 时间段,
-        类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("事件"),
-        内容: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-      })).prefault([]).transform(list => list.slice(-12)),
+      事件日志: zod__WEBPACK_IMPORTED_MODULE_0__.z.array(事件日志Item).prefault([]).transform(list => list.filter(e => e && typeof e === "object" && (e.内容 || e.日期)).slice(-12)),
       世界状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         高庭声望: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
         伪超凡注意度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
