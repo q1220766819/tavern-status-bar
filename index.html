@@ -91,6 +91,20 @@ var __webpack_modules__ = {
       趋势: "—",
       收支明细: ""
     });
+    const 关键NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
+      分区: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("后勤"),
+      任职: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string()).transform(a => a.join("\n")), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string() ]).prefault(""),
+      忠诚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+      野心: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string()), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(s => s ? s.split(/[；;\n]/).map(x => x.trim()).filter(Boolean) : []) ]).prefault([]),
+      阶位: 阶位Schema,
+      等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("在岗"),
+      力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -189,7 +203,7 @@ var __webpack_modules__ = {
         防御成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         忠诚成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         恐慌成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).prefault({}),
+        关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 关键NPCItem).prefault({}),
         入侵预警: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           倒计时: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           时间单位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("小时"),
@@ -240,6 +254,132 @@ var __webpack_modules__ = {
         路线值: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "战争", "毁灭", "创造" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0)).prefault({})
       }).prefault({})
     });
+  },
+  "./src/迷雾薪火/界面/状态栏/components/npcDetail.ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      事件数组: () => 事件数组,
+      亚修档案: () => 亚修档案,
+      力量体系行: () => 力量体系行,
+      外部档案: () => 外部档案,
+      头行: () => 头行,
+      忠诚色: () => 忠诚色,
+      档案行: () => 档案行,
+      状态色: () => 状态色,
+      野心色: () => 野心色,
+      领地档案: () => 领地档案
+    });
+    var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const 忠诚色 = v => v > 80 ? "#5fa86b" : v < 40 ? "var(--c-danger)" : "var(--c-ash)";
+    const 野心色 = v => v > 70 ? "#e0a83c" : "var(--c-ash)";
+    const 状态色 = s => {
+      if (s?.includes("失踪")) return "var(--c-danger)";
+      if (s?.includes("负伤")) return "#e0a83c";
+      if (s?.includes("外出")) return "var(--c-rare)";
+      return "#5fa86b";
+    };
+    const 事件数组 = v => {
+      if (v == null) return [];
+      if (Array.isArray(v)) return v.map(e => String(e)).filter(Boolean);
+      if (typeof v === "string") return v.split(/[；;\n]/).map(s => s.trim()).filter(Boolean);
+      return [ String(v) ];
+    };
+    const 力量体系行 = p => {
+      const 阶 = p.阶位 || "";
+      if (阶.startsWith("一阶")) return null;
+      if (阶.startsWith("二阶")) return {
+        label: "破限",
+        value: p.力量体系 || "无"
+      };
+      if (阶.startsWith("三阶")) return {
+        label: "权能",
+        value: p.力量体系 || "未知"
+      };
+      if (阶.startsWith("四阶")) return {
+        label: "权能·伟业",
+        value: p.力量体系 || "未知"
+      };
+      if (阶.startsWith("五阶")) return {
+        label: "传说",
+        value: p.力量体系 || "未知"
+      };
+      if (阶.startsWith("六阶")) return {
+        label: "权域",
+        value: p.力量体系 || "未知"
+      };
+      return {
+        label: "力量体系",
+        value: p.力量体系 || "未知"
+      };
+    };
+    function 档案行(label, value) {
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-row"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label"
+      }, label), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-value"
+      }, value) ]);
+    }
+    function 头行(name, 副, 状态) {
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-head"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-name"
+      }, name), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-tier"
+      }, 副), 状态 ? (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-status",
+        style: {
+          color: 状态色(状态),
+          borderColor: 状态色(状态)
+        }
+      }, 状态) : null ]);
+    }
+    function 领地档案(name, p) {
+      const rows = [ 头行(name, `${p.阶位 || "阶位未知"}${p.等级 ? " " + p.等级 : ""}`, p.状态 || "在岗"), 档案行("任职", p.任职 || "未知"), 档案行("年龄", p.年龄 || "?"), 档案行("职业", p.职业 || "未知"), 档案行("技能", p.技能 || "（未填写）") ];
+      const 忠 = p.忠诚 != null && p.忠诚 !== "" ? Number(p.忠诚) : null;
+      const 野 = p.野心 != null && p.野心 !== "" ? Number(p.野心) : null;
+      rows.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-row"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label"
+      }, "忠诚"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-value big",
+        style: 忠 != null ? {
+          color: 忠诚色(忠)
+        } : {}
+      }, 忠 != null ? String(忠) : "?"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label sub"
+      }, "野心"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-value big",
+        style: 野 != null ? {
+          color: 野心色(野)
+        } : {}
+      }, 野 != null ? String(野) : "?") ]));
+      const evts = 事件数组(p.关键事件);
+      rows.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-row"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+        class: "arch-label"
+      }, "关键事件"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "arch-value events"
+      }, evts.length ? evts.map(e => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "evt"
+      }, e)) : [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+        class: "evt dim"
+      }, "暂无") ]) ]));
+      const 体 = 力量体系行(p);
+      if (体) rows.push(档案行(体.label, 体.value));
+      return rows;
+    }
+    function 外部档案(name, p) {
+      return [ 头行(name, p.阶位 || "阶位未知"), 档案行("出身", p.出身 || "未知"), 档案行("好感", p.好感 != null ? String(p.好感) : "?"), 档案行("主要能力", p.能力 || "（未填写）"), 档案行("关系由来", p.由来 || "（未填写）"), 档案行("当前位置", p.位置 || "未知") ];
+    }
+    function 亚修档案(name, a) {
+      return [ 头行(name, `${a.阶位 || "?"}${a.体系词 ? " · " + a.体系词 : ""}`), 档案行("天赋", a.天赋 || "未知"), 档案行("职业", a.职业 || "未知"), 档案行("破限", a.破限 && a.破限 !== "无" ? a.破限 : "无"), 档案行("好感", a.好感 != null ? String(a.好感) : "?"), 档案行("忠诚", a.忠诚 != null ? String(a.忠诚) : "?"), 档案行("敬畏", a.敬畏 != null ? String(a.敬畏) : "?"), 档案行("债务", a.债务 || "无"), 档案行("秘密", a.秘密 || "无"), 档案行("博弈阶段", a.博弈阶段 || "平行发展") ];
+    }
   },
   "./src/迷雾薪火/界面/状态栏/components/useModal.ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
@@ -1616,8 +1756,9 @@ var __webpack_modules__ = {
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
     var _useModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useModal */ "./src/迷雾薪火/界面/状态栏/components/useModal.ts");
     var _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ChangeBubble.vue */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue");
-    var zod__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! zod */ "zod");
-    var zod__WEBPACK_IMPORTED_MODULE_4___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_4__);
+    var _npcDetail__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./npcDetail */ "./src/迷雾薪火/界面/状态栏/components/npcDetail.ts");
+    var zod__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! zod */ "zod");
+    var zod__WEBPACK_IMPORTED_MODULE_5___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_5__);
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "TerritoryPanel",
       setup(__props, {expose: __expose}) {
@@ -1838,32 +1979,13 @@ var __webpack_modules__ = {
           });
         }
         function open关键NPC详情(name, cat) {
-          const p = NPC(name);
-          const blocks = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-meta"
-          }, [ hChip(`年龄 ${p.年龄 ?? "?"}`), hChip(`${p.阶位 || "阶位未知"}${p.等级 ? ` LV.${p.等级}` : ""}`), p.忠诚 != null ? hChip(`忠诚 ${p.忠诚}`) : null, p.野心 != null ? hChip(`野心 ${p.野心}`) : null, p.状态 ? hChip(p.状态, p.状态 !== "在岗" ? `st-${NPC状态类(p.状态)}` : "") : null ]) ];
-          if (p.过往) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "过往"), p.过往 ]));
-          if (p.职业) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "职业"), p.职业 ]));
-          if (p.力量体系) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "力量体系"), p.力量体系 ]));
-          if (p.技能) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", "技能"), p.技能 ]));
-          if (!blocks.slice(1).length) blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block dim"
-          }, "（过往/职业/力量体系/技能均未填写）"));
           open({
             title: name,
             path: [ "关键NPC", cat, name ],
             level: 2,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-              class: "list"
-            }, blocks)
+              class: "arch-body"
+            }, (0, _npcDetail__WEBPACK_IMPORTED_MODULE_4__["领地档案"])(name, NPC(name)))
           });
         }
         const __returned__ = {
@@ -1976,6 +2098,7 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
     var _useModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useModal */ "./src/迷雾薪火/界面/状态栏/components/useModal.ts");
+    var _npcDetail__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./npcDetail */ "./src/迷雾薪火/界面/状态栏/components/npcDetail.ts");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "UnifiedNPC",
       setup(__props, {expose: __expose}) {
@@ -1999,69 +2122,21 @@ var __webpack_modules__ = {
           return !q || "亚修".includes(q);
         });
         const 名录数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 领地Names.value.length + 外部Names.value.length + (show亚修.value ? 1 : 0));
-        function 档案(name, source) {
-          const rows = [];
-          if (source === "宿敌") {
-            const a = store.data.关系?.亚修 ?? {};
-            rows.push([ "阶位", `${a.阶位 || "?"}${a.体系词 ? " · " + a.体系词 : ""}` ]);
-            if (a.天赋) rows.push([ "天赋", a.天赋 ]);
-            if (a.职业) rows.push([ "职业", a.职业 ]);
-            if (a.破限 && a.破限 !== "无") rows.push([ "破限", a.破限 ]);
-            rows.push([ "好感", a.好感 != null ? String(a.好感) : "?" ]);
-            rows.push([ "忠诚", a.忠诚 != null ? String(a.忠诚) : "?" ]);
-            rows.push([ "敬畏", a.敬畏 != null ? String(a.敬畏) : "?" ]);
-            if (a.债务) rows.push([ "债务", a.债务 ]);
-            if (a.秘密) rows.push([ "秘密", a.秘密 ]);
-            rows.push([ "博弈阶段", a.博弈阶段 || "平行发展" ]);
-          } else if (source === "领地") {
-            const p = 关键NPC(name);
-            rows.push([ "年龄", p.年龄 || "?" ]);
-            rows.push([ "阶位", `${p.阶位 || "?"}${p.等级 ? " " + p.等级 : ""}` ]);
-            rows.push([ "分区", p.分区 || "后勤" ]);
-            if (p.职业) rows.push([ "职业", p.职业 ]);
-            if (p.过往) rows.push([ "过往", p.过往 ]);
-            if (p.力量体系) rows.push([ "力量体系", p.力量体系 ]);
-            if (p.技能) rows.push([ "技能", p.技能 ]);
-            rows.push([ "忠诚", p.忠诚 != null ? String(p.忠诚) : "?" ]);
-            rows.push([ "野心", p.野心 != null ? String(p.野心) : "?" ]);
-            rows.push([ "状态", p.状态 || "在岗" ]);
-          } else {
-            const p = 外部NPC(name);
-            if (p.出身) rows.push([ "出身", p.出身 ]);
-            rows.push([ "阶位", p.阶位 || "?" ]);
-            rows.push([ "好感", p.好感 != null ? String(p.好感) : "?" ]);
-            if (p.能力) rows.push([ "主要能力", p.能力 ]);
-            if (p.由来) rows.push([ "关系由来", p.由来 ]);
-            if (p.位置) rows.push([ "当前位置", p.位置 ]);
-          }
-          return rows;
-        }
         function open档案(name, source) {
-          const rows = 档案(name, source);
-          const chips = [];
           const sourceTag = {
             宿敌: "宿敌·关键人物",
             领地: "领地要员",
             外部: "外部人物"
           };
-          chips.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
-            class: "chip"
-          }, sourceTag[source]));
-          const blocks = [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-meta"
-          }, chips) ];
-          blocks.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "list"
-          }, rows.map(([k, v]) => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-            class: "detail-block"
-          }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("b", k), v || "（未填写）" ]))));
+          const body = source === "宿敌" ? (0, _npcDetail__WEBPACK_IMPORTED_MODULE_3__["亚修档案"])(name, store.data.关系?.亚修 ?? {}) : source === "领地" ? (0, 
+          _npcDetail__WEBPACK_IMPORTED_MODULE_3__["领地档案"])(name, 关键NPC(name)) : (0, _npcDetail__WEBPACK_IMPORTED_MODULE_3__["外部档案"])(name, 外部NPC(name));
           open({
             title: name,
             path: [ "名录", sourceTag[source], name ],
             level: 2,
             content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
-              class: "list"
-            }, blocks)
+              class: "arch-body"
+            }, body)
           });
         }
         const __returned__ = {
@@ -2075,7 +2150,6 @@ var __webpack_modules__ = {
           外部Names,
           show亚修,
           名录数,
-          档案,
           open档案
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
@@ -4055,7 +4129,7 @@ var __webpack_modules__ = {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "brow-status", `bs-${$setup.NPC状态类($setup.NPC(n).状态)}` ])
       }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).状态), 3)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_51, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).过往 || "（暂无过往）"), 1) ]) ], 8, _hoisted_46))), 128)) ]) ]) ]);
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_51, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC(n).任职 || $setup.NPC(n).过往 || "（暂无档案）"), 1) ]) ], 8, _hoisted_46))), 128)) ]) ]) ]);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TimelinePanel.vue?vue&type=template&id=70c34100&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -6547,7 +6621,7 @@ let __webpack_exports__ = {};
 /*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-48.use[1]!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./src/迷雾薪火/界面/状态栏/global.css ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************/
-*{box-sizing:border-box;margin:0;padding:0}:root{--c-ember:#e08a3c;--c-surface:#1a1d20;--c-surface-2:#23272b;--c-ash:#c9c2b4;--c-muted:#7c7a72;--c-danger:#b0413e;--c-border:#3a3f3c;--c-rare:#6b8cbf;--c-unique:#d4af37;--font-body:'Courier New','Microsoft YaHei','Sarasa Mono SC',monospace}body{background:transparent;font-family:var(--font-body)}
+*{box-sizing:border-box;margin:0;padding:0}:root{--c-ember:#e08a3c;--c-surface:#1a1d20;--c-surface-2:#23272b;--c-ash:#c9c2b4;--c-muted:#7c7a72;--c-danger:#b0413e;--c-border:#3a3f3c;--c-rare:#6b8cbf;--c-unique:#d4af37;--font-body:'Courier New','Microsoft YaHei','Sarasa Mono SC',monospace}body{background:transparent;font-family:var(--font-body)}.arch-body{display:flex;flex-direction:column}.arch-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:2px 0 10px;border-bottom:1px solid var(--c-border);margin-bottom:4px;.arch-name{color:var(--c-ember);font-size:16px;font-weight:bold}.arch-tier{color:var(--c-muted);font-size:12px}.arch-status{font-size:11px;border:1px solid;border-radius:2px;padding:0 6px;line-height:18px}}.arch-row{display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px dashed var(--c-border)}.arch-label{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px;&.sub{letter-spacing:0;margin-left:8px}}.arch-value{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;&.big{font-size:18px;font-weight:bold;line-height:1.2}&.dim,.dim{color:var(--c-muted);opacity:0.7}&.events{display:flex;flex-direction:column;gap:4px}}.evt{color:var(--c-ash);font-size:13px;line-height:1.5;padding-left:14px;position:relative;&::before{content:'▸';position:absolute;left:0;color:var(--c-ember)}}
 
 </style></head>
 <body>
