@@ -91,15 +91,21 @@ var __webpack_modules__ = {
       趋势: "—",
       收支明细: ""
     });
+    const 条目文本 = x => {
+      if (typeof x === "string") return x;
+      if (x == null) return "";
+      if (typeof x === "object") return [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.content || "" ].filter(Boolean).join("——");
+      return String(x);
+    };
     const 关键NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
       分区: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("后勤"),
       任职: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string()).transform(a => a.join("\n")), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string() ]).prefault(""),
+      技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean).join("\n")), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string() ]).prefault(""),
       忠诚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
       野心: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string()), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(s => s ? s.split(/[；;\n]/).map(x => x.trim()).filter(Boolean) : []) ]).prefault([]),
+      关键事件: zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.array(zod__WEBPACK_IMPORTED_MODULE_0__.z.any()).transform(a => a.map(条目文本).filter(Boolean)), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(s => s ? s.split(/[；;\n]/).map(x => x.trim()).filter(Boolean) : []) ]).prefault([]),
       阶位: 阶位Schema,
       等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("在岗"),
@@ -264,6 +270,8 @@ var __webpack_modules__ = {
       外部档案: () => 外部档案,
       头行: () => 头行,
       忠诚色: () => 忠诚色,
+      文本化: () => 文本化,
+      条目文本: () => 条目文本,
       档案行: () => 档案行,
       状态色: () => 状态色,
       野心色: () => 野心色,
@@ -271,6 +279,12 @@ var __webpack_modules__ = {
     });
     var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const 条目文本 = x => {
+      if (typeof x === "string") return x;
+      if (x == null) return "";
+      if (typeof x === "object") return [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.content || "" ].filter(Boolean).join("——");
+      return String(x);
+    };
     const 忠诚色 = v => v > 80 ? "#5fa86b" : v < 40 ? "var(--c-danger)" : "var(--c-ash)";
     const 野心色 = v => v > 70 ? "#e0a83c" : "var(--c-ash)";
     const 状态色 = s => {
@@ -281,9 +295,15 @@ var __webpack_modules__ = {
     };
     const 事件数组 = v => {
       if (v == null) return [];
-      if (Array.isArray(v)) return v.map(e => String(e)).filter(Boolean);
+      if (Array.isArray(v)) return v.map(条目文本).filter(Boolean);
       if (typeof v === "string") return v.split(/[；;\n]/).map(s => s.trim()).filter(Boolean);
-      return [ String(v) ];
+      return [ 条目文本(v) ];
+    };
+    const 文本化 = v => {
+      if (typeof v === "string") return v;
+      if (v == null) return "";
+      if (Array.isArray(v)) return v.map(条目文本).filter(Boolean).join("\n");
+      return 条目文本(v);
     };
     const 力量体系行 = p => {
       const 阶 = p.阶位 || "";
@@ -338,7 +358,7 @@ var __webpack_modules__ = {
       }, 状态) : null ]);
     }
     function 领地档案(name, p) {
-      const rows = [ 头行(name, `${p.阶位 || "阶位未知"}${p.等级 ? " " + p.等级 : ""}`, p.状态 || "在岗"), 档案行("任职", p.任职 || "未知"), 档案行("年龄", p.年龄 || "?"), 档案行("职业", p.职业 || "未知"), 档案行("技能", p.技能 || "（未填写）") ];
+      const rows = [ 头行(name, `${p.阶位 || "阶位未知"}${p.等级 ? " " + p.等级 : ""}`, p.状态 || "在岗"), 档案行("任职", p.任职 || "未知"), 档案行("年龄", p.年龄 || "?"), 档案行("职业", p.职业 || "未知"), 档案行("技能", 文本化(p.技能) || "（未填写）") ];
       const 忠 = p.忠诚 != null && p.忠诚 !== "" ? Number(p.忠诚) : null;
       const 野 = p.野心 != null && p.野心 !== "" ? Number(p.野心) : null;
       rows.push((0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
