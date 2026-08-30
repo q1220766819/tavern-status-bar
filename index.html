@@ -1005,7 +1005,7 @@ var __webpack_modules__ = {
       __name: "ModalHost",
       setup(__props, {expose: __expose}) {
         __expose();
-        const {stack, back, closeTo, closeAll} = (0, _useModal__WEBPACK_IMPORTED_MODULE_1__.useModal)();
+        const {stack, back, closeAll} = (0, _useModal__WEBPACK_IMPORTED_MODULE_1__.useModal)();
         const RenderNode = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
           props: {
             node: {
@@ -1020,7 +1020,6 @@ var __webpack_modules__ = {
         const __returned__ = {
           stack,
           back,
-          closeTo,
           closeAll,
           RenderNode
         };
@@ -2525,18 +2524,16 @@ var __webpack_modules__ = {
     const _hoisted_3 = {
       class: "modal-head"
     };
-    const _hoisted_4 = [ "onClick" ];
-    const _hoisted_5 = {
+    const _hoisted_4 = {
       class: "modal-titles"
     };
-    const _hoisted_6 = {
+    const _hoisted_5 = {
       class: "modal-path"
     };
-    const _hoisted_7 = {
+    const _hoisted_6 = {
       class: "modal-title"
     };
-    const _hoisted_8 = [ "onClick" ];
-    const _hoisted_9 = {
+    const _hoisted_7 = {
       class: "modal-body"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -2555,18 +2552,18 @@ var __webpack_modules__ = {
         style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)(entry.width ? {
           maxWidth: entry.width + "px"
         } : {}),
-        onClick: _cache[0] || (_cache[0] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(() => {}, [ "stop" ]))
+        onClick: _cache[2] || (_cache[2] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(() => {}, [ "stop" ]))
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-back-btn",
-        onClick: $event => $setup.closeTo(i)
-      }, "←", 8, _hoisted_4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(entry.path.join(" › ")), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(entry.title), 1) ]), (0, 
+        onClick: _cache[0] || (_cache[0] = (...args) => $setup.back && $setup.back(...args))
+      }, "←"), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_5, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(entry.path.join(" › ")), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(entry.title), 1) ]), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-close",
-        onClick: $event => $setup.closeTo(i)
-      }, "×", 8, _hoisted_8) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [ (0, 
+        onClick: _cache[1] || (_cache[1] = (...args) => $setup.closeAll && $setup.closeAll(...args))
+      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["RenderNode"], {
         node: entry.content
       }, null, 8, [ "node" ]) ]) ], 6) ], 14, _hoisted_2))), 128)) ]);
