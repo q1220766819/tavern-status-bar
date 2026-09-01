@@ -62,13 +62,16 @@ var __webpack_modules__ = {
     }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "微弱", "初燃", "炽烈", "彻夜", "永燃", "蜕凡圣火", "神国薪庭", "至高王焰", "唯一界火" ])).prefault("微弱");
     const 评级链 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
       const s = String(v);
+      if (s.includes("唯一圣域") || s.includes("唯一")) return "唯一圣域";
       if (s.includes("神座")) return "神座之城";
       if (s.includes("圣城")) return "圣城级";
       if (s.includes("王都")) return "王都级";
+      if (s.includes("巨城")) return "巨城级";
       if (s.includes("城镇")) return "城镇级";
       if (s.includes("庄园")) return "庄园级";
+      if (s.includes("哨垒") || s.includes("哨塔")) return "哨垒级";
       return "营地级";
-    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "营地级", "庄园级", "城镇级", "王都级", "圣城级", "神座之城" ])).prefault("营地级");
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "营地级", "哨垒级", "庄园级", "城镇级", "巨城级", "王都级", "圣城级", "神座之城", "唯一圣域" ])).prefault("营地级");
     const 任务状态 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
       const s = String(v);
       if (s.includes("完成")) return "已完成";
@@ -146,7 +149,12 @@ var __webpack_modules__ = {
       时段: 时间段,
       类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("事件"),
       内容: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
-    }), zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(() => ({})) ]).prefault({});
+    }), zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(() => ({
+      日期: "",
+      时段: "上午",
+      类型: "",
+      内容: ""
+    })) ]).prefault({});
     const 外部NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
       所属: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       出身: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -1922,6 +1930,10 @@ var __webpack_modules__ = {
           const 截止 = Number(动向(k).截止天数);
           return 截止 ? 截止 - 天数.value : null;
         };
+        const 将过期 = k => {
+          const 剩 = 剩余天数(k);
+          return 剩 != null && 剩 <= 1;
+        };
         const 时效文字 = k => {
           const 剩 = 剩余天数(k);
           if (剩 != null) return `剩余 ${剩} 天`;
@@ -1981,6 +1993,7 @@ var __webpack_modules__ = {
           活跃任务,
           天数,
           剩余天数,
+          将过期,
           时效文字,
           突破任务
         };
@@ -4030,7 +4043,7 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向(k).内容), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
-          dying: $setup.剩余天数(k) != null && $setup.剩余天数(k) <= 1
+          dying: $setup.将过期(k)
         })
       }, "时效：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.时效文字(k)), 3), $setup.动向(k).关联 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
