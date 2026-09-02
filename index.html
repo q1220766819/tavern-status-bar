@@ -196,6 +196,7 @@ var __webpack_modules__ = {
         技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
         破限状态,
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
+        爵位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("无"),
         血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
@@ -275,6 +276,7 @@ var __webpack_modules__ = {
         忠诚成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         恐慌成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         关键NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 关键NPCItem).transform(合并引号键).prefault({}),
+        封爵国: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         入侵预警: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
           倒计时: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           时间单位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("小时"),
@@ -1585,6 +1587,7 @@ var __webpack_modules__ = {
         const 时间段 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 时间.value.时间段 || "");
         const 结算计数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 时间.value.结算周期计数 ?? 1);
         const 污染 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.污染指数 ?? 0);
+        const 爵位 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.爵位 ?? "无");
         const 伟业 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.伟业传唱度 ?? 0);
         const 破限 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.破限状态 ?? "无");
         const 未分配属性点 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.未分配属性点 ?? 0);
@@ -1592,6 +1595,7 @@ var __webpack_modules__ = {
         const 阶位 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.阶位 || "");
         const 等级 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => P.value.等级 || "");
         const L = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.领地 ?? {});
+        const 封爵国 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.封爵国 ?? "");
         const 薪火等级 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.薪火等级 || "");
         const 特殊名 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.薪火特殊名 || "");
         const 评级链 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => L.value.评级链 || "");
@@ -1650,6 +1654,7 @@ var __webpack_modules__ = {
           时间段,
           结算计数,
           污染,
+          爵位,
           伟业,
           破限,
           未分配属性点,
@@ -1657,6 +1662,7 @@ var __webpack_modules__ = {
           阶位,
           等级,
           L,
+          封爵国,
           薪火等级,
           特殊名,
           评级链,
@@ -3559,20 +3565,21 @@ var __webpack_modules__ = {
       class: "row-v"
     };
     const _hoisted_11 = {
+      key: 0,
       class: "row-v"
     };
     const _hoisted_12 = {
       class: "row-v"
     };
     const _hoisted_13 = {
-      key: 0,
       class: "row-v"
     };
     const _hoisted_14 = {
-      class: "qr-row"
+      key: 1,
+      class: "row-v"
     };
     const _hoisted_15 = {
-      class: "row-v"
+      class: "qr-row"
     };
     const _hoisted_16 = {
       class: "row-v"
@@ -3584,20 +3591,20 @@ var __webpack_modules__ = {
       class: "row-v"
     };
     const _hoisted_19 = {
+      class: "row-v"
+    };
+    const _hoisted_20 = {
       key: 0,
       class: "row-v danger"
     };
-    const _hoisted_20 = {
-      class: "qr-row"
-    };
     const _hoisted_21 = {
-      class: "res-k"
+      class: "qr-row"
     };
     const _hoisted_22 = {
-      class: "qr-row"
+      class: "res-k"
     };
     const _hoisted_23 = {
-      class: "row-v"
+      class: "qr-row"
     };
     const _hoisted_24 = {
       class: "row-v"
@@ -3606,32 +3613,32 @@ var __webpack_modules__ = {
       class: "row-v"
     };
     const _hoisted_26 = {
-      key: 0,
       class: "row-v"
     };
     const _hoisted_27 = {
-      class: "qr-row"
+      key: 0,
+      class: "row-v"
     };
     const _hoisted_28 = {
-      class: "row-v"
+      class: "qr-row"
     };
     const _hoisted_29 = {
-      key: 0
+      class: "row-v"
     };
     const _hoisted_30 = {
-      class: "row-v"
+      key: 0
     };
     const _hoisted_31 = {
-      key: 0
+      class: "row-v"
     };
     const _hoisted_32 = {
-      class: "row-v"
-    };
-    const _hoisted_33 = {
       key: 0
     };
-    const _hoisted_34 = {
+    const _hoisted_33 = {
       class: "row-v"
+    };
+    const _hoisted_34 = {
+      key: 0
     };
     const _hoisted_35 = {
       class: "row-v"
@@ -3640,6 +3647,9 @@ var __webpack_modules__ = {
       class: "row-v"
     };
     const _hoisted_37 = {
+      class: "row-v"
+    };
+    const _hoisted_38 = {
       class: "row-v"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -3692,29 +3702,31 @@ var __webpack_modules__ = {
         class: "row-k"
       }, "状态", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.姓名) + " · " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.阶位) + " " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.等级) + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.破限 !== "无" ? " · " + $setup.破限 : ""), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, "污染 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.污染) + "/100", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, "伟业传唱 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.等级) + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.破限 !== "无" ? " · " + $setup.破限 : ""), 1), $setup.爵位 && $setup.爵位 !== "无" ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "爵位：" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.爵位) + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.封爵国 ? "（" + $setup.封爵国 + "）" : ""), 1)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, "污染 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.污染) + "/100", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, "伟业传唱 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.伟业) + "/100", 1), $setup.未分配属性点 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_13, "可用属性点 +" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, "可用属性点 +" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.未分配属性点), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [ _cache[3] || (_cache[3] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [ _cache[3] || (_cache[3] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "row-k"
-      }, "领地", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, "薪火 " + (0, 
+      }, "领地", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, "薪火 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.薪火等级) + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.特殊名 ? `「${$setup.特殊名}」` : "") + " · " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.评级链), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, "人口 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.评级链), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, "人口 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.现有人数) + "/" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.庇护上限) + "（" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口占用) + "%）", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, "防" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.防御), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_18, "忠" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.人口占用) + "%）", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_18, "防" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.防御), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_19, "忠" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.忠诚), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "row-v", {
           danger: $setup.恐慌 >= 75
         } ])
       }, "恐" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.恐慌), 3), $setup.入侵倒计时 > 0 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_19, "⚠ 入侵 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_20, "⚠ 入侵 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.入侵倒计时) + "h", 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [ _cache[4] || (_cache[4] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [ _cache[4] || (_cache[4] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "row-k"
       }, "资源", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -3722,11 +3734,11 @@ var __webpack_modules__ = {
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
         key: r.key,
         class: "row-v res"
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_22, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.key), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.存量) + " ", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["ChangeBubble"], {
         value: r.存量
-      }, null, 8, [ "value" ]) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [ _cache[5] || (_cache[5] = (0, 
+      }, null, 8, [ "value" ]) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [ _cache[5] || (_cache[5] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "row-k"
       }, "世界", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
@@ -3735,32 +3747,32 @@ var __webpack_modules__ = {
         key: k,
         class: "row-v"
       }, "庭·" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(k) + " " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(v), 1))), 128)), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_23, "伪超凡注视 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_24, "伪超凡注视 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.伪超凡) + "/100", 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_24, "外神注视 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外神) + "/100", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_25, "薪火注视 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_25, "外神注视 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外神) + "/100", 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_26, "薪火注视 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.薪火注视) + "/100", 1), $setup.有路线 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_26, "路线 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_27, "路线 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.路线文本), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [ _cache[6] || (_cache[6] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [ _cache[6] || (_cache[6] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "row-k"
-      }, "速览", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_28, [ (0, 
+      }, "速览", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_29, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("背包×" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包数), 1), $setup.装备数 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_29, "（穿" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_30, "（穿" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.装备数) + "）", 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_30, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_31, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("活跃任务×" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.任务数), 1), $setup.动向数 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_31, " · 动向" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_32, " · 动向" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.动向数), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_32, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_33, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("势力×" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.势力数), 1), $setup.外部NPC数 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_33, " · 外部NPC" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_34, " · 外部NPC" + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外部NPC数), 1)) : (0, vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_34, "地点×" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_35, "建筑×" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_36, "关键NPC×" + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_37, "日志 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_35, "地点×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_36, "建筑×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.建筑数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_37, "关键NPC×" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.NPC数), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_38, "日志 " + (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.日志数) + " 条", 1) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ], 2);
     }
