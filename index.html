@@ -94,6 +94,7 @@ var __webpack_modules__ = {
       趋势: "—",
       收支明细: ""
     });
+    const 对象文本 = o => Object.entries(o).filter(([, v]) => v != null && (typeof v === "string" || typeof v === "number")).map(([k, v]) => `${k}：${v}`).join("；");
     const 条目文本 = x => {
       if (typeof x === "string") {
         const t = x.trim();
@@ -101,7 +102,10 @@ var __webpack_modules__ = {
         return t;
       }
       if (x == null) return "";
-      if (typeof x === "object") return [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.content || "" ].filter(Boolean).join("——");
+      if (typeof x === "object") {
+        const known = [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.内容 || x.content || "" ].filter(Boolean).join("——");
+        return known || 对象文本(x);
+      }
       return String(x);
     };
     const 文本数组 = v => {
@@ -110,7 +114,7 @@ var __webpack_modules__ = {
       if (typeof v === "string") return v.split(/[；;\n]/).map(s => s.trim()).filter(Boolean);
       return [ 条目文本(v) ];
     };
-    const 文本块 = v => typeof v === "string" ? v : 文本数组(v).join("\n");
+    const 文本块 = v => typeof v === "string" ? v : v == null ? "" : Array.isArray(v) ? 文本数组(v).join("\n") : 条目文本(v);
     const 清键 = s => {
       const t = String(s).trim();
       if (t.length >= 2 && t[0] === '"' && t[t.length - 1] === '"') return t.slice(1, -1);
@@ -142,7 +146,7 @@ var __webpack_modules__ = {
       阶位: 阶位Schema,
       等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("在岗"),
-      力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+      力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault("")
     }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
     const 事件日志Item = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -170,7 +174,7 @@ var __webpack_modules__ = {
       由来: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       阶位: 阶位Schema,
       等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-      力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+      力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault("")
     }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -342,6 +346,7 @@ var __webpack_modules__ = {
     });
     var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+    const 对象文本 = o => Object.entries(o).filter(([, v]) => v != null && (typeof v === "string" || typeof v === "number")).map(([k, v]) => `${k}：${v}`).join("；");
     const 条目文本 = x => {
       if (typeof x === "string") {
         const t = x.trim();
@@ -349,7 +354,10 @@ var __webpack_modules__ = {
         return t;
       }
       if (x == null) return "";
-      if (typeof x === "object") return [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.content || "" ].filter(Boolean).join("——");
+      if (typeof x === "object") {
+        const known = [ x.名称 || x.name || x.技能名 || x.标题 || "", x.描述 || x.效果 || x.详情 || x.内容 || x.content || "" ].filter(Boolean).join("——");
+        return known || 对象文本(x);
+      }
       return String(x);
     };
     const 忠诚色 = v => v > 80 ? "#5fa86b" : v < 40 ? "var(--c-danger)" : "var(--c-ash)";
