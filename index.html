@@ -1339,16 +1339,30 @@ var __webpack_modules__ = {
           delete store.data.背包[n];
           selectedItem.value = null;
         }
+        function 金币价值(item) {
+          if (item.价值 != null && !Number.isNaN(Number(item.价值))) return Math.max(1, Math.round(Number(item.价值)));
+          if (item.分类 === "图纸") {
+            const 等 = String(item.等级 || "");
+            if (等.includes("重构")) return 2e3;
+            if (等.includes("升格")) return 0;
+            return 300;
+          }
+          const 表 = {
+            灰: 1,
+            白: 3,
+            绿: 12,
+            蓝: 50,
+            黑紫: 200
+          };
+          return 表[item.品质 || "灰"] || 1;
+        }
         function 出售(n) {
           const item = 背包(n);
-          const 价格 = {
-            灰: 1,
-            白: 2,
-            绿: 5,
-            蓝: 15,
-            黑紫: 50
-          };
-          const price = (价格[item.品质 || ""] || 1) * (item.数量 || 1);
+          const price = 金币价值(item) * (Number(item.数量) || 1);
+          if (price <= 0) {
+            toastr.warning("升格级图纸不按金钱流通——只以功勋、盟约、重大人情或大事件结算，无法出售");
+            return;
+          }
           if (!store.data.领地.资源.金币) store.data.领地.资源.金币 = {
             存量: 0,
             收支: 0,
@@ -1367,6 +1381,7 @@ var __webpack_modules__ = {
           const item = 背包(n);
           const cat = item.分类 || "物品";
           const slot = 部位(item, n);
+          const 图纸等 = item.分类 === "图纸" ? String(item.等级 || "") : "";
           const acts = [];
           if (slot) {
             acts.push({
@@ -1374,7 +1389,12 @@ var __webpack_modules__ = {
               run: () => 穿戴(n)
             });
           }
-          if (cat === "书籍") {
+          if (cat === "图纸") {
+            acts.push({
+              label: "查看图纸",
+              run: () => bookModal.value = `【${图纸等 || "未知等级"}级图纸】\n${item.词条 || item.用途 || "（图纸内容未填写）"}`
+            });
+          } else if (cat === "书籍") {
             acts.push({
               label: "阅读",
               run: () => bookModal.value = item.词条 || "空白的书"
@@ -1389,9 +1409,11 @@ var __webpack_modules__ = {
               label: "使用（慎用）",
               run: () => 使用(n)
             });
-          } else if (cat === "材料") {
+          }
+          const 值 = 金币价值(item);
+          if (!图纸等.includes("升格")) {
             acts.push({
-              label: "出售",
+              label: 值 > 0 ? `出售（${值}金币）` : "出售",
               run: () => 出售(n)
             });
           }
@@ -1430,6 +1452,7 @@ var __webpack_modules__ = {
           穿戴上槽位,
           卸下,
           丢弃,
+          金币价值,
           出售,
           使用,
           操作
