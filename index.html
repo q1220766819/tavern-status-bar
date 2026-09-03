@@ -118,22 +118,30 @@ var __webpack_modules__ = {
     };
     const 文本块 = v => typeof v === "string" ? v : v == null ? "" : Array.isArray(v) ? 文本数组(v).join("\n") : 条目文本(v);
     const 清键 = s => {
-      const t = String(s).trim();
-      if (t.length < 2) return t;
-      const pairs = {
-        '"': '"',
-        "'": "'",
-        "“": "”",
-        "‘": "’",
-        "「": "」",
-        "《": "》",
-        "〈": "〉",
-        "(": ")",
-        "（": "）",
-        "[": "]",
-        "【": "】"
-      };
-      if (pairs[t[0]] === t[t.length - 1]) return t.slice(1, -1).trim();
+      let t = String(s).trim();
+      let out = "";
+      for (const ch of t) {
+        const c = ch.codePointAt(0) ?? -1;
+        if (c === 12288) out += " "; else if (c >= 65296 && c <= 65305) out += String.fromCharCode(c - 65248); else if (c >= 65313 && c <= 65338) out += String.fromCharCode(c - 65248); else if (c >= 65345 && c <= 65370) out += String.fromCharCode(c - 65248); else if (c === 12539 || c === 8226 || c === 8231 || c === 8729 || c === 65294) out += "·"; else out += ch;
+      }
+      t = out;
+      if (t.length >= 2) {
+        const pairs = {
+          '"': '"',
+          "'": "'",
+          "“": "”",
+          "‘": "’",
+          "「": "」",
+          "《": "》",
+          "〈": "〉",
+          "(": ")",
+          "（": "）",
+          "[": "]",
+          "【": "】"
+        };
+        if (pairs[t[0]] === t[t.length - 1]) t = t.slice(1, -1).trim();
+      }
+      t = t.replace(/^[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+/, "").replace(/[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+$/, "");
       return t;
     };
     const 合并引号键 = obj => {
@@ -1198,22 +1206,30 @@ var __webpack_modules__ = {
         const itemNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.背包 ?? {}).filter(k => k !== "$meta"));
         const 去引号 = s => {
           if (typeof s !== "string") return s == null ? "" : typeof s === "number" ? String(s) : "";
-          const t = s.trim();
-          if (t.length < 2) return t;
-          const pairs = {
-            '"': '"',
-            "'": "'",
-            "“": "”",
-            "‘": "’",
-            "「": "」",
-            "《": "》",
-            "〈": "〉",
-            "(": ")",
-            "（": "）",
-            "[": "]",
-            "【": "】"
-          };
-          if (pairs[t[0]] === t[t.length - 1]) return t.slice(1, -1).trim();
+          let t = s.trim();
+          let out = "";
+          for (const ch of t) {
+            const c = ch.codePointAt(0) ?? -1;
+            if (c === 12288) out += " "; else if (c >= 65296 && c <= 65305) out += String.fromCharCode(c - 65248); else if (c >= 65313 && c <= 65338) out += String.fromCharCode(c - 65248); else if (c >= 65345 && c <= 65370) out += String.fromCharCode(c - 65248); else if (c === 12539 || c === 8226 || c === 8231 || c === 8729 || c === 65294) out += "·"; else out += ch;
+          }
+          t = out;
+          if (t.length >= 2) {
+            const pairs = {
+              '"': '"',
+              "'": "'",
+              "“": "”",
+              "‘": "’",
+              "「": "」",
+              "《": "》",
+              "〈": "〉",
+              "(": ")",
+              "（": "）",
+              "[": "]",
+              "【": "】"
+            };
+            if (pairs[t[0]] === t[t.length - 1]) t = t.slice(1, -1).trim();
+          }
+          t = t.replace(/^[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+/, "").replace(/[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+$/, "");
           return t;
         };
         const 背包 = k => {
@@ -1542,22 +1558,30 @@ var __webpack_modules__ = {
         };
         const 去引号 = s => {
           if (typeof s !== "string") return s == null ? "" : typeof s === "number" ? String(s) : "";
-          const t = s.trim();
-          if (t.length < 2) return t;
-          const pairs = {
-            '"': '"',
-            "'": "'",
-            "“": "”",
-            "‘": "’",
-            "「": "」",
-            "《": "》",
-            "〈": "〉",
-            "(": ")",
-            "（": "）",
-            "[": "]",
-            "【": "】"
-          };
-          if (pairs[t[0]] === t[t.length - 1]) return t.slice(1, -1).trim();
+          let t = s.trim();
+          let out = "";
+          for (const ch of t) {
+            const c = ch.codePointAt(0) ?? -1;
+            if (c === 12288) out += " "; else if (c >= 65296 && c <= 65305) out += String.fromCharCode(c - 65248); else if (c >= 65313 && c <= 65338) out += String.fromCharCode(c - 65248); else if (c >= 65345 && c <= 65370) out += String.fromCharCode(c - 65248); else if (c === 12539 || c === 8226 || c === 8231 || c === 8729 || c === 65294) out += "·"; else out += ch;
+          }
+          t = out;
+          if (t.length >= 2) {
+            const pairs = {
+              '"': '"',
+              "'": "'",
+              "“": "”",
+              "‘": "’",
+              "「": "」",
+              "《": "》",
+              "〈": "〉",
+              "(": ")",
+              "（": "）",
+              "[": "]",
+              "【": "】"
+            };
+            if (pairs[t[0]] === t[t.length - 1]) t = t.slice(1, -1).trim();
+          }
+          t = t.replace(/^[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+/, "").replace(/[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+$/, "");
           return t;
         };
         const 地点Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.地图 ?? {}).filter(k => k !== "$meta"));
