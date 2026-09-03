@@ -155,6 +155,23 @@ var __webpack_modules__ = {
       }
       return out;
     };
+    const 图词 = v => {
+      const t = String(v ?? "").trim();
+      if (t.includes("上界")) return "上界";
+      if (t.includes("高庭")) return "高庭";
+      if (t.includes("森林")) return "森林";
+      return "荒野";
+    };
+    const 图层级 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(图词).prefault("荒野");
+    const 跨域地图 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+      const s = String(v || "").trim();
+      if (!s) return "";
+      if (s.includes("上界")) return "上界";
+      if (s.includes("高庭")) return "高庭";
+      if (s.includes("森林")) return "森林";
+      if (s.includes("荒野")) return "荒野";
+      return s;
+    }).prefault("");
     const 关键NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
       分区: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("后勤"),
       任职: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -185,6 +202,7 @@ var __webpack_modules__ = {
       内容: ""
     })) ]).prefault({});
     const 外部NPCItem = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
+      所在地图: 图层级,
       所属: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       出身: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       位置: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -200,6 +218,38 @@ var __webpack_modules__ = {
       阶位: 阶位Schema,
       等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       力量体系: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault("")
+    }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
+    const 势力关系Item = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
+      所在地图: 图层级,
+      跨域: 跨域地图,
+      领袖: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      评级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      关系度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).optional(),
+      档位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      介绍: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      管理风格: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      主要产出: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      特殊建筑: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      NPC列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().prefault(""),
+      成因: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
+    const 地图Item = zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({
+      所在地图: 图层级,
+      类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      方位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      距离: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      发现状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
+        const s = String(v ?? "").trim();
+        if (s.includes("已探索")) return "已探索";
+        if (s.includes("未知")) return "未知";
+        return "已发现未探索";
+      }).prefault("已发现未探索"),
+      简介: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      危险度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      产出: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      控制者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("未知"),
+      最近动态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
     }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -273,10 +323,10 @@ var __webpack_modules__ = {
           破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           博弈阶段
         }).prefault({}),
-        势力关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        势力关系: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 势力关系Item).transform(合并引号键).prefault({}),
         外部NPC: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 外部NPCItem).transform(合并引号键).prefault({})
       }).prefault({}),
-      地图: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+      地图: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 地图Item).transform(合并引号键).prefault({}),
       领地: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         薪火等级,
         薪火特殊名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -1558,36 +1608,43 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
+    var _useModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./useModal */ "./src/迷雾薪火/界面/状态栏/components/useModal.ts");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "MapPanel",
       setup(__props, {expose: __expose}) {
         __expose();
         const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
-        const modal = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null);
-        const open = n => modal.value = n;
-        const 方向角 = {
-          北: -90,
-          东北: -45,
-          东: 0,
-          东南: 45,
-          南: 90,
-          西南: 135,
-          西: 180,
-          西北: 225
+        const {open} = (0, _useModal__WEBPACK_IMPORTED_MODULE_2__.useModal)();
+        const 图层 = [ "荒野", "森林", "高庭", "上界" ];
+        function 当前图() {
+          const 评级 = store.data.领地?.评级链 || "";
+          if (store.data.人物面板?.阶位 && /六阶|七阶|八阶|九阶/.test(store.data.人物面板.阶位)) return "上界";
+          if (/公国|圣城|神座|唯一圣域/.test(评级)) return "高庭";
+          if (/庄园|城镇|都城|巨城/.test(评级)) return "森林";
+          return "荒野";
+        }
+        const 选图 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(当前图());
+        const 地点 = k => store.data.地图?.[k] ?? {};
+        const 属图 = m => [ "荒野", "森林", "高庭", "上界" ].includes(m || "") ? m : "荒野";
+        const 地点Keys = m => Object.keys(store.data.地图 ?? {}).filter(k => k !== "$meta").filter(k => 属图(地点(k).所在地图) === m);
+        const 当前层地点 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 地点Keys(选图.value));
+        const 未知 = k => (地点(k).发现状态 || "已发现未探索") === "未知";
+        const 状态词 = k => 未知(k) ? "未知" : (地点(k).发现状态 || "已发现未探索") === "已探索" ? "探索" : "半";
+        const 类型 = k => String(地点(k).类型 || "").trim();
+        const 方位 = k => String(地点(k).方位 || "未知").trim();
+        const 距离 = k => String(地点(k).距离 || "未知").trim();
+        const 控制者 = k => String(地点(k).控制者 || "未知").trim() || "未知";
+        const 是代管 = k => 控制者(k).includes("代管");
+        const 发现状态 = k => 未知(k) ? "未知" : 地点(k).发现状态 || "已发现未探索";
+        const 名称 = k => {
+          if (未知(k)) return "？ · 未知地点";
+          return 去引号(k);
         };
-        const 距离r = {
-          近: 50,
-          中: 100,
-          远: 150
-        };
-        const 类型类 = {
-          营地: "t-camp",
-          庄园: "t-manor",
-          城镇: "t-town",
-          遗迹: "t-ruin",
-          危险区: "t-danger",
-          迷雾深处: "t-mist",
-          资源点: "t-res"
+        const 提示 = k => {
+          const d = 方位(k);
+          const t = 类型(k) || "迷雾深处";
+          if (d && d !== "未知") return `${d}·${t}有微弱火光`;
+          return `${t}方向有微弱火光`;
         };
         const 去引号 = s => {
           if (typeof s !== "string") return s == null ? "" : typeof s === "number" ? String(s) : "";
@@ -1617,67 +1674,63 @@ var __webpack_modules__ = {
           t = t.replace(/^[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+/, "").replace(/[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+$/, "");
           return t;
         };
-        const 地点Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.地图 ?? {}).filter(k => k !== "$meta"));
-        const 地点 = k => store.data.地图?.[k] ?? {};
-        function pos(方位, 距离) {
-          const ang = 方向角[方位 || "北"] ?? -90;
-          const r = 距离r[距离 || "中"] ?? 60;
-          const rad = ang * Math.PI / 180;
-          return {
-            x: 170 + r * Math.cos(rad),
-            y: 170 + r * Math.sin(rad)
-          };
+        const archRow = (label, value) => (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+          class: "arch-row"
+        }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+          class: "arch-label"
+        }, label), (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("span", {
+          class: "arch-value"
+        }, value || "未知") ]);
+        function open地点(k) {
+          const p = 地点(k);
+          const u = 未知(k);
+          const 显示名 = u ? "未知地点" : 去引号(k);
+          const rows = [];
+          if (u) {
+            rows.push(archRow("方向提示", `${提示(k)}（尚未探明，无法确认其名称）`));
+            rows.push(archRow("类型", 类型(k) || "迷雾深处"));
+          } else {
+            if (p.简介) rows.push(archRow("概况", String(p.简介))); else rows.push(archRow("概况", "（简介未探明）"));
+            rows.push(archRow("危险度", String(p.危险度 || "未知")));
+            rows.push(archRow("已知产出", String(p.产出 || "未知")));
+            rows.push(archRow("方位 · 距离", `${方位(k)} · ${距离(k)}`));
+            const 主 = 控制者(k);
+            rows.push(archRow("控制者", 主));
+            if (是代管(k)) rows.push(archRow("属地说明", "该地为玩家属地、交由从属代管——所属权不变，代管人在此坐镇。"));
+            rows.push(archRow("最近动态", String(p.最近动态 || "").trim() || "暂无动态"));
+          }
+          open({
+            title: 显示名,
+            path: [ "舆图志", 选图.value ],
+            level: 2,
+            content: (0, vue__WEBPACK_IMPORTED_MODULE_0__.h)("div", {
+              class: "arch-body"
+            }, rows)
+          });
         }
-        const 已发现 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-          const counts = new Map;
-          return 地点Keys.value.map(k => {
-            const p = 地点(k);
-            if ((p.发现状态 || "已发现未探索") === "未知") return null;
-            const key = `${p.方位 || "北"}|${p.距离 || "中"}`;
-            const idx = counts.get(key) ?? 0;
-            counts.set(key, idx + 1);
-            const base = pos(p.方位, p.距离);
-            const ang = (方向角[p.方位 || "北"] ?? -90) * Math.PI / 180;
-            return {
-              name: k,
-              显示名: 去引号(k),
-              x: base.x - Math.sin(ang) * idx * 14,
-              y: base.y + Math.cos(ang) * idx * 14,
-              类型类: 类型类[p.类型 || ""] || "t-mist",
-              发现状态: p.发现状态 || "已发现未探索"
-            };
-          }).filter(v => !!v);
-        });
-        const 未知 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-          const counts = new Map;
-          return 地点Keys.value.map(k => {
-            const p = 地点(k);
-            if ((p.发现状态 || "") !== "未知") return null;
-            const key = `${p.方位 || "北"}|${p.距离 || "中"}`;
-            const idx = counts.get(key) ?? 0;
-            counts.set(key, idx + 1);
-            const base = pos(p.方位, p.距离);
-            const ang = (方向角[p.方位 || "北"] ?? -90) * Math.PI / 180;
-            return {
-              x: base.x - Math.sin(ang) * idx * 14,
-              y: base.y + Math.cos(ang) * idx * 14,
-              提示: `${p.方位 || "某方向"}·${p.类型 || "迷雾深处"}有微弱火光`
-            };
-          }).filter(v => !!v);
-        });
         const __returned__ = {
           store,
-          modal,
           open,
-          方向角,
-          距离r,
-          类型类,
-          去引号,
-          地点Keys,
+          图层,
+          当前图,
+          选图,
           地点,
-          pos,
-          已发现,
-          未知
+          属图,
+          地点Keys,
+          当前层地点,
+          未知,
+          状态词,
+          类型,
+          方位,
+          距离,
+          控制者,
+          是代管,
+          发现状态,
+          名称,
+          提示,
+          去引号,
+          archRow,
+          open地点
         };
         Object.defineProperty(__returned__, "__isScriptSetup", {
           enumerable: false,
@@ -1890,10 +1943,26 @@ var __webpack_modules__ = {
         __expose();
         const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
         const {open} = (0, _useModal__WEBPACK_IMPORTED_MODULE_2__.useModal)();
-        const 势力Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.关系.势力关系 ?? {}).filter(k => k !== "$meta"));
-        const npcKeys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.关系.外部NPC ?? {}).filter(k => k !== "$meta"));
+        const 图层 = [ "荒野", "森林", "高庭", "上界" ];
+        function 当前图() {
+          const 评级 = store.data.领地?.评级链 || "";
+          if (store.data.人物面板?.阶位 && /六阶|七阶|八阶|九阶/.test(store.data.人物面板.阶位)) return "上界";
+          if (/公国|圣城|神座|唯一圣域/.test(评级)) return "高庭";
+          if (/庄园|城镇|都城|巨城/.test(评级)) return "森林";
+          return "荒野";
+        }
+        const 选图 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.ref)(当前图());
+        const 势力Keys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.关系.势力关系 ?? {}).filter(k => k !== "$meta").filter(k => 属图(势力(k).所在地图) === 选图.value || (势力(k).跨域 || "") === 选图.value));
+        const npcKeys = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.关系.外部NPC ?? {}).filter(k => k !== "$meta").filter(k => 属图(外部NPC(k).所在地图) === 选图.value));
+        const 属图 = m => [ "荒野", "森林", "高庭", "上界" ].includes(m || "") ? m : "荒野";
         const 势力 = k => store.data.关系.势力关系?.[k] ?? {};
         const 外部NPC = k => store.data.关系.外部NPC?.[k] ?? {};
+        const 势力数 = m => Object.keys(store.data.关系.势力关系 ?? {}).filter(k => k !== "$meta" && (属图(势力(k).所在地图) === m || (势力(k).跨域 || "") === m)).length;
+        const npc数 = m => Object.keys(store.data.关系.外部NPC ?? {}).filter(k => k !== "$meta" && 属图(外部NPC(k).所在地图) === m).length;
+        const 本层总数 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => ({
+          势力: 势力Keys.value.length,
+          NPC: npcKeys.value.length
+        }));
         const 档位色板 = {
           仇恨: "var(--c-danger)",
           敌对: "#e07a3c",
@@ -2053,10 +2122,17 @@ var __webpack_modules__ = {
         const __returned__ = {
           store,
           open,
+          图层,
+          当前图,
+          选图,
           势力Keys,
           npcKeys,
+          属图,
           势力,
           外部NPC,
+          势力数,
+          npc数,
+          本层总数,
           档位色板,
           档位色,
           档位区间,
@@ -3544,135 +3620,81 @@ var __webpack_modules__ = {
       class: "panel"
     };
     const _hoisted_2 = {
-      viewBox: "0 0 340 340",
-      class: "map"
+      class: "map-tabs"
     };
-    const _hoisted_3 = [ "x2", "y2" ];
-    const _hoisted_4 = [ "cx", "cy" ];
-    const _hoisted_5 = [ "cx", "cy", "onClick" ];
-    const _hoisted_6 = [ "x", "y" ];
-    const _hoisted_7 = [ "x", "y" ];
+    const _hoisted_3 = [ "onClick" ];
+    const _hoisted_4 = {
+      class: "map-cnt"
+    };
+    const _hoisted_5 = {
+      class: "block"
+    };
+    const _hoisted_6 = {
+      class: "block-title"
+    };
+    const _hoisted_7 = {
+      class: "o-scroll"
+    };
     const _hoisted_8 = {
-      class: "modal-card"
+      key: 0,
+      class: "empty"
     };
     const _hoisted_9 = {
-      class: "modal-head"
+      key: 1,
+      class: "o-grid"
     };
-    const _hoisted_10 = {
-      class: "modal-title"
-    };
+    const _hoisted_10 = [ "onClick" ];
     const _hoisted_11 = {
-      class: "detail-meta"
+      class: "o-name"
     };
     const _hoisted_12 = {
-      class: "chip"
+      class: "o-status"
     };
     const _hoisted_13 = {
-      class: "chip"
+      key: 0,
+      class: "o-hint"
     };
     const _hoisted_14 = {
-      class: "chip"
-    };
-    const _hoisted_15 = {
-      key: 0,
-      class: "chip"
-    };
-    const _hoisted_16 = {
-      key: 0,
-      class: "detail-text"
-    };
-    const _hoisted_17 = {
-      key: 1,
-      class: "detail-text dim"
-    };
-    const _hoisted_18 = {
-      key: 2,
-      class: "detail-text"
+      class: "o-line"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
-      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_2, [ _cache[2] || (_cache[2] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)('<defs data-v-7203f04a><radialGradient id="fogGrad" cx="50%" cy="50%" r="65%" data-v-7203f04a><stop offset="0%" stop-color="#2a2f34" data-v-7203f04a></stop><stop offset="70%" stop-color="#1b2025" data-v-7203f04a></stop><stop offset="100%" stop-color="#12161a" data-v-7203f04a></stop></radialGradient><radialGradient id="campGlow" cx="50%" cy="50%" r="50%" data-v-7203f04a><stop offset="0%" stop-color="#ffb35c" stop-opacity="0.9" data-v-7203f04a></stop><stop offset="60%" stop-color="#e08a3c" stop-opacity="0.5" data-v-7203f04a></stop><stop offset="100%" stop-color="#e08a3c" stop-opacity="0" data-v-7203f04a></stop></radialGradient></defs><circle cx="170" cy="170" r="160" fill="url(#fogGrad)" stroke="#3a3f3c" data-v-7203f04a></circle>', 2)), ((0, 
+      return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [ ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.图层, m => (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        key: m,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "map-tab", {
+          active: $setup.选图 === m
+        } ]),
+        onClick: $event => $setup.选图 = m
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(m), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点Keys(m).length), 1) ], 10, _hoisted_3)), 64)) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, "舆图志 · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.选图), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [ !$setup.当前层地点.length ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, "该地图已知地点尚属空白——探索、NPC告知或附近动向会点亮新地点。")) : ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [ ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.已发现, p => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("g", {
-        key: p.name
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("line", {
-        x1: 170,
-        y1: 170,
-        x2: p.x,
-        y2: p.y,
-        class: "link"
-      }, null, 8, _hoisted_3), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
-        cx: p.x,
-        cy: p.y,
-        r: 9,
-        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "ring", {
-          explored: p.发现状态 === "已探索"
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.当前层地点, k => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+        key: k,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "o-cell", [ $setup.未知(k) ? "is-unknown" : "", "st-" + $setup.状态词(k) ] ]),
+        onClick: $event => $setup.open地点(k)
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.名称(k)), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "o-type", `ty-${$setup.类型(k)}` ])
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.类型(k) || "地点"), 3), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.发现状态(k)), 1), $setup.未知(k) ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.提示(k)), 1)) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.方位(k)) + " · " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.距离(k)), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "o-line", {
+          delege: $setup.是代管(k)
         } ])
-      }, null, 10, _hoisted_4), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
-        cx: p.x,
-        cy: p.y,
-        r: 6,
-        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "node", p.类型类 ]),
-        onClick: $event => $setup.open(p.name)
-      }, null, 10, _hoisted_5), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("text", {
-        x: p.x,
-        y: p.y - 12,
-        class: "node-label",
-        "text-anchor": "middle"
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(p.显示名), 9, _hoisted_6) ]))), 128)), _cache[3] || (_cache[3] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
-        cx: "170",
-        cy: "170",
-        r: "26",
-        fill: "url(#campGlow)"
-      }, null, -1)), _cache[4] || (_cache[4] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("circle", {
-        cx: "170",
-        cy: "170",
-        r: "8",
-        class: "camp-core"
-      }, null, -1)), _cache[5] || (_cache[5] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("text", {
-        x: "170",
-        y: "144",
-        class: "camp-label",
-        "text-anchor": "middle"
-      }, "营地", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.未知, u => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("text", {
-        key: u.提示,
-        x: u.x,
-        y: u.y,
-        class: "unknown",
-        "text-anchor": "middle"
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(u.提示), 9, _hoisted_7))), 128)) ])), _cache[7] || (_cache[7] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)('<div class="legend" data-v-7203f04a><span class="lg" data-v-7203f04a><i class="dot t-camp" data-v-7203f04a></i>营地</span><span class="lg" data-v-7203f04a><i class="dot t-manor" data-v-7203f04a></i>庄园</span><span class="lg" data-v-7203f04a><i class="dot t-town" data-v-7203f04a></i>城镇</span><span class="lg" data-v-7203f04a><i class="dot t-ruin" data-v-7203f04a></i>遗迹</span><span class="lg" data-v-7203f04a><i class="dot t-res" data-v-7203f04a></i>资源点</span><span class="lg" data-v-7203f04a><i class="dot t-danger" data-v-7203f04a></i>危险区</span><span class="lg" data-v-7203f04a><i class="dot t-mist" data-v-7203f04a></i>迷雾深处</span></div><div class="muted" data-v-7203f04a>点击已发现地点查看详情；未知方位以迷雾提示显示</div>', 2)), $setup.modal ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-        key: 0,
-        class: "modal-backdrop",
-        onClick: _cache[1] || (_cache[1] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => $setup.modal = null, [ "self" ]))
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.去引号($setup.modal)), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        class: "modal-close",
-        onClick: _cache[0] || (_cache[0] = $event => $setup.modal = null)
-      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).类型 || "类型未知"), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).方位 || "方位未知") + " · " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).距离 || "距离未知"), 1), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).发现状态 || "未知"), 1), $setup.地点($setup.modal).危险度 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, "危险度 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.地点($setup.modal).危险度), 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), $setup.地点($setup.modal).简介 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.去引号($setup.地点($setup.modal).简介)), 1)) : ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, "（简介未探明）")), $setup.地点($setup.modal).产出 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [ _cache[6] || (_cache[6] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "已知产出：", -1)), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.去引号($setup.地点($setup.modal).产出)), 1) ])) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]) ])) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
+      }, "控制者：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.控制者(k)), 3) ], 64)) ], 10, _hoisted_10))), 128)) ])) ]) ]) ]);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/ModalHost.vue?vue&type=template&id=525f9b9c&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -3996,60 +4018,83 @@ var __webpack_modules__ = {
       class: "panel"
     };
     const _hoisted_2 = {
+      class: "map-tabs"
+    };
+    const _hoisted_3 = [ "onClick" ];
+    const _hoisted_4 = {
+      class: "map-cnt"
+    };
+    const _hoisted_5 = {
       class: "block"
     };
-    const _hoisted_3 = {
+    const _hoisted_6 = {
+      class: "block-title"
+    };
+    const _hoisted_7 = {
       key: 0,
       class: "faction-empty"
     };
-    const _hoisted_4 = {
+    const _hoisted_8 = {
+      class: "empty-line"
+    };
+    const _hoisted_9 = {
       key: 1,
       class: "faction-row"
     };
-    const _hoisted_5 = [ "onClick" ];
-    const _hoisted_6 = {
-      key: 0,
-      class: "faction-badge"
+    const _hoisted_10 = [ "onClick" ];
+    const _hoisted_11 = {
+      key: 1,
+      class: "faction-cross"
     };
-    const _hoisted_7 = {
+    const _hoisted_12 = {
       class: "faction-name"
     };
-    const _hoisted_8 = {
+    const _hoisted_13 = {
       class: "faction-sub"
     };
-    const _hoisted_9 = {
+    const _hoisted_14 = {
       class: "block"
     };
-    const _hoisted_10 = {
+    const _hoisted_15 = {
+      class: "block-title"
+    };
+    const _hoisted_16 = {
       class: "faction-row"
     };
-    const _hoisted_11 = {
+    const _hoisted_17 = {
       key: 0,
       class: "muted"
     };
-    const _hoisted_12 = [ "onClick" ];
-    const _hoisted_13 = {
+    const _hoisted_18 = [ "onClick" ];
+    const _hoisted_19 = {
       class: "faction-name"
     };
-    const _hoisted_14 = {
+    const _hoisted_20 = {
       class: "faction-sub"
     };
-    const _hoisted_15 = {
+    const _hoisted_21 = {
       class: "faction-tier neutral-band"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [ _cache[1] || (_cache[1] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [ ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.图层, m => (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        key: m,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "map-tab", {
+          active: $setup.选图 === m
+        } ]),
+        onClick: $event => $setup.选图 = m
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(m), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.势力数(m) + $setup.npc数(m)), 1) ], 10, _hoisted_3)), 64)) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, "势力关系 · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.选图), 1), !$setup.势力Keys.length ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.本层总数.势力 ? "该地图尚未建交势力" : "迷雾茫茫，尚无建交势力") + "——派出斥候、放行商队，或等待附近的动向找上门来。", 1), _cache[0] || (_cache[0] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        class: "block-title"
-      }, "势力关系", -1)), !$setup.势力Keys.length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [ ..._cache[0] || (_cache[0] = [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        class: "empty-line"
-      }, "迷雾茫茫，尚无建交势力——派出斥候、放行商队，或等待附近的动向找上门来。", -1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "empty-hint"
-      }, "解锁提示：发现势力后自动出现卡片", -1) ]) ])) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [ ((0, 
+      }, "解锁提示：发现势力后自动出现卡片", -1)) ])) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [ ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.势力Keys, f => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
@@ -4059,10 +4104,16 @@ var __webpack_modules__ = {
           borderColor: $setup.档位色($setup.势力档位($setup.势力(f)))
         }),
         onClick: $event => $setup.open势力(f)
-      }, [ $setup.势力(f).状态 ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_6, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.状态徽章($setup.势力(f).状态)), 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(f), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, [ (0, 
+      }, [ $setup.势力(f).状态 ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+        key: 0,
+        class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "faction-badge", {
+          off: $setup.势力(f).跨域
+        } ])
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.状态徽章($setup.势力(f).状态)), 3)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.势力(f).跨域 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, "跨域")) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(f), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.势力(f).领袖 || "领袖未知"), 1), $setup.势力(f).评级 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
@@ -4072,12 +4123,11 @@ var __webpack_modules__ = {
         style: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
           background: $setup.档位色($setup.势力档位($setup.势力(f)))
         })
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.档位文字($setup.势力(f))), 5) ], 12, _hoisted_5))), 128)) ])) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [ _cache[2] || (_cache[2] = (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        class: "block-title"
-      }, "外部重要NPC", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [ !$setup.npcKeys.length ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, "暂无外部NPC")) : (0, 
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.档位文字($setup.势力(f))), 5) ], 12, _hoisted_10))), 128)) ])) ]), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, "外部重要NPC · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.选图), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [ !$setup.npcKeys.length ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.本层总数.NPC ? "该地图暂无外部NPC" : "暂无外部NPC"), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.npcKeys, n => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
@@ -4085,14 +4135,14 @@ var __webpack_modules__ = {
         key: n,
         class: "faction-card neutral",
         onClick: $event => $setup.openNPC(n)
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, [ (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_19, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(n), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_20, [ (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外部NPC(n).出身 || "出身未知"), 1), $setup.外部NPC(n).阶位 ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" · " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外部NPC(n).阶位), 1) ], 64)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, "好感 " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外部NPC(n).好感 ?? "?"), 1) ], 8, _hoisted_12))), 128)) ]) ]) ]);
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, "好感 " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.外部NPC(n).好感 ?? "?"), 1) ], 8, _hoisted_18))), 128)) ]) ]) ]);
     }
   },
   "./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-vue-components!./node_modules/.pnpm/unplugin@3.3.0_webpack@5.109.2/node_modules/unplugin/dist/webpack/loaders/transform.mjs??unplugin-auto-import!./node_modules/.pnpm/ts-loader@9.6.2_loader-util_f83a982f88ef9e76207204ba4c605698/node_modules/ts-loader/index.js??clonedRuleSet-42!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[4]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/TaskPanel.vue?vue&type=template&id=558cb288&scoped=true&ts=true"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -7114,7 +7164,7 @@ let __webpack_exports__ = {};
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/RelationshipPanel.vue?vue&type=style&index=0&id=44558a69&lang=scss&scoped=true ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-44558a69]{display:flex;flex-direction:column;gap:10px}.block[data-v-44558a69]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-44558a69]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.faction-row[data-v-44558a69]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.faction-card[data-v-44558a69]{position:relative;flex:0 0 150px;height:96px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 12px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;text-align:left;color:var(--c-muted)}.faction-card.neutral[data-v-44558a69]{border-color:var(--c-border)}.faction-card[data-v-44558a69]:hover{filter:brightness(1.15)}.faction-card .faction-badge[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-name[data-v-44558a69]{color:var(--c-ash);font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}.faction-card .faction-sub[data-v-44558a69]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.faction-card .faction-tier[data-v-44558a69]{align-self:flex-start;color:#1a1d20;font-size:10px;font-weight:bold;border-radius:3px;padding:1px 6px;line-height:16px}.faction-card .faction-tier.neutral-band[data-v-44558a69]{background:var(--c-border)}.faction-empty[data-v-44558a69]{padding:20px 12px;text-align:center}.faction-empty .empty-line[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.7}.faction-empty .empty-hint[data-v-44558a69]{margin-top:8px;color:var(--c-muted);font-size:11px;opacity:0.7}.muted[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-body[data-v-44558a69]{display:flex;flex-direction:column}.fs-head[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}.fs-name-row[data-v-44558a69]{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fs-name[data-v-44558a69]{color:var(--c-ember);font-size:20px;font-weight:bold}.fs-badge[data-v-44558a69]{color:#1a1d20;font-size:11px;font-weight:bold;border-radius:3px;padding:1px 8px;line-height:18px;flex-shrink:0}.fs-relrow[data-v-44558a69]{display:flex;align-items:center;gap:8px}.fs-reltrack[data-v-44558a69]{position:relative;flex:1;height:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px}.fs-reltick[data-v-44558a69]{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #1a1d20}.fs-relval[data-v-44558a69]{color:var(--c-muted);font-size:11px;width:26px;text-align:right;flex-shrink:0}.fs-meta[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-div[data-v-44558a69]{height:1px;background:var(--c-border);margin:10px 0}.fs-block[data-v-44558a69]{display:flex;flex-direction:column;gap:6px}.fs-sub[data-v-44558a69]{color:#c9a062;font-size:11px;letter-spacing:3px}.fs-subrow[data-v-44558a69]{display:flex;align-items:center;justify-content:space-between}.fs-subcount[data-v-44558a69]{color:var(--c-muted);font-size:11px}.fs-text[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.fs-field[data-v-44558a69]{display:flex;gap:10px;align-items:flex-start}.fs-label[data-v-44558a69]{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px}.fs-val[data-v-44558a69]{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;word-break:break-word}.fs-npcs[data-v-44558a69]{display:flex;flex-direction:column;gap:2px;max-height:150px;overflow-y:auto}.fs-npc[data-v-44558a69]{color:var(--c-ash);font-size:12px;line-height:1.5;padding:4px 0;border-bottom:1px dashed var(--c-border)}.fs-npc[data-v-44558a69]:last-child{border-bottom:none}.fs-unknown[data-v-44558a69]{color:var(--c-muted);font-size:12px;opacity:0.75}
+.panel[data-v-44558a69]{display:flex;flex-direction:column;gap:10px}.block[data-v-44558a69]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-44558a69]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.map-tabs[data-v-44558a69]{display:flex;gap:8px;flex-wrap:wrap}.map-tab[data-v-44558a69]{height:28px;padding:0 12px;border-radius:14px;background:var(--c-surface);border:1px solid var(--c-border);color:var(--c-muted);font-size:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px}.map-tab.active[data-v-44558a69]{background:var(--c-surface-2);border-color:var(--c-ember);color:var(--c-ember)}.map-tab[data-v-44558a69]:hover{border-color:var(--c-ember)}.map-tab .map-cnt[data-v-44558a69]{font-size:10px;opacity:0.75}.faction-row[data-v-44558a69]{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}.faction-card[data-v-44558a69]{position:relative;flex:0 0 150px;height:96px;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:10px 12px;background:var(--c-surface);border:2px solid var(--c-border);border-radius:8px;cursor:pointer;font-family:inherit;text-align:left;color:var(--c-muted)}.faction-card.neutral[data-v-44558a69]{border-color:var(--c-border)}.faction-card[data-v-44558a69]:hover{filter:brightness(1.15)}.faction-card .faction-badge[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-danger);border:1px solid var(--c-danger);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-badge.off[data-v-44558a69]{right:auto;left:8px}.faction-card .faction-cross[data-v-44558a69]{position:absolute;top:6px;right:8px;font-size:10px;color:var(--c-rare);border:1px solid var(--c-rare);border-radius:2px;padding:0 4px;line-height:14px}.faction-card .faction-name[data-v-44558a69]{color:var(--c-ash);font-size:14px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:26px}.faction-card .faction-sub[data-v-44558a69]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.faction-card .faction-tier[data-v-44558a69]{align-self:flex-start;color:#1a1d20;font-size:10px;font-weight:bold;border-radius:3px;padding:1px 6px;line-height:16px}.faction-card .faction-tier.neutral-band[data-v-44558a69]{background:var(--c-border)}.faction-empty[data-v-44558a69]{padding:20px 12px;text-align:center}.faction-empty .empty-line[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.7}.faction-empty .empty-hint[data-v-44558a69]{margin-top:8px;color:var(--c-muted);font-size:11px;opacity:0.7}.muted[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-body[data-v-44558a69]{display:flex;flex-direction:column}.fs-head[data-v-44558a69]{display:flex;flex-direction:column;gap:8px}.fs-name-row[data-v-44558a69]{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.fs-name[data-v-44558a69]{color:var(--c-ember);font-size:20px;font-weight:bold}.fs-badge[data-v-44558a69]{color:#1a1d20;font-size:11px;font-weight:bold;border-radius:3px;padding:1px 8px;line-height:18px;flex-shrink:0}.fs-relrow[data-v-44558a69]{display:flex;align-items:center;gap:8px}.fs-reltrack[data-v-44558a69]{position:relative;flex:1;height:6px;background:var(--c-surface-2);border:1px solid var(--c-border);border-radius:3px}.fs-reltick[data-v-44558a69]{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;border:2px solid #1a1d20}.fs-relval[data-v-44558a69]{color:var(--c-muted);font-size:11px;width:26px;text-align:right;flex-shrink:0}.fs-meta[data-v-44558a69]{color:var(--c-muted);font-size:12px}.fs-div[data-v-44558a69]{height:1px;background:var(--c-border);margin:10px 0}.fs-block[data-v-44558a69]{display:flex;flex-direction:column;gap:6px}.fs-sub[data-v-44558a69]{color:#c9a062;font-size:11px;letter-spacing:3px}.fs-subrow[data-v-44558a69]{display:flex;align-items:center;justify-content:space-between}.fs-subcount[data-v-44558a69]{color:var(--c-muted);font-size:11px}.fs-text[data-v-44558a69]{color:var(--c-ash);font-size:13px;line-height:1.6}.fs-field[data-v-44558a69]{display:flex;gap:10px;align-items:flex-start}.fs-label[data-v-44558a69]{flex:0 0 64px;flex-shrink:0;color:var(--c-muted);font-size:11px;letter-spacing:2px;padding-top:2px}.fs-val[data-v-44558a69]{flex:1;min-width:0;color:var(--c-ash);font-size:13px;line-height:1.6;word-break:break-word}.fs-npcs[data-v-44558a69]{display:flex;flex-direction:column;gap:2px;max-height:150px;overflow-y:auto}.fs-npc[data-v-44558a69]{color:var(--c-ash);font-size:12px;line-height:1.5;padding:4px 0;border-bottom:1px dashed var(--c-border)}.fs-npc[data-v-44558a69]:last-child{border-bottom:none}.fs-unknown[data-v-44558a69]{color:var(--c-muted);font-size:12px;opacity:0.75}
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/InventoryPanel.vue?vue&type=style&index=0&id=25b57b9b&lang=scss&scoped=true ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
@@ -7122,7 +7172,7 @@ let __webpack_exports__ = {};
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-.panel[data-v-7203f04a]{display:flex;flex-direction:column;gap:6px}.map[data-v-7203f04a]{width:100%;height:auto;border:1px solid var(--c-border);border-radius:6px}.link[data-v-7203f04a]{stroke:#4a4f55;stroke-width:1;stroke-dasharray:3 3;opacity:0.8}.ring[data-v-7203f04a]{fill:none;stroke:var(--c-muted);stroke-width:1;stroke-dasharray:2 2}.ring.explored[data-v-7203f04a]{stroke:var(--c-ember);stroke-dasharray:none}.node[data-v-7203f04a]{stroke:#1a1d20;stroke-width:1.5;cursor:pointer;filter:drop-shadow(0 0 3px rgba(0,0,0,0.6))}.node.t-camp[data-v-7203f04a]{fill:#5fa86b}.node.t-manor[data-v-7203f04a]{fill:var(--c-rare)}.node.t-town[data-v-7203f04a]{fill:#e0a83c}.node.t-ruin[data-v-7203f04a]{fill:#8a8a8a}.node.t-res[data-v-7203f04a]{fill:#4fbfa8}.node.t-danger[data-v-7203f04a]{fill:var(--c-danger)}.node.t-mist[data-v-7203f04a]{fill:#4a4f55}.camp-core[data-v-7203f04a]{fill:#ffb35c;filter:drop-shadow(0 0 6px #e08a3c)}.camp-label[data-v-7203f04a]{fill:#ffb35c;font-size:9px;font-weight:bold}.node-label[data-v-7203f04a]{fill:var(--c-ash);font-size:8px}.unknown[data-v-7203f04a]{fill:var(--c-muted);font-size:8px;opacity:0.75}.legend[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:8px;padding:4px 2px}.legend .lg[data-v-7203f04a]{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--c-muted)}.legend .lg .dot[data-v-7203f04a]{width:8px;height:8px;border-radius:50%;display:inline-block}.legend .lg .dot.t-camp[data-v-7203f04a]{background:#5fa86b}.legend .lg .dot.t-manor[data-v-7203f04a]{background:var(--c-rare)}.legend .lg .dot.t-town[data-v-7203f04a]{background:#e0a83c}.legend .lg .dot.t-ruin[data-v-7203f04a]{background:#8a8a8a}.legend .lg .dot.t-res[data-v-7203f04a]{background:#4fbfa8}.legend .lg .dot.t-danger[data-v-7203f04a]{background:var(--c-danger)}.legend .lg .dot.t-mist[data-v-7203f04a]{background:#4a4f55}.muted[data-v-7203f04a]{color:var(--c-muted);font-size:11px}.modal-backdrop[data-v-7203f04a]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-7203f04a]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-head[data-v-7203f04a]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.modal-title[data-v-7203f04a]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-7203f04a]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-7203f04a]:hover{color:var(--c-ember)}.detail-meta[data-v-7203f04a]{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}.chip[data-v-7203f04a]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2)}.detail-text[data-v-7203f04a]{color:var(--c-ash);font-size:12px;line-height:1.6}.detail-text b[data-v-7203f04a]{color:var(--c-ember)}.dim[data-v-7203f04a]{color:var(--c-muted);opacity:0.7}
+@charset "UTF-8";.panel[data-v-7203f04a]{display:flex;flex-direction:column;gap:8px}.map-tabs[data-v-7203f04a]{display:flex;gap:8px;flex-wrap:wrap}.map-tab[data-v-7203f04a]{height:28px;padding:0 12px;border-radius:14px;background:var(--c-surface);border:1px solid var(--c-border);color:var(--c-muted);font-size:12px;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px}.map-tab.active[data-v-7203f04a]{background:var(--c-surface-2);border-color:var(--c-ember);color:var(--c-ember)}.map-tab[data-v-7203f04a]:hover{border-color:var(--c-ember)}.map-tab .map-cnt[data-v-7203f04a]{font-size:10px;opacity:0.75}.block[data-v-7203f04a]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-7203f04a]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.o-scroll[data-v-7203f04a]{max-height:320px;overflow-y:auto;padding-right:4px}.o-grid[data-v-7203f04a]{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}.o-cell[data-v-7203f04a]{position:relative;display:flex;flex-direction:column;gap:5px;padding:9px 10px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:6px;cursor:pointer;font-family:inherit;text-align:left;min-width:0}.o-cell[data-v-7203f04a]:hover{background:var(--c-surface-2);border-color:var(--c-ember)}.o-cell.st-探索[data-v-7203f04a]{border-left:3px solid #5fa86b}.o-cell.st-半[data-v-7203f04a]{border-left:3px solid #e0a83c}.o-cell.is-unknown[data-v-7203f04a]{opacity:0.8;border-style:dashed}.o-cell .o-name[data-v-7203f04a]{color:var(--c-ash);font-size:13px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:30px}.o-cell .o-type[data-v-7203f04a]{align-self:flex-start;font-size:10px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:0 4px;line-height:15px}.o-cell .o-type.ty-营地[data-v-7203f04a]{color:#5fa86b;border-color:#5fa86b}.o-cell .o-type.ty-庄园[data-v-7203f04a]{color:var(--c-rare);border-color:var(--c-rare)}.o-cell .o-type.ty-城镇[data-v-7203f04a]{color:#e0a83c;border-color:#e0a83c}.o-cell .o-type.ty-遗迹[data-v-7203f04a]{color:#8a8a8a;border-color:#8a8a8a}.o-cell .o-type.ty-危险区[data-v-7203f04a]{color:var(--c-danger);border-color:var(--c-danger)}.o-cell .o-type.ty-迷雾深处[data-v-7203f04a]{color:#4a4f55;border-color:#4a4f55}.o-cell .o-type.ty-资源点[data-v-7203f04a]{color:#4fbfa8;border-color:#4fbfa8}.o-cell .o-type.ty-双城[data-v-7203f04a]{color:var(--c-unique);border-color:var(--c-unique)}.o-cell .o-type.ty-神国[data-v-7203f04a]{color:var(--c-unique);border-color:var(--c-unique)}.o-cell .o-status[data-v-7203f04a]{position:absolute;top:8px;right:8px;font-size:10px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:0 4px;line-height:14px}.o-cell .o-line[data-v-7203f04a]{color:var(--c-muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.o-cell .o-line.delege[data-v-7203f04a]{color:var(--c-ember)}.o-cell .o-hint[data-v-7203f04a]{color:var(--c-muted);font-size:11px;line-height:1.5;font-style:italic}.empty[data-v-7203f04a]{color:var(--c-muted);font-size:12px;text-align:center;padding:14px 8px}
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/UnifiedNPC.vue?vue&type=style&index=0&id=6dcad0fc&lang=scss&scoped=true ***!
   \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
