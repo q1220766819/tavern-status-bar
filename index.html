@@ -1236,6 +1236,34 @@ var __webpack_modules__ = {
           const v = store.data.背包?.[k];
           return v && typeof v === "object" ? v : {};
         };
+        const 品质词 = q => {
+          const s = typeof q === "string" ? q.trim() : "";
+          const m = s.match(/^(灰|白|绿|蓝|黑紫|红)/);
+          return m ? m[1] : "";
+        };
+        const dimRows = n => {
+          const it = 背包(n);
+          const order = [ "描述", "耐久", "基础属性", "镶嵌", "附魔", "污染度", "词条" ];
+          const rows = [];
+          for (const k of order) {
+            const v = it[k];
+            if (v != null && String(v) !== "") rows.push({
+              k,
+              v: String(v)
+            });
+          }
+          return rows;
+        };
+        const 背包提示 = n => {
+          const it = 背包(n);
+          const 行 = [];
+          const t = 品质词(it.品质);
+          if (t) 行.push(`品质：${it.品质}`);
+          if (it.基础属性) 行.push(`基础属性：${it.基础属性}`);
+          if (it.描述) 行.push(it.描述);
+          if (it.词条) 行.push(it.词条);
+          return 行.join("\n");
+        };
         const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
         const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.装备栏 ?? {});
         const 槽位物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => slotModal.value ? 装备栏.value[slotModal.value] || "" : "");
@@ -1295,12 +1323,13 @@ var __webpack_modules__ = {
           }
         }
         const 品质类 = q => {
-          if (q === "红") return "q-red";
-          if (q === "黑紫") return "q-black";
-          if (q === "蓝") return "q-blue";
-          if (q === "绿") return "q-green";
-          if (q === "白") return "q-white";
-          return "";
+          const t = 品质词(q);
+          if (t === "红") return "q-red";
+          if (t === "黑紫") return "q-black";
+          if (t === "蓝") return "q-blue";
+          if (t === "绿") return "q-green";
+          if (t === "白") return "q-white";
+          return "q-grey";
         };
         const 服装方案 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.服装方案 ?? {});
         const outfitNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(服装方案.value).filter(k => k !== "$meta"));
@@ -1403,7 +1432,8 @@ var __webpack_modules__ = {
             黑紫: 200,
             红: 0
           };
-          return 表[item.品质 || "灰"] || 1;
+          const t = 品质词(item.品质) || "灰";
+          return 表[t] ?? 1;
         }
         function 出售(n) {
           const item = 背包(n);
@@ -1431,7 +1461,7 @@ var __webpack_modules__ = {
           const cat = item.分类 || "物品";
           const slot = 部位(item, n);
           const 图纸等 = item.分类 === "图纸" ? String(item.等级 || "") : "";
-          const 红品 = item.品质 === "红";
+          const 红品 = 品质词(item.品质) === "红";
           const acts = [];
           if (slot) {
             acts.push({
@@ -1483,6 +1513,9 @@ var __webpack_modules__ = {
           itemNames,
           去引号,
           背包,
+          品质词,
+          dimRows,
+          背包提示,
           槽位,
           装备栏,
           槽位物品,
@@ -3267,38 +3300,51 @@ var __webpack_modules__ = {
       class: "modal-title"
     };
     const _hoisted_33 = {
-      key: 0,
-      class: "detail"
+      class: "dims"
     };
     const _hoisted_34 = {
+      class: "dimk"
+    };
+    const _hoisted_35 = {
+      class: "dimv"
+    };
+    const _hoisted_36 = {
       class: "actions"
     };
-    const _hoisted_35 = [ "onClick" ];
-    const _hoisted_36 = {
+    const _hoisted_37 = [ "onClick" ];
+    const _hoisted_38 = {
       class: "modal-card"
     };
-    const _hoisted_37 = {
+    const _hoisted_39 = {
       class: "modal-head"
     };
-    const _hoisted_38 = {
+    const _hoisted_40 = {
       class: "modal-title"
     };
-    const _hoisted_39 = {
-      key: 0,
-      class: "detail"
+    const _hoisted_41 = {
+      class: "slot-worn"
     };
-    const _hoisted_40 = {
+    const _hoisted_42 = {
+      class: "dims"
+    };
+    const _hoisted_43 = {
+      class: "dimk"
+    };
+    const _hoisted_44 = {
+      class: "dimv"
+    };
+    const _hoisted_45 = {
       key: 0,
       class: "muted dim"
     };
-    const _hoisted_41 = [ "onClick" ];
-    const _hoisted_42 = {
+    const _hoisted_46 = [ "onClick" ];
+    const _hoisted_47 = {
       class: "modal-card"
     };
-    const _hoisted_43 = {
+    const _hoisted_48 = {
       class: "modal-head"
     };
-    const _hoisted_44 = {
+    const _hoisted_49 = {
       class: "detail"
     };
     function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -3383,7 +3429,7 @@ var __webpack_modules__ = {
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: n,
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "cell", $setup.品质类($setup.背包(n).品质) ]),
-        title: $setup.去引号($setup.背包(n).词条 || ""),
+        title: $setup.背包提示(n),
         onClick: $event => $setup.selectedItem = n
       }, [ _cache[13] || (_cache[13] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "cell-icon"
@@ -3407,36 +3453,53 @@ var __webpack_modules__ = {
       }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "chip", $setup.品质类($setup.背包($setup.selectedItem).品质) ])
       }, "品质：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.selectedItem).品质 || "?") + " · " + (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.selectedItem).分类 || "物品"), 3), $setup.背包($setup.selectedItem).词条 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_33, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.selectedItem).词条), 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [ ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.selectedItem).分类 || "物品") + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.selectedItem).部位 ? " · " + $setup.背包($setup.selectedItem).部位 : "") + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.selectedItem).数量 > 1 ? " ×" + $setup.背包($setup.selectedItem).数量 : ""), 3), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [ ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.dimRows($setup.selectedItem), r => ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        key: r.k,
+        class: "dim"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_34, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.k), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_35, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.v), 1) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [ ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.操作($setup.selectedItem), a => ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: a.label,
         class: "action",
         onClick: $event => a.run()
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(a.label), 9, _hoisted_35))), 128)) ]) ]) ])) : (0, 
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(a.label), 9, _hoisted_37))), 128)) ]) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.slotModal ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: 1,
         class: "modal-backdrop",
         onClick: _cache[6] || (_cache[6] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => $setup.slotModal = null, [ "self" ]))
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_38, (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_40, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.slotModal), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-close",
         onClick: _cache[4] || (_cache[4] = $event => $setup.slotModal = null)
       }, "×") ]), $setup.槽位物品 ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         key: 0
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, "穿戴：" + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.去引号($setup.槽位物品)), 1), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: (0, vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([ "chip", $setup.品质类($setup.背包($setup.槽位物品).品质) ])
-      }, "品质：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.槽位物品).品质 || "?"), 3), $setup.背包($setup.槽位物品).词条 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.槽位物品).词条), 1)) : (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, "品质：" + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.槽位物品).品质 || "?") + " · " + (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.背包($setup.槽位物品).分类 || "物品"), 3), (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [ ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.dimRows($setup.槽位物品), r => ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+        key: r.k,
+        class: "dim"
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_43, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.k), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_44, (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.v), 1) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "action",
         onClick: _cache[5] || (_cache[5] = $event => $setup.slotModal && $setup.卸下($setup.slotModal))
       }, "卸下") ], 64)) : ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
@@ -3444,7 +3507,7 @@ var __webpack_modules__ = {
       }, [ _cache[14] || (_cache[14] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "muted"
       }, "空位 · 从背包选择装备", -1)), !$setup.slotCandidates.length ? ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
-      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_40, "无可穿戴到该槽位的物品（装备类物品需带部位或分类为武器/装备/饰品）")) : (0, 
+      (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_45, "无可穿戴到该槽位的物品（装备类物品需带部位或分类为武器/装备/饰品）")) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.slotCandidates, c => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
@@ -3452,20 +3515,20 @@ var __webpack_modules__ = {
         key: c,
         class: "action",
         onClick: $event => $setup.slotModal && $setup.穿戴上槽位($setup.slotModal, c)
-      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c), 9, _hoisted_41))), 128)) ], 64)) ]) ])) : (0, 
+      }, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c), 9, _hoisted_46))), 128)) ], 64)) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.bookModal ? ((0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: 2,
         class: "modal-backdrop",
         onClick: _cache[8] || (_cache[8] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($event => $setup.bookModal = null, [ "self" ]))
-      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [ _cache[15] || (_cache[15] = (0, 
+      }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [ (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [ _cache[15] || (_cache[15] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "modal-title"
       }, "阅读", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "modal-close",
         onClick: _cache[7] || (_cache[7] = $event => $setup.bookModal = null)
-      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, (0, 
+      }, "×") ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.bookModal), 1) ]) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true) ]);
     }
@@ -7055,7 +7118,7 @@ let __webpack_exports__ = {};
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/InventoryPanel.vue?vue&type=style&index=0&id=25b57b9b&lang=scss&scoped=true ***!
   \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-@charset "UTF-8";.panel[data-v-25b57b9b]{display:flex;flex-direction:column;gap:10px}.block[data-v-25b57b9b]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-25b57b9b]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.equips[data-v-25b57b9b]{display:flex;gap:6px;flex-wrap:wrap}.slot[data-v-25b57b9b]{flex:1 0 30%;display:flex;flex-direction:column;gap:2px;background:var(--c-surface);border:1px dashed var(--c-border);border-radius:3px;padding:6px;cursor:pointer;font-family:inherit;text-align:left}.slot.filled[data-v-25b57b9b]{border-style:solid;border-color:var(--c-ember)}.slot .slot-name[data-v-25b57b9b]{color:var(--c-muted);font-size:10px}.slot .slot-item[data-v-25b57b9b]{color:var(--c-ash);font-size:12px;font-weight:bold}.grid[data-v-25b57b9b]{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.cell[data-v-25b57b9b]{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:2px;padding:4px 2px;cursor:pointer;font-family:inherit;overflow:hidden}.cell[data-v-25b57b9b]:hover{border-color:var(--c-ember)}.cell .cell-icon[data-v-25b57b9b]{font-size:12px;color:var(--c-muted)}.cell .cell-name[data-v-25b57b9b]{font-size:9px;color:var(--c-ash);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}.cell .cell-meta[data-v-25b57b9b]{display:flex;align-items:center;gap:3px}.cell .cell-meta .cat[data-v-25b57b9b]{font-size:8px;color:var(--c-muted)}.cell .cell-meta .stack[data-v-25b57b9b]{font-size:9px;color:var(--c-ember)}.cell.q-red .cell-icon[data-v-25b57b9b]{color:#d43f3f;text-shadow:0 0 6px rgba(212,63,63,0.6)}.cell.q-black .cell-icon[data-v-25b57b9b]{color:#9a5bcc}.cell.q-blue .cell-icon[data-v-25b57b9b]{color:var(--c-rare)}.cell.q-green .cell-icon[data-v-25b57b9b]{color:#5fa86b}.cell.q-white .cell-icon[data-v-25b57b9b]{color:var(--c-ash)}.muted[data-v-25b57b9b]{color:var(--c-muted);font-size:12px}.modal-backdrop[data-v-25b57b9b]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-25b57b9b]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-card.menu[data-v-25b57b9b]{max-width:300px}.modal-head[data-v-25b57b9b]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.modal-title[data-v-25b57b9b]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-25b57b9b]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-25b57b9b]:hover{color:var(--c-ember)}.chip[data-v-25b57b9b]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2);display:inline-block;margin-bottom:8px}.chip.q-red[data-v-25b57b9b]{color:#d43f3f;border-color:#d43f3f}.chip.q-black[data-v-25b57b9b]{color:#9a5bcc;border-color:#9a5bcc}.chip.q-blue[data-v-25b57b9b]{color:var(--c-rare);border-color:var(--c-rare)}.chip.q-green[data-v-25b57b9b]{color:#5fa86b;border-color:#5fa86b}.chip.q-white[data-v-25b57b9b]{color:var(--c-ash)}.detail[data-v-25b57b9b]{color:var(--c-ash);font-size:12px;line-height:1.6;margin-bottom:10px}.actions[data-v-25b57b9b]{display:flex;gap:6px;flex-wrap:wrap}.action[data-v-25b57b9b]{background:var(--c-surface-2);color:var(--c-ember);border:1px solid var(--c-ember);border-radius:2px;padding:5px 10px;cursor:pointer;font-family:inherit;font-size:12px}.action[data-v-25b57b9b]:hover{background:rgba(224,138,60,0.12)}.outfit[data-v-25b57b9b]{margin-top:8px}.outfit-toggle[data-v-25b57b9b]{width:100%;background:var(--c-surface);border:1px dashed var(--c-border);border-radius:3px;color:var(--c-ember);font-family:inherit;font-size:12px;padding:6px;cursor:pointer}.outfit-toggle[data-v-25b57b9b]:hover{border-color:var(--c-ember)}.outfit-body[data-v-25b57b9b]{margin-top:6px;display:flex;flex-direction:column;gap:6px}.outfit-save[data-v-25b57b9b]{display:flex;gap:6px}.outfit-save .outfit-input[data-v-25b57b9b]{flex:1;min-width:0;background:var(--c-surface);border:1px solid var(--c-border);border-radius:2px;color:var(--c-ash);font-family:inherit;font-size:12px;padding:5px 8px}.outfit-save .outfit-input[data-v-25b57b9b]:focus{outline:none;border-color:var(--c-ember)}.outfit-save .outfit-save-btn[data-v-25b57b9b]{flex-shrink:0;background:rgba(224,138,60,0.12);color:var(--c-ember);border:1px solid var(--c-ember);border-radius:2px;padding:5px 10px;cursor:pointer;font-family:inherit;font-size:12px}.outfit-save .outfit-save-btn[data-v-25b57b9b]:hover{background:rgba(224,138,60,0.2)}.outfit-card[data-v-25b57b9b]{display:flex;align-items:center;gap:8px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:6px 8px}.outfit-card .outfit-info[data-v-25b57b9b]{flex:1;min-width:0}.outfit-card .outfit-info .outfit-name[data-v-25b57b9b]{color:var(--c-ash);font-weight:bold;font-size:12px;display:block}.outfit-card .outfit-info .outfit-summary[data-v-25b57b9b]{color:var(--c-muted);font-size:10px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.outfit-card .outfit-acts[data-v-25b57b9b]{display:flex;gap:4px;flex-shrink:0}.outfit-card .outfit-acts .outfit-act[data-v-25b57b9b]{background:rgba(224,138,60,0.12);color:var(--c-ember);border:1px solid var(--c-ember);border-radius:2px;padding:3px 8px;cursor:pointer;font-family:inherit;font-size:11px}.outfit-card .outfit-acts .outfit-act[data-v-25b57b9b]:hover{background:rgba(224,138,60,0.2)}.outfit-card .outfit-acts .outfit-del[data-v-25b57b9b]{background:transparent;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;width:22px;cursor:pointer;font-family:inherit}.outfit-card .outfit-acts .outfit-del[data-v-25b57b9b]:hover{color:var(--c-danger);border-color:var(--c-danger)}.crystal .cry-row[data-v-25b57b9b]{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:6px}.crystal .cry[data-v-25b57b9b]{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--c-ash)}.crystal .cry .dot[data-v-25b57b9b]{width:9px;height:9px;border-radius:50%;display:inline-block}.crystal .cry.cq-碎裂 .dot[data-v-25b57b9b]{background:#8a8a8a}.crystal .cry.cq-完整 .dot[data-v-25b57b9b]{background:#e8e4da}.crystal .cry.cq-驳杂 .dot[data-v-25b57b9b]{background:#5fa86b}.crystal .cry.cq-高纯 .dot[data-v-25b57b9b]{background:#6b8cbf}.crystal .cry.cq-完美 .dot[data-v-25b57b9b]{background:#9a5bcc}.crystal .cry.cq-神品 .dot[data-v-25b57b9b]{background:#d43f3f;box-shadow:0 0 5px #d43f3f}.crystal .cry-rate[data-v-25b57b9b]{color:var(--c-muted);font-size:10px;line-height:1.5;margin-bottom:6px}.crystal .cry-acts[data-v-25b57b9b]{display:flex;flex-wrap:wrap;gap:6px}.crystal .cry-btn[data-v-25b57b9b]{background:var(--c-surface);color:var(--c-ember);border:1px solid var(--c-border);border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:inherit}.crystal .cry-btn[data-v-25b57b9b]:hover:not(:disabled){border-color:var(--c-ember)}.crystal .cry-btn[data-v-25b57b9b]:disabled{opacity:0.4;cursor:not-allowed}
+@charset "UTF-8";.panel[data-v-25b57b9b]{display:flex;flex-direction:column;gap:10px}.block[data-v-25b57b9b]{border:1px solid var(--c-border);border-radius:4px;background:var(--c-surface-2);padding:10px}.block .block-title[data-v-25b57b9b]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:8px}.equips[data-v-25b57b9b]{display:flex;gap:6px;flex-wrap:wrap}.slot[data-v-25b57b9b]{flex:1 0 30%;display:flex;flex-direction:column;gap:2px;background:var(--c-surface);border:1px dashed var(--c-border);border-radius:3px;padding:6px;cursor:pointer;font-family:inherit;text-align:left}.slot.filled[data-v-25b57b9b]{border-style:solid;border-color:var(--c-ember)}.slot .slot-name[data-v-25b57b9b]{color:var(--c-muted);font-size:10px}.slot .slot-item[data-v-25b57b9b]{color:var(--c-ash);font-size:12px;font-weight:bold}.grid[data-v-25b57b9b]{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}.cell[data-v-25b57b9b]{display:flex;flex-direction:column;align-items:center;gap:1px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:2px;padding:4px 2px;cursor:pointer;font-family:inherit;overflow:hidden}.cell[data-v-25b57b9b]:hover{border-color:var(--c-ember)}.cell .cell-icon[data-v-25b57b9b]{font-size:12px;color:var(--c-muted)}.cell .cell-name[data-v-25b57b9b]{font-size:9px;color:var(--c-ash);white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}.cell .cell-meta[data-v-25b57b9b]{display:flex;align-items:center;gap:3px}.cell .cell-meta .cat[data-v-25b57b9b]{font-size:8px;color:var(--c-muted)}.cell .cell-meta .stack[data-v-25b57b9b]{font-size:9px;color:var(--c-ember)}.cell.q-red .cell-icon[data-v-25b57b9b]{color:#d43f3f;text-shadow:0 0 6px rgba(212,63,63,0.6)}.cell.q-black .cell-icon[data-v-25b57b9b]{color:#9a5bcc}.cell.q-blue .cell-icon[data-v-25b57b9b]{color:var(--c-rare)}.cell.q-green .cell-icon[data-v-25b57b9b]{color:#5fa86b}.cell.q-white .cell-icon[data-v-25b57b9b]{color:var(--c-ash)}.muted[data-v-25b57b9b]{color:var(--c-muted);font-size:12px}.modal-backdrop[data-v-25b57b9b]{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}.modal-card[data-v-25b57b9b]{width:100%;max-width:380px;background:var(--c-surface);border:1px solid var(--c-ember);border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.6);padding:14px}.modal-card.menu[data-v-25b57b9b]{max-width:350px}.modal-head[data-v-25b57b9b]{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.modal-title[data-v-25b57b9b]{color:var(--c-ember);font-size:15px;font-weight:bold}.modal-close[data-v-25b57b9b]{background:transparent;border:none;color:var(--c-muted);font-size:20px;cursor:pointer}.modal-close[data-v-25b57b9b]:hover{color:var(--c-ember)}.chip[data-v-25b57b9b]{font-size:11px;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;padding:2px 6px;background:var(--c-surface-2);display:inline-block;margin-bottom:8px}.chip.q-red[data-v-25b57b9b]{color:#d43f3f;border-color:#d43f3f}.chip.q-black[data-v-25b57b9b]{color:#9a5bcc;border-color:#9a5bcc}.chip.q-blue[data-v-25b57b9b]{color:var(--c-rare);border-color:var(--c-rare)}.chip.q-green[data-v-25b57b9b]{color:#5fa86b;border-color:#5fa86b}.chip.q-white[data-v-25b57b9b]{color:var(--c-ash)}.chip.q-grey[data-v-25b57b9b]{color:var(--c-muted)}.slot-worn[data-v-25b57b9b]{color:var(--c-ember);font-size:12px;font-weight:bold;margin-bottom:6px}.dims[data-v-25b57b9b]{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}.dim[data-v-25b57b9b]{display:flex;gap:6px;align-items:flex-start;line-height:1.5}.dimk[data-v-25b57b9b]{flex:0 0 auto;color:var(--c-muted);font-size:11px;border:1px solid var(--c-border);border-radius:2px;padding:0 5px;background:var(--c-surface-2);margin-top:1px}.dimv[data-v-25b57b9b]{color:var(--c-ash);font-size:12px;white-space:pre-wrap;word-break:break-word}.detail[data-v-25b57b9b]{color:var(--c-ash);font-size:12px;line-height:1.6;margin-bottom:10px}.actions[data-v-25b57b9b]{display:flex;gap:6px;flex-wrap:wrap}.action[data-v-25b57b9b]{background:var(--c-surface-2);color:var(--c-ember);border:1px solid var(--c-ember);border-radius:2px;padding:5px 10px;cursor:pointer;font-family:inherit;font-size:12px}.action[data-v-25b57b9b]:hover{background:rgba(224,138,60,0.12)}.outfit[data-v-25b57b9b]{margin-top:8px}.outfit-toggle[data-v-25b57b9b]{width:100%;background:var(--c-surface);border:1px dashed var(--c-border);border-radius:3px;color:var(--c-ember);font-family:inherit;font-size:12px;padding:6px;cursor:pointer}.outfit-toggle[data-v-25b57b9b]:hover{border-color:var(--c-ember)}.outfit-body[data-v-25b57b9b]{margin-top:6px;display:flex;flex-direction:column;gap:6px}.outfit-save[data-v-25b57b9b]{display:flex;gap:6px}.outfit-save .outfit-input[data-v-25b57b9b]{flex:1;min-width:0;background:var(--c-surface);border:1px solid var(--c-border);border-radius:2px;color:var(--c-ash);font-family:inherit;font-size:12px;padding:5px 8px}.outfit-save .outfit-input[data-v-25b57b9b]:focus{outline:none;border-color:var(--c-ember)}.outfit-save .outfit-save-btn[data-v-25b57b9b]{flex-shrink:0;background:rgba(224,138,60,0.12);color:var(--c-ember);border:1px solid var(--c-ember);border-radius:2px;padding:5px 10px;cursor:pointer;font-family:inherit;font-size:12px}.outfit-save .outfit-save-btn[data-v-25b57b9b]:hover{background:rgba(224,138,60,0.2)}.outfit-card[data-v-25b57b9b]{display:flex;align-items:center;gap:8px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:3px;padding:6px 8px}.outfit-card .outfit-info[data-v-25b57b9b]{flex:1;min-width:0}.outfit-card .outfit-info .outfit-name[data-v-25b57b9b]{color:var(--c-ash);font-weight:bold;font-size:12px;display:block}.outfit-card .outfit-info .outfit-summary[data-v-25b57b9b]{color:var(--c-muted);font-size:10px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.outfit-card .outfit-acts[data-v-25b57b9b]{display:flex;gap:4px;flex-shrink:0}.outfit-card .outfit-acts .outfit-act[data-v-25b57b9b]{background:rgba(224,138,60,0.12);color:var(--c-ember);border:1px solid var(--c-ember);border-radius:2px;padding:3px 8px;cursor:pointer;font-family:inherit;font-size:11px}.outfit-card .outfit-acts .outfit-act[data-v-25b57b9b]:hover{background:rgba(224,138,60,0.2)}.outfit-card .outfit-acts .outfit-del[data-v-25b57b9b]{background:transparent;color:var(--c-muted);border:1px solid var(--c-border);border-radius:2px;width:22px;cursor:pointer;font-family:inherit}.outfit-card .outfit-acts .outfit-del[data-v-25b57b9b]:hover{color:var(--c-danger);border-color:var(--c-danger)}.crystal .cry-row[data-v-25b57b9b]{display:flex;flex-wrap:wrap;gap:6px 12px;margin-bottom:6px}.crystal .cry[data-v-25b57b9b]{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--c-ash)}.crystal .cry .dot[data-v-25b57b9b]{width:9px;height:9px;border-radius:50%;display:inline-block}.crystal .cry.cq-碎裂 .dot[data-v-25b57b9b]{background:#8a8a8a}.crystal .cry.cq-完整 .dot[data-v-25b57b9b]{background:#e8e4da}.crystal .cry.cq-驳杂 .dot[data-v-25b57b9b]{background:#5fa86b}.crystal .cry.cq-高纯 .dot[data-v-25b57b9b]{background:#6b8cbf}.crystal .cry.cq-完美 .dot[data-v-25b57b9b]{background:#9a5bcc}.crystal .cry.cq-神品 .dot[data-v-25b57b9b]{background:#d43f3f;box-shadow:0 0 5px #d43f3f}.crystal .cry-rate[data-v-25b57b9b]{color:var(--c-muted);font-size:10px;line-height:1.5;margin-bottom:6px}.crystal .cry-acts[data-v-25b57b9b]{display:flex;flex-wrap:wrap;gap:6px}.crystal .cry-btn[data-v-25b57b9b]{background:var(--c-surface);color:var(--c-ember);border:1px solid var(--c-border);border-radius:3px;padding:3px 8px;font-size:11px;cursor:pointer;font-family:inherit}.crystal .cry-btn[data-v-25b57b9b]:hover:not(:disabled){border-color:var(--c-ember)}.crystal .cry-btn[data-v-25b57b9b]:disabled{opacity:0.4;cursor:not-allowed}
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/.pnpm/css-loader@7.1.4_webpack@5.109.2/node_modules/css-loader/dist/cjs.js??clonedRuleSet-47.use[1]!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/.pnpm/postcss-loader@8.2.1_postcs_d066eba6038c65082196053f3d69a966/node_modules/postcss-loader/dist/cjs.js!./node_modules/.pnpm/sass-loader@17.0.0_sass@1.103.1_webpack@5.109.2/node_modules/sass-loader/dist/cjs/index.js!./node_modules/.pnpm/vue-loader@17.4.2_@vue+comp_4494d7206993ee9efd2b5bb1b637ceda/node_modules/vue-loader/dist/index.js??ruleSet[1].rules[6].use[0]!./src/迷雾薪火/界面/状态栏/components/MapPanel.vue?vue&type=style&index=0&id=7203f04a&lang=scss&scoped=true ***!
   \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
