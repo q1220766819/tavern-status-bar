@@ -296,9 +296,9 @@ var __webpack_modules__ = {
       价值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
       攻击: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
       防御: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-      血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-      体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-      精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => Math.max(0, Math.floor(Number.isFinite(Number(v)) ? Number(v) : 0))).optional(),
+      体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => Math.max(0, Math.floor(Number.isFinite(Number(v)) ? Number(v) : 0))).optional(),
+      精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => Math.max(0, Math.floor(Number.isFinite(Number(v)) ? Number(v) : 0))).optional(),
       污染度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
       镶嵌: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
       附魔: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -352,9 +352,9 @@ var __webpack_modules__ = {
         破限状态,
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         爵位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("无"),
-        血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-        体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-        精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+        血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => Math.max(0, Math.floor(Number.isFinite(Number(v)) ? Number(v) : 0))).optional(),
+        体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => Math.max(0, Math.floor(Number.isFinite(Number(v)) ? Number(v) : 0))).optional(),
+        精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => Math.max(0, Math.floor(Number.isFinite(Number(v)) ? Number(v) : 0))).optional(),
         状态效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 状态效果Item).transform(合并引号键).prefault({}),
         权能: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         仪典: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -1392,7 +1392,7 @@ var __webpack_modules__ = {
           const [lx, ly] = xy(i, R + 22);
           const c = Math.cos(ang(i));
           const anchor = c > .3 ? "start" : c < -.3 ? "end" : "middle";
-          const show = bonus > 0 ? `${raw}+${bonus}` : String(raw);
+          const show = bonus > 0 ? `${v}（${raw}+${bonus}）` : String(v);
           return {
             a,
             v: show,
