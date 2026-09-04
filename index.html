@@ -734,7 +734,7 @@ var __webpack_modules__ = {
       const keys = [ ...六维键, ...战键 ];
       const out = {};
       for (const k of keys) {
-        const re = new RegExp(k + "\\s*[＋+](\\d+)(?:\\s*[~～—\\-]\\s*\\d+)?", "g");
+        const re = new RegExp("(?:" + k + "(?:力|上限|值)?)(?:(?:恒定|额外|为|提升|增加|点|上限|及|和|\\s)*)[＋+](\\d+)(?:\\s*[~～—\\-]\\s*\\d+)?", "g");
         let m;
         let sum = 0;
         while (m = re.exec(t)) sum += Number(m[1]);
