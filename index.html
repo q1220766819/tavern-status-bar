@@ -1081,12 +1081,61 @@ var __webpack_modules__ = {
         const talentNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.人物面板.天赋 ?? {}).filter(k => k !== "$meta"));
         const skillNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.人物面板.技能 ?? {}).filter(k => k !== "$meta"));
         const statusNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.人物面板.状态效果 ?? {}).filter(k => k !== "$meta"));
+        const 解析加值 = s => {
+          const t = String(s ?? "");
+          const keys = [ "力量", "体质", "敏捷", "感知", "精神", "魅力", "攻击", "防御", "血量", "体力", "精神力" ];
+          const out = {};
+          for (const k of keys) {
+            const re = new RegExp(k + "\\s*[＋+](\\d+)(?:\\s*[~～—\\-]\\s*\\d+)?", "g");
+            let m;
+            let sum = 0;
+            while (m = re.exec(t)) sum += Number(m[1]);
+            if (sum) out[k] = sum;
+          }
+          return out;
+        };
+        const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
+        const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.装备栏 ?? {});
+        const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.map(s => 装备栏.value[s]).filter(Boolean));
+        const 装备加总 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
+          const 六 = {
+            力量: 0,
+            体质: 0,
+            敏捷: 0,
+            感知: 0,
+            精神: 0,
+            魅力: 0
+          };
+          const 战斗 = {
+            攻击: 0,
+            防御: 0,
+            血量: 0,
+            体力: 0,
+            精神力: 0
+          };
+          const 六Keys = [ "力量", "体质", "敏捷", "感知", "精神", "魅力" ];
+          const 战Keys = [ "攻击", "防御", "血量", "体力", "精神力" ];
+          for (const n of 装备中物品.value) {
+            const it = store.data.背包?.[n];
+            if (!it || typeof it !== "object") continue;
+            const b = 解析加值(it.基础属性);
+            for (const k of 六Keys) 六[k] += b[k] || 0;
+            for (const k of 战Keys) {
+              const num = Number(it[k]);
+              if (!Number.isNaN(num)) 战斗[k] += num; else if (b[k]) 战斗[k] += b[k];
+            }
+          }
+          return {
+            六,
+            战斗
+          };
+        });
         const vitals = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           const 六 = store.data.人物面板.六维 ?? {};
-          const g = k => 六[k]?.数值 ?? 0;
-          const 血上限 = g("体质") * 100 + g("力量") * 80 + 120 + 装备加成("血量");
-          const 体上限 = g("体质") * 80 + g("敏捷") * 70 + 100 + 装备加成("体力");
-          const 精上限 = g("精神") * 80 + g("感知") * 70 + 100 + 装备加成("精神力");
+          const g = k => (六[k]?.数值 ?? 0) + (装备加总.value.六[k] || 0);
+          const 血上限 = g("体质") * 100 + g("力量") * 80 + 120 + (装备加总.value.战斗.血量 || 0);
+          const 体上限 = g("体质") * 80 + g("敏捷") * 70 + 100 + (装备加总.value.战斗.体力 || 0);
+          const 精上限 = g("精神") * 80 + g("感知") * 70 + 100 + (装备加总.value.战斗.精神力 || 0);
           const pct = (cur, max) => Math.max(0, Math.min(100, Math.round(cur / Math.max(1, max) * 100)));
           const P = store.data.人物面板;
           const disp = (cur, max) => cur == null ? max : cur;
@@ -1110,20 +1159,18 @@ var __webpack_modules__ = {
             color: "var(--c-rare)"
           } ];
         });
-        const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
-        const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.装备栏 ?? {});
-        const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.map(s => 装备栏.value[s]).filter(Boolean));
-        const 装备加成 = f => 装备中物品.value.reduce((a, n) => a + (store.data.背包?.[n]?.[f] || 0), 0);
         const 战斗属性 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           const 六 = store.data.人物面板.六维 ?? {};
-          const g = k => 六[k]?.数值 ?? 0;
-          const mk = (name, base, f) => ({
+          const raw = k => 六[k]?.数值 ?? 0;
+          const G = 装备加总.value.六;
+          const B = 装备加总.value.战斗;
+          const mk = (name, base, eq) => ({
             name,
             base,
-            equip: 装备加成(f),
-            total: base + 装备加成(f)
+            equip: eq,
+            total: base + eq
           });
-          return [ mk("攻击力", g("力量") * 2 + g("敏捷") * .5, "攻击"), mk("防御力", g("体质") * 2 + g("力量") * .5, "防御"), mk("血量", g("体质") * 100 + g("力量") * 80 + 120, "血量"), mk("体力", g("体质") * 80 + g("敏捷") * 70 + 100, "体力"), mk("精神力", g("精神") * 80 + g("感知") * 70 + 100, "精神力") ];
+          return [ mk("攻击力", raw("力量") * 2 + raw("敏捷") * .5, G.力量 * 2 + G.敏捷 * .5 + (B.攻击 || 0)), mk("防御力", raw("体质") * 2 + raw("力量") * .5, G.体质 * 2 + G.力量 * .5 + (B.防御 || 0)), mk("血量", raw("体质") * 100 + raw("力量") * 80 + 120, G.体质 * 100 + G.力量 * 80 + (B.血量 || 0)), mk("体力", raw("体质") * 80 + raw("敏捷") * 70 + 100, G.体质 * 80 + G.敏捷 * 70 + (B.体力 || 0)), mk("精神力", raw("精神") * 80 + raw("感知") * 70 + 100, G.精神 * 80 + G.感知 * 70 + (B.精神力 || 0)) ];
         });
         const 天赋项 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => talentNames.value.map(n => {
           const t = store.data.人物面板.天赋[n];
@@ -1177,11 +1224,12 @@ var __webpack_modules__ = {
           talentNames,
           skillNames,
           statusNames,
-          vitals,
+          解析加值,
           槽位,
           装备栏,
           装备中物品,
-          装备加成,
+          装备加总,
+          vitals,
           战斗属性,
           天赋项,
           技能项,
