@@ -251,6 +251,82 @@ var __webpack_modules__ = {
       控制者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("未知"),
       最近动态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
     }).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
+    const 松条目 = def => zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject(def).prefault({}), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(() => ({})) ]).prefault({});
+    const 技能Item = 松条目({
+      类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      冷却: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      消耗: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault("")
+    });
+    const 天赋Item = 松条目({
+      品级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      异化值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault("")
+    });
+    const 状态效果Item = 松条目({
+      层数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      持续: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault("")
+    });
+    const 服装方案Item = 松条目({
+      头部: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      躯干: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      脚部: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      右手: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      颈部: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    });
+    const 建筑Item = 松条目({
+      等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      分区: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      耐久: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      耐久上限: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      简介: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      详情: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    });
+    const 背包Item = 松条目({
+      品质: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      词条: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(文本块).prefault(""),
+      分类: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      部位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      描述: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      耐久: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      基础属性: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      数量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      价值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      攻击: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      防御: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      污染度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      镶嵌: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      附魔: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      用途: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    });
+    const 活跃任务Item = 松条目({
+      名称: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      目标: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      奖励: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      发布者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      失败惩罚: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    });
+    const 附近动向Item = 松条目({
+      类型: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      内容: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      时效: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      截止天数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
+      层级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      关联: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    });
+    const 权柄Item = 松条目({
+      名称: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
+      消耗: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
+    });
     const Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
       人物面板: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         姓名: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -271,15 +347,15 @@ var __webpack_modules__ = {
         等级: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("LV.1"),
         经验值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         经验池: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
-        天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
-        技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        天赋: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 天赋Item).transform(合并引号键).prefault({}),
+        技能: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 技能Item).transform(合并引号键).prefault({}),
         破限状态,
         污染指数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         爵位: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("无"),
         血量: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         体力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
         精神力: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().optional(),
-        状态效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        状态效果: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 状态效果Item).transform(合并引号键).prefault({}),
         权能: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         仪典: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         伟业传唱度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
@@ -291,7 +367,7 @@ var __webpack_modules__ = {
           右手: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           颈部: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
         }).prefault({}),
-        服装方案: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({})
+        服装方案: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 服装方案Item).transform(合并引号键).prefault({})
       }).prefault({}),
       时间: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         日期: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -347,7 +423,7 @@ var __webpack_modules__ = {
           老幼妇孺: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
           状况说明: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
         }).prefault({}),
-        建筑列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        建筑列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 建筑Item).transform(合并引号键).prefault({}),
         防御值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         忠诚度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         恐慌度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
@@ -364,7 +440,7 @@ var __webpack_modules__ = {
           魔物概况: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")
         }).prefault({})
       }).prefault({}),
-      背包: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+      背包: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 背包Item).transform(合并引号键).prefault({}),
       晶石仓库: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         碎裂: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(非负数).prefault(0),
         完整: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(非负数).prefault(0),
@@ -374,9 +450,9 @@ var __webpack_modules__ = {
         神品: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(非负数).prefault(0)
       }).prefault({}),
       知识: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        职业碎片进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        职业碎片进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)).transform(合并引号键).prefault({}),
         古代文字破译度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-        魔物图鉴: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({})
+        魔物图鉴: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault("")).transform(合并引号键).prefault({})
       }).prefault({}),
       任务栏: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
         突破任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
@@ -389,13 +465,13 @@ var __webpack_modules__ = {
           发布者: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
           状态: 任务状态
         }).prefault({}),
-        活跃任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
-        附近动向: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        活跃任务: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 活跃任务Item).transform(合并引号键).prefault({}),
+        附近动向: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 附近动向Item).transform(合并引号键).prefault({}),
         已完成计数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)
       }).prefault({}),
       事件日志: zod__WEBPACK_IMPORTED_MODULE_0__.z.array(事件日志Item).prefault([]).transform(list => list.filter(e => e && typeof e === "object" && (e.内容 || e.日期)).slice(-12)),
       世界状态: zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-        高庭声望: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        高庭声望: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0)).transform(合并引号键).prefault({}),
         伪超凡注意度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         外神注视度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         薪火注视度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0)
@@ -404,7 +480,7 @@ var __webpack_modules__ = {
         神火纯度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
         信仰基数: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         神国完整度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-        权柄列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.looseObject({}).transform(合并引号键).prefault({}),
+        权柄列表: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.string(), 权柄Item).transform(合并引号键).prefault({}),
         神考进度: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         路线值: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "战争", "毁灭", "创造" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0)).prefault({})
       }).prefault({})
