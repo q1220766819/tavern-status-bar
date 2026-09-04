@@ -718,6 +718,98 @@ var __webpack_modules__ = {
       return [ 头行(name, `${a.阶位 || "?"}${a.体系词 ? " · " + a.体系词 : ""}`), 档案行("天赋", a.天赋 || "未知"), 档案行("职业", a.职业 || "未知"), 档案行("破限", a.破限 && a.破限 !== "无" ? a.破限 : "无"), 档案行("好感", a.好感 != null ? String(a.好感) : "?"), 档案行("忠诚", a.忠诚 != null ? String(a.忠诚) : "?"), 档案行("敬畏", a.敬畏 != null ? String(a.敬畏) : "?"), 档案行("债务", a.债务 || "无"), 档案行("秘密", a.秘密 || "无"), 档案行("博弈阶段", a.博弈阶段 || "平行发展") ];
     }
   },
+  "./src/迷雾薪火/界面/状态栏/components/statBonus.ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+    __webpack_require__.r(__webpack_exports__);
+    __webpack_require__.d(__webpack_exports__, {
+      六维键: () => 六维键,
+      战键: () => 战键,
+      装备加成: () => 装备加成,
+      角色额外加成: () => 角色额外加成,
+      解析加值: () => 解析加值
+    });
+    const 六维键 = [ "力量", "体质", "敏捷", "感知", "精神", "魅力" ];
+    const 战键 = [ "攻击", "防御", "血量", "体力", "精神力" ];
+    const 解析加值 = s => {
+      const t = String(s ?? "");
+      const keys = [ ...六维键, ...战键 ];
+      const out = {};
+      for (const k of keys) {
+        const re = new RegExp(k + "\\s*[＋+](\\d+)(?:\\s*[~～—\\-]\\s*\\d+)?", "g");
+        let m;
+        let sum = 0;
+        while (m = re.exec(t)) sum += Number(m[1]);
+        if (sum) out[k] = sum;
+      }
+      return out;
+    };
+    const 初始 = () => {
+      const 六 = {
+        力量: 0,
+        体质: 0,
+        敏捷: 0,
+        感知: 0,
+        精神: 0,
+        魅力: 0
+      };
+      const 战 = {
+        攻击: 0,
+        防御: 0,
+        血量: 0,
+        体力: 0,
+        精神力: 0
+      };
+      return {
+        六,
+        战
+      };
+    };
+    const 角色额外加成 = 面板 => {
+      const {六, 战} = 初始();
+      const texts = [];
+      const 天赋 = 面板?.天赋 ?? {};
+      for (const k of Object.keys(天赋)) {
+        if (k === "$meta") continue;
+        texts.push(String(天赋[k]?.效果 ?? ""));
+      }
+      const 技能 = 面板?.技能 ?? {};
+      for (const k of Object.keys(技能)) {
+        if (k === "$meta") continue;
+        const s = 技能[k];
+        if (s && typeof s === "object" && !/主动/.test(String(s.类型 || ""))) {
+          texts.push(String(s.效果 || ""));
+          if (s.代价) texts.push(String(s.代价));
+        }
+      }
+      for (const t of texts) {
+        const b = 解析加值(t);
+        for (const k of Object.keys(b)) {
+          if (六维键.includes(k)) 六[k] = (六[k] || 0) + b[k];
+          if (战键.includes(k)) 战[k] = (战[k] || 0) + b[k];
+        }
+      }
+      return {
+        六,
+        战
+      };
+    };
+    const 装备加成 = (背包, 名称列表) => {
+      const {六, 战} = 初始();
+      for (const n of 名称列表) {
+        const it = 背包?.[n];
+        if (!it || typeof it !== "object") continue;
+        const b = 解析加值(it.基础属性);
+        for (const k of 六维键) 六[k] += b[k] || 0;
+        for (const k of 战键) {
+          const num = Number(it[k]);
+          if (!Number.isNaN(num)) 战[k] += num; else if (b[k]) 战[k] += b[k];
+        }
+      }
+      return {
+        六,
+        战
+      };
+    };
+  },
   "./src/迷雾薪火/界面/状态栏/components/useModal.ts"(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
     __webpack_require__.r(__webpack_exports__);
     __webpack_require__.d(__webpack_exports__, {
@@ -1072,6 +1164,7 @@ var __webpack_modules__ = {
     var _HexagonStats_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HexagonStats.vue */ "./src/迷雾薪火/界面/状态栏/components/HexagonStats.vue");
     var _CategoryModal_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CategoryModal.vue */ "./src/迷雾薪火/界面/状态栏/components/CategoryModal.vue");
     var _ChangeBubble_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ChangeBubble.vue */ "./src/迷雾薪火/界面/状态栏/components/ChangeBubble.vue");
+    var _statBonus__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./statBonus */ "./src/迷雾薪火/界面/状态栏/components/statBonus.ts");
     const __WEBPACK_DEFAULT_EXPORT__ = (0, vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
       __name: "CharacterPanel",
       setup(__props, {expose: __expose}) {
@@ -1081,96 +1174,58 @@ var __webpack_modules__ = {
         const talentNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.人物面板.天赋 ?? {}).filter(k => k !== "$meta"));
         const skillNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.人物面板.技能 ?? {}).filter(k => k !== "$meta"));
         const statusNames = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => Object.keys(store.data.人物面板.状态效果 ?? {}).filter(k => k !== "$meta"));
-        const 解析加值 = s => {
-          const t = String(s ?? "");
-          const keys = [ "力量", "体质", "敏捷", "感知", "精神", "魅力", "攻击", "防御", "血量", "体力", "精神力" ];
-          const out = {};
-          for (const k of keys) {
-            const re = new RegExp(k + "\\s*[＋+](\\d+)(?:\\s*[~～—\\-]\\s*\\d+)?", "g");
-            let m;
-            let sum = 0;
-            while (m = re.exec(t)) sum += Number(m[1]);
-            if (sum) out[k] = sum;
-          }
-          return out;
-        };
         const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
         const 装备栏 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => store.data.人物面板.装备栏 ?? {});
         const 装备中物品 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.map(s => 装备栏.value[s]).filter(Boolean));
-        const 装备加总 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
-          const 六 = {
-            力量: 0,
-            体质: 0,
-            敏捷: 0,
-            感知: 0,
-            精神: 0,
-            魅力: 0
-          };
-          const 战斗 = {
-            攻击: 0,
-            防御: 0,
-            血量: 0,
-            体力: 0,
-            精神力: 0
-          };
-          const 六Keys = [ "力量", "体质", "敏捷", "感知", "精神", "魅力" ];
-          const 战Keys = [ "攻击", "防御", "血量", "体力", "精神力" ];
-          for (const n of 装备中物品.value) {
-            const it = store.data.背包?.[n];
-            if (!it || typeof it !== "object") continue;
-            const b = 解析加值(it.基础属性);
-            for (const k of 六Keys) 六[k] += b[k] || 0;
-            for (const k of 战Keys) {
-              const num = Number(it[k]);
-              if (!Number.isNaN(num)) 战斗[k] += num; else if (b[k]) 战斗[k] += b[k];
-            }
-          }
-          return {
-            六,
-            战斗
-          };
-        });
+        const 装备加总 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => (0, _statBonus__WEBPACK_IMPORTED_MODULE_5__["装备加成"])(store.data.背包 ?? {}, 装备中物品.value));
+        const 被动加总 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => (0, _statBonus__WEBPACK_IMPORTED_MODULE_5__["角色额外加成"])(store.data.人物面板));
         const vitals = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           const 六 = store.data.人物面板.六维 ?? {};
-          const g = k => (六[k]?.数值 ?? 0) + (装备加总.value.六[k] || 0);
-          const 血上限 = g("体质") * 100 + g("力量") * 80 + 120 + (装备加总.value.战斗.血量 || 0);
-          const 体上限 = g("体质") * 80 + g("敏捷") * 70 + 100 + (装备加总.value.战斗.体力 || 0);
-          const 精上限 = g("精神") * 80 + g("感知") * 70 + 100 + (装备加总.value.战斗.精神力 || 0);
+          const raw = k => 六[k]?.数值 ?? 0;
+          const E = 装备加总.value;
+          const P = 被动加总.value;
+          const 血加成 = (E.六.体质 + P.六.体质) * 100 + (E.六.力量 + P.六.力量) * 80 + (E.战.血量 || 0) + (P.战.血量 || 0);
+          const 体加成 = (E.六.体质 + P.六.体质) * 80 + (E.六.敏捷 + P.六.敏捷) * 70 + (E.战.体力 || 0) + (P.战.体力 || 0);
+          const 精加成 = (E.六.精神 + P.六.精神) * 80 + (E.六.感知 + P.六.感知) * 70 + (E.战.精神力 || 0) + (P.战.精神力 || 0);
+          const 血上限 = raw("体质") * 100 + raw("力量") * 80 + 120 + 血加成;
+          const 体上限 = raw("体质") * 80 + raw("敏捷") * 70 + 100 + 体加成;
+          const 精上限 = raw("精神") * 80 + raw("感知") * 70 + 100 + 精加成;
           const pct = (cur, max) => Math.max(0, Math.min(100, Math.round(cur / Math.max(1, max) * 100)));
-          const P = store.data.人物面板;
+          const Pv = store.data.人物面板;
           const disp = (cur, max) => cur == null ? max : cur;
           return [ {
             name: "血量",
-            cur: disp(P.血量, 血上限),
+            cur: disp(Pv.血量, 血上限),
             max: 血上限,
-            pct: pct(disp(P.血量, 血上限), 血上限),
+            pct: pct(disp(Pv.血量, 血上限), 血上限),
             color: "var(--c-danger)"
           }, {
             name: "体力",
-            cur: disp(P.体力, 体上限),
+            cur: disp(Pv.体力, 体上限),
             max: 体上限,
-            pct: pct(disp(P.体力, 体上限), 体上限),
+            pct: pct(disp(Pv.体力, 体上限), 体上限),
             color: "#5fa86b"
           }, {
             name: "精神力",
-            cur: disp(P.精神力, 精上限),
+            cur: disp(Pv.精神力, 精上限),
             max: 精上限,
-            pct: pct(disp(P.精神力, 精上限), 精上限),
+            pct: pct(disp(Pv.精神力, 精上限), 精上限),
             color: "var(--c-rare)"
           } ];
         });
         const 战斗属性 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => {
           const 六 = store.data.人物面板.六维 ?? {};
           const raw = k => 六[k]?.数值 ?? 0;
-          const G = 装备加总.value.六;
-          const B = 装备加总.value.战斗;
-          const mk = (name, base, eq) => ({
+          const E = 装备加总.value;
+          const P = 被动加总.value;
+          const mk = (name, base, eq, bu) => ({
             name,
             base,
             equip: eq,
-            total: base + eq
+            buff: bu,
+            total: base + eq + bu
           });
-          return [ mk("攻击力", raw("力量") * 2 + raw("敏捷") * .5, G.力量 * 2 + G.敏捷 * .5 + (B.攻击 || 0)), mk("防御力", raw("体质") * 2 + raw("力量") * .5, G.体质 * 2 + G.力量 * .5 + (B.防御 || 0)), mk("血量", raw("体质") * 100 + raw("力量") * 80 + 120, G.体质 * 100 + G.力量 * 80 + (B.血量 || 0)), mk("体力", raw("体质") * 80 + raw("敏捷") * 70 + 100, G.体质 * 80 + G.敏捷 * 70 + (B.体力 || 0)), mk("精神力", raw("精神") * 80 + raw("感知") * 70 + 100, G.精神 * 80 + G.感知 * 70 + (B.精神力 || 0)) ];
+          return [ mk("攻击力", raw("力量") * 2 + raw("敏捷") * .5, E.六.力量 * 2 + E.六.敏捷 * .5 + (E.战.攻击 || 0), P.六.力量 * 2 + P.六.敏捷 * .5 + (P.战.攻击 || 0)), mk("防御力", raw("体质") * 2 + raw("力量") * .5, E.六.体质 * 2 + E.六.力量 * .5 + (E.战.防御 || 0), P.六.体质 * 2 + P.六.力量 * .5 + (P.战.防御 || 0)), mk("血量", raw("体质") * 100 + raw("力量") * 80 + 120, E.六.体质 * 100 + E.六.力量 * 80 + (E.战.血量 || 0), P.六.体质 * 100 + P.六.力量 * 80 + (P.战.血量 || 0)), mk("体力", raw("体质") * 80 + raw("敏捷") * 70 + 100, E.六.体质 * 80 + E.六.敏捷 * 70 + (E.战.体力 || 0), P.六.体质 * 80 + P.六.敏捷 * 70 + (P.战.体力 || 0)), mk("精神力", raw("精神") * 80 + raw("感知") * 70 + 100, E.六.精神 * 80 + E.六.感知 * 70 + (E.战.精神力 || 0), P.六.精神 * 80 + P.六.感知 * 70 + (P.战.精神力 || 0)) ];
         });
         const 天赋项 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => talentNames.value.map(n => {
           const t = store.data.人物面板.天赋[n];
@@ -1224,11 +1279,11 @@ var __webpack_modules__ = {
           talentNames,
           skillNames,
           statusNames,
-          解析加值,
           槽位,
           装备栏,
           装备中物品,
           装备加总,
+          被动加总,
           vitals,
           战斗属性,
           天赋项,
@@ -1296,6 +1351,7 @@ var __webpack_modules__ = {
     var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "vue");
     var vue__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
     var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./src/迷雾薪火/界面/状态栏/store.ts");
+    var _statBonus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./statBonus */ "./src/迷雾薪火/界面/状态栏/components/statBonus.ts");
     const CX = 100;
     const CY = 95;
     const R = 50;
@@ -1305,6 +1361,14 @@ var __webpack_modules__ = {
         __expose();
         const store = (0, _store__WEBPACK_IMPORTED_MODULE_1__.useDataStore)();
         const attrs = [ "力量", "体质", "敏捷", "感知", "精神", "魅力" ];
+        const 槽位 = [ "头部", "躯干", "脚部", "右手", "颈部" ];
+        const 名称 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => 槽位.map(s => (store.data.人物面板.装备栏 ?? {})[s]).filter(Boolean));
+        const 装加 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => (0, _statBonus__WEBPACK_IMPORTED_MODULE_2__["装备加成"])(store.data.背包 ?? {}, 名称.value));
+        const 被加 = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => (0, _statBonus__WEBPACK_IMPORTED_MODULE_2__["角色额外加成"])(store.data.人物面板));
+        const eff = k => {
+          const raw = store.data.人物面板.六维?.[k]?.数值 ?? 0;
+          return raw + (装加.value.六[k] || 0) + (被加.value.六[k] || 0);
+        };
         function ang(i) {
           return (-90 + i * 60) * Math.PI / 180;
         }
@@ -1315,20 +1379,23 @@ var __webpack_modules__ = {
         const gridHexagons = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => [ .25, .5, .75, 1 ].map(lv => attrs.map((_, i) => xy(i, R * lv).join(",")).join(" ")));
         const axes = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => attrs.map((_, i) => xy(i, R)));
         const dataPolygon = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => attrs.map((a, i) => {
-          const v = store.data.人物面板.六维[a]?.数值 ?? 0;
+          const v = eff(a);
           return xy(i, Math.min(v / maxScale.value, 1) * R).join(",");
         }).join(" "));
         const vertices = (0, vue__WEBPACK_IMPORTED_MODULE_0__.computed)(() => attrs.map((a, i) => {
-          const v = store.data.人物面板.六维[a]?.数值 ?? 0;
+          const v = eff(a);
+          const raw = store.data.人物面板.六维?.[a]?.数值 ?? 0;
+          const bonus = (装加.value.六[a] || 0) + (被加.value.六[a] || 0);
           const broken = !!store.data.人物面板.六维[a]?.破限;
           const ratio = Math.min(v / maxScale.value, 1);
           const [dx, dy] = xy(i, ratio * R);
           const [lx, ly] = xy(i, R + 22);
           const c = Math.cos(ang(i));
           const anchor = c > .3 ? "start" : c < -.3 ? "end" : "middle";
+          const show = bonus > 0 ? `${raw}+${bonus}` : String(raw);
           return {
             a,
-            v,
+            v: show,
             broken,
             dx,
             dy,
@@ -1343,6 +1410,11 @@ var __webpack_modules__ = {
           CX,
           CY,
           R,
+          槽位,
+          名称,
+          装加,
+          被加,
+          eff,
           ang,
           xy,
           maxScale,
@@ -3183,10 +3255,10 @@ var __webpack_modules__ = {
           width: v.pct + "%",
           background: v.color
         })
-      }, null, 4) ]) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_7, [ _cache[7] || (_cache[7] = (0, 
+      }, null, 4) ]) ]))), 128)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_7, [ _cache[8] || (_cache[8] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "battl-title"
-      }, "战斗属性（基础 + 装备 = 总额）", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
+      }, "战斗属性（基础 + 装备/天赋·被动 = 总额）", -1)), ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.战斗属性, a => ((0, vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), 
       (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -3194,15 +3266,21 @@ var __webpack_modules__ = {
         class: "battl-line"
       }, [ (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_8, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(a.name), 1), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, [ (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.base)) + " ", 1), _cache[4] || (_cache[4] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.base)) + " ", 1), _cache[5] || (_cache[5] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "op"
-      }, "+", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.equip)) + " ", 1), _cache[5] || (_cache[5] = (0, 
+      }, "+", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.equip)) + " ", 1), Math.round(a.buff) > 0 ? ((0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, [ _cache[4] || (_cache[4] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+        class: "op"
+      }, "+", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.buff)), 1) ], 64)) : (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _cache[6] || (_cache[6] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "op"
-      }, "=", -1)), _cache[6] || (_cache[6] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()), (0, 
+      }, "=", -1)), _cache[7] || (_cache[7] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)()), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(a.total)), 1) ]) ]))), 128)) ]), (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_10, [ _cache[13] || (_cache[13] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_10, [ _cache[14] || (_cache[14] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
         class: "card-title"
       }, "人物", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [ (0, 
@@ -3212,19 +3290,19 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.阶位), 1), (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_15, (0, vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.等级), 1) ]), $setup.store.data.人物面板.外貌 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [ _cache[8] || (_cache[8] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [ _cache[9] || (_cache[9] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "k"
       }, "外貌", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.外貌), 1) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.store.data.人物面板.过往 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [ _cache[9] || (_cache[9] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [ _cache[10] || (_cache[10] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "k"
       }, "过往", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_19, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.过往), 1) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.store.data.人物面板.职业 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [ _cache[10] || (_cache[10] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [ _cache[11] || (_cache[11] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "k"
       }, "职业", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_21, (0, 
@@ -3233,13 +3311,13 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.职业介绍), 1)) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.store.data.人物面板.权能 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [ _cache[11] || (_cache[11] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [ _cache[12] || (_cache[12] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "k"
       }, "权能", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_24, (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.store.data.人物面板.权能), 1) ])) : (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.store.data.人物面板.体系词 ? ((0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, [ _cache[12] || (_cache[12] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, [ _cache[13] || (_cache[13] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "k"
       }, "体系词", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_26, (0, 
@@ -3254,28 +3332,28 @@ var __webpack_modules__ = {
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "cat-row",
         onClick: _cache[0] || (_cache[0] = $event => $setup.openCategory("天赋"))
-      }, [ _cache[14] || (_cache[14] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, [ _cache[15] || (_cache[15] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "cat-name"
       }, "天赋", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_30, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.talentNames.length), 1), _cache[15] || (_cache[15] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.talentNames.length), 1), _cache[16] || (_cache[16] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "chev"
       }, "›", -1)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "cat-row",
         onClick: _cache[1] || (_cache[1] = $event => $setup.openCategory("技能"))
-      }, [ _cache[16] || (_cache[16] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, [ _cache[17] || (_cache[17] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "cat-name"
       }, "技能", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_31, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.skillNames.length), 1), _cache[17] || (_cache[17] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.skillNames.length), 1), _cache[18] || (_cache[18] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "chev"
       }, "›", -1)) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         class: "cat-row",
         onClick: _cache[2] || (_cache[2] = $event => $setup.openCategory("状态"))
-      }, [ _cache[18] || (_cache[18] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, [ _cache[19] || (_cache[19] = (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "cat-name"
       }, "状态", -1)), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_32, (0, 
-      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.statusNames.length), 1), _cache[19] || (_cache[19] = (0, 
+      vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.statusNames.length), 1), _cache[20] || (_cache[20] = (0, 
       vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         class: "chev"
       }, "›", -1)) ]) ]), (0, vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)($setup["CategoryModal"], {
