@@ -13,14 +13,17 @@ var __webpack_modules__ = {
     });
     var zod__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! zod */ "zod");
     var zod__WEBPACK_IMPORTED_MODULE_0___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_0__);
-    const 阶位枚举 = [ "一阶见习", "二阶精英", "三阶王者", "四阶史诗", "五阶传奇", "六阶超凡", "七阶神话", "八阶至高", "九阶唯一" ];
+    const 阶位枚举 = [ "一阶见习", "二阶精英", "三阶王者", "四阶史诗", "五阶传奇", "六阶超凡", "七阶神话", "八阶至高", "九阶唯一", "凡人", "未知" ];
     const 阶位Schema = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
       const s = String(v);
       for (const t of 阶位枚举) {
+        if (t === "凡人" || t === "未知") continue;
         if (s.startsWith(t.slice(0, 2))) return t;
       }
-      return s;
-    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum(阶位枚举)).prefault("一阶见习");
+      if (/[?？]/.test(s) || s.includes("未知") || s.includes("未探明") || s.includes("不明")) return "未知";
+      if (s.includes("凡") || s.includes("无") || s.includes("普") || s.includes("常人") || s === "—" || s === "") return "凡人";
+      return "凡人";
+    }).pipe(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum(阶位枚举)).prefault("凡人");
     const 破限状态 = zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().transform(v => {
       const s = String(v);
       if (s.includes("三")) return "三破限";
@@ -143,6 +146,66 @@ var __webpack_modules__ = {
       }
       t = t.replace(/^[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+/, "").replace(/[\u00b7\u3002\uFF0E.,，、！!？?；;:：\s]+$/, "");
       return t;
+    };
+    const 六维键组 = [ "力量", "体质", "敏捷", "感知", "精神", "魅力" ];
+    const 六维近称 = {
+      体体: "体质",
+      体制: "体质",
+      体系: "体质",
+      体魄: "体质",
+      肉体: "体质",
+      灵敏: "敏捷",
+      灵巧: "敏捷",
+      敏捷力: "敏捷",
+      感知力: "感知",
+      敏锐: "感知",
+      洞察: "感知",
+      精神力: "精神",
+      心智: "精神",
+      智力: "精神"
+    };
+    const 字距 = (a, b) => {
+      const A = [ ...a ], B = [ ...b ];
+      const dp = Array.from({
+        length: A.length + 1
+      }, () => Array(B.length + 1).fill(0));
+      for (let i = 0; i <= A.length; i++) dp[i][0] = i;
+      for (let j = 0; j <= B.length; j++) dp[0][j] = j;
+      for (let i = 1; i <= A.length; i++) for (let j = 1; j <= B.length; j++) dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + (A[i - 1] === B[j - 1] ? 0 : 1));
+      return dp[A.length][B.length];
+    };
+    const 六维规整键 = k => {
+      if (六维键组.includes(k)) return k;
+      if (六维近称[k]) return 六维近称[k];
+      let best = null;
+      for (const c of 六维键组) {
+        if (字距(k, c) <= 1) {
+          best = c;
+          break;
+        }
+      }
+      return best;
+    };
+    const 规整六维 = raw => {
+      const out = {};
+      const src = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : {};
+      const 取数 = x => {
+        const n = Number(x);
+        return Number.isFinite(n) ? Math.floor(n) : 0;
+      };
+      for (const k of Object.keys(src)) {
+        const ck = 六维规整键(k);
+        if (!ck) continue;
+        const v = src[k];
+        if (v && typeof v === "object" && !Array.isArray(v)) out[ck] = {
+          数值: _.clamp(取数(v["数值"]), 0, 100),
+          破限: !!v["破限"]
+        }; else out[ck] = {
+          数值: _.clamp(取数(v), 0, 100),
+          破限: false
+        };
+      }
+      return out;
     };
     const 合并引号键 = obj => {
       const out = {};
@@ -333,13 +396,7 @@ var __webpack_modules__ = {
         年龄: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         外貌: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
         过往: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
-        六维: zod__WEBPACK_IMPORTED_MODULE_0__.z.record(zod__WEBPACK_IMPORTED_MODULE_0__.z.enum([ "力量", "体质", "敏捷", "感知", "精神", "魅力" ]), zod__WEBPACK_IMPORTED_MODULE_0__.z.union([ zod__WEBPACK_IMPORTED_MODULE_0__.z.object({
-          数值: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(v => _.clamp(v, 0, 100)).prefault(0),
-          破限: zod__WEBPACK_IMPORTED_MODULE_0__.z.boolean().prefault(false)
-        }), zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().transform(n => ({
-          数值: Number.isNaN(n) ? 0 : _.clamp(n, 0, 100),
-          破限: false
-        })) ]).prefault({})).prefault({}),
+        六维: zod__WEBPACK_IMPORTED_MODULE_0__.z.any().transform(规整六维).prefault({}),
         未分配属性点: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.number().prefault(0),
         阶位: 阶位Schema,
         职业: zod__WEBPACK_IMPORTED_MODULE_0__.z.coerce.string().prefault(""),
@@ -858,24 +915,39 @@ var __webpack_modules__ = {
       defineMvuDataStore: () => defineMvuDataStore
     });
     var pinia__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pinia */ "pinia");
-    var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "vue");
-    var vue__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
-    var _vueuse_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vueuse/core */ "./node_modules/.pnpm/@vueuse+shared@14.4.0_vue@3.5.41_typescript@6.0.3_/node_modules/@vueuse/shared/dist/index.js");
+    var zod__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! zod */ "zod");
+    var zod__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(zod__WEBPACK_IMPORTED_MODULE_1__);
+    var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "vue");
+    var vue__WEBPACK_IMPORTED_MODULE_2___default = __webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_2__);
+    var _vueuse_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vueuse/core */ "./node_modules/.pnpm/@vueuse+shared@14.4.0_vue@3.5.41_typescript@6.0.3_/node_modules/@vueuse/shared/dist/index.js");
     function defineMvuDataStore(schema, variable_option, additional_setup) {
       if (variable_option.type === "message" && (variable_option.message_id === undefined || variable_option.message_id === "latest")) {
         variable_option.message_id = -1;
       }
       return (0, pinia__WEBPACK_IMPORTED_MODULE_0__.defineStore)(`mvu_data.${_(variable_option).entries().sortBy(entry => entry[0]).map(entry => entry[1]).join(".")}`, errorCatched(() => {
-        const data = (0, vue__WEBPACK_IMPORTED_MODULE_1__.ref)(schema.parse(_.get(getVariables(variable_option), "stat_data", {}), {
-          reportInput: true
-        }));
+        let warned = false;
+        const 取数据 = () => {
+          const stat_data = _.get(getVariables(variable_option), "stat_data", {});
+          const result = schema.safeParse(stat_data);
+          if (result.success) return result.data;
+          if (!warned) {
+            warned = true;
+            console.warn("[mvu] 变量含无法解析内容，已回退默认档（酒馆原值保留，可安全重试）：", zod__WEBPACK_IMPORTED_MODULE_1__.z.prettifyError?.(result.error) ?? result.error);
+          }
+          return schema.parse({});
+        };
+        const data = (0, vue__WEBPACK_IMPORTED_MODULE_2__.ref)(取数据());
         if (additional_setup) {
           additional_setup(data);
         }
-        (0, _vueuse_core__WEBPACK_IMPORTED_MODULE_2__.useIntervalFn)(() => {
+        (0, _vueuse_core__WEBPACK_IMPORTED_MODULE_3__.useIntervalFn)(() => {
           const stat_data = _.get(getVariables(variable_option), "stat_data", {});
           const result = schema.safeParse(stat_data);
           if (result.error) {
+            if (!warned) {
+              warned = true;
+              console.warn("[mvu] 变量含无法解析内容，轮询已跳过（保留上一份数据）：", zod__WEBPACK_IMPORTED_MODULE_1__.z.prettifyError?.(result.error) ?? result.error);
+            }
             return;
           }
           if (!_.isEqual(data.value, result.data)) {
@@ -887,7 +959,7 @@ var __webpack_modules__ = {
             }
           }
         }, 2e3);
-        const {ignoreUpdates} = (0, _vueuse_core__WEBPACK_IMPORTED_MODULE_2__.watchIgnorable)(data, new_data => {
+        const {ignoreUpdates} = (0, _vueuse_core__WEBPACK_IMPORTED_MODULE_3__.watchIgnorable)(data, new_data => {
           const result = schema.safeParse(new_data);
           if (result.error) {
             return;
